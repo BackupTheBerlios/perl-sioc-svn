@@ -1,0 +1,22 @@
+Changes
+MANIFEST
+META.yml # Will be created by "make dist"
+Makefile.PL
+README
+lib/SIOC.pm
+lib/SIOC/Community.pm
+lib/SIOC/Container.pm
+lib/SIOC/Exporter.pm
+lib/SIOC/Forum.pm
+lib/SIOC/Item.pm
+lib/SIOC/Post.pm
+lib/SIOC/Role.pm
+lib/SIOC/Site.pm
+lib/SIOC/Space.pm
+lib/SIOC/Thread.pm
+lib/SIOC/User.pm
+lib/SIOC/Usergroup.pm
+t/00-load.t
+t/boilerplate.t
+t/pod-coverage.t
+t/pod.t
