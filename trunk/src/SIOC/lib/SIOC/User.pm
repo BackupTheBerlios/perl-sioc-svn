@@ -1,6 +1,35 @@
+###########################################################
+# SIOC::User
+# User class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC::User;
 use base qw( SIOC );
+
+use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+
 {
+    my %sioc_account_of :ATTR;
+    my %sioc_administrator_of :ATTR;
+    my %sioc_avatar :ATTR;
+    my %sioc_creator_of :ATTR;
+    my %sioc_email :ATTR;
+    my %sioc_email_sha1 :ATTR;
+    my %sioc_has_function :ATTR;
+    my %sioc_member_of :ATTR;
+    my %sioc_moderator_of :ATTR;
+    my %sioc_modifier_of :ATTR;
+    my %sioc_owner_of :ATTR;
+    my %sioc_subscriber_of :ATTR;
+}
+1;
+__END__
     
 =head1 NAME
 
@@ -43,102 +72,54 @@ describes information about the individual itself.
 Refers to the foaf:Agent or foaf:Person who owns this sioc:User
 online account.
 
-=cut
-
-my %sioc_account_of :ATTR;
-
 =item administrator_of 
 
 A Site that the User is an administrator of.
-
-=cut
-
-my %sioc_administrator_of :ATTR;
 
 =item avatar 
 
 An image or depiction used to represent this User.
 
-=cut
-
-my %sioc_avatar :ATTR;
-
 =item creator_of 
 
 An Item that the User is a creator of.
-
-=cut
-
-my %sioc_creator_of :ATTR;
 
 =item email 
 
 An electronic mail address of the User.
 
-=cut
-
-my %sioc_email :ATTR;
-
 =item email_sha1 
 
 An electronic mail address of the User, encoded using SHA1.
-
-=cut
-
-my %sioc_email_sha1 :ATTR;
 
 =item has_function 
 
 A Role that this User has.
 
-=cut
-
-my %sioc_has_function :ATTR;
-
 =item member_of 
 
 A Usergroup that this User is a member of.
-
-=cut
-
-my %sioc_member_of :ATTR;
 
 =item moderator_of 
 
 A Forum that User is a moderator of.
 
-=cut
-
-my %sioc_moderator_of :ATTR;
-
 =item modifier_of 
 
 An Item that this User has modified.
-
-=cut
-
-my %sioc_modifier_of :ATTR;
 
 =item owner_of 
 
 A Container owned by a particular User, for example, a weblog
 or image gallery.
 
-=cut
-
-my %sioc_owner_of :ATTR;
-
 =item subscriber_of 
 
 A Container that a User is subscribed to.
 
-=cut
-
-my %sioc_subscriber_of :ATTR;
-
 =back
 
-=head1 METHODS
+=head1 SUBROUTINES/METHODS
 
 A separate section listing the public components of the module's interface.
 
@@ -215,8 +196,3 @@ the same terms as Perl itself. See L<perlartistic>.  This program is
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.
-
-=cut
-
-}
-1;

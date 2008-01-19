@@ -1,6 +1,21 @@
+###########################################################
+# SIOC::Community
+# Community class in the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC::Community;
 use base qw( SIOC );
-{
+
+use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+
+1;
+__END__
     
 =head1 NAME
 
@@ -108,8 +123,3 @@ the same terms as Perl itself. See L<perlartistic>.  This program is
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.
-
-=cut
-
-}
-1;

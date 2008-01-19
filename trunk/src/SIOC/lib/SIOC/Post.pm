@@ -1,6 +1,31 @@
+###########################################################
+# SIOC::Post
+# Post class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC::Post;
 use base qw( SIOC::Item );
+
+use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+
 {
+    my %sioc_attachment :ATTR;
+    my %sioc_content :ATTR;
+    my %sioc_note :ATTR;
+    my %sioc_num_replies :ATTR;
+    my %sioc_related_to :ATTR;
+    my %sioc_sibling :ATTR;
+    my %content_encoded :ATTR;
+}
+
+1;
+__END__
     
 =head1 NAME
 
@@ -39,44 +64,24 @@ subclasses of SIOC::Post.
 
 The URI of a file attached to a Post.
 
-=cut
-
-my %sioc_attachment :ATTR;
-
 =item content 
 
 The content of the Post in plain text format.
-
-=cut
-
-my %sioc_content :ATTR;
 
 =item note 
 
 A note associated with this Post, for example, if it has been
 edited by a User.
 
-=cut
-
-my %sioc_note :ATTR;
-
 =item num_replies 
 
 The number of replies that this Post has. Useful for when
 the reply structure is absent.
 
-=cut
-
-my %sioc_num_replies :ATTR;
-
 =item related_to 
 
 Related Posts for this Post, perhaps determined implicitly
 from topics or references.
-
-=cut
-
-my %sioc_related_to :ATTR;
 
 =item sibling 
 
@@ -85,17 +90,9 @@ Forum, but the siblings may differ in some small way (for example, language,
 category, etc.). The sibling of this Post should be self-describing (that is,
 it should contain all available information).
 
-=cut
-
-my %sioc_sibling :ATTR;
-
 =item content_encoded 
 
 Used to describe the encoded content of a Post, contained in CDATA areas.
-
-=cut
-
-my %content_encoded :ATTR;
 
 =back
 
@@ -112,11 +109,6 @@ Name the section accordingly.
 In an object-oriented module, this section should begin with a sentence (of the
 form "An object of this class represents ...") to give the reader a high-level
 context to help them understand the methods that are subsequently described.
-
-=cut
-
-}
-1;
 
 =head1 DIAGNOSTICS
 

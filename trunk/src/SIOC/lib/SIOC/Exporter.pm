@@ -1,10 +1,22 @@
+###########################################################
+# SIOC::Exporter
+# Exporter class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC::Exporter;
 
-use warnings;
 use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
 
 use Class::Std;
-{
+
+1;
+__END__
 
 =head1 NAME
 
@@ -107,8 +119,3 @@ the same terms as Perl itself. See L<perlartistic>.  This program is
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.
-
-=cut
-
-}
-1;

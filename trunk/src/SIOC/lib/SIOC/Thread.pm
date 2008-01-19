@@ -1,6 +1,21 @@
+###########################################################
+# SIOC::Thread
+# Thread class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC::Thread;
 use base qw( SIOC::Container );
-{
+
+use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+
+1;
+__END__
     
 =head1 NAME
 
@@ -28,7 +43,7 @@ user and replied to by others. The Thread container is used to group Posts
 from a single discussion thread together via the sioc:container_of property,
 especially where a sioc:has_reply / reply_of structure is absent.
 
-=head1 METHODS
+=head1 SUBROUTINES/METHODS
 
 A separate section listing the public components of the module's interface.
 
@@ -41,11 +56,6 @@ Name the section accordingly.
 In an object-oriented module, this section should begin with a sentence (of the
 form "An object of this class represents ...") to give the reader a high-level
 context to help them understand the methods that are subsequently described.
-
-=cut
-
-}
-1;
 
 =head1 DIAGNOSTICS
 

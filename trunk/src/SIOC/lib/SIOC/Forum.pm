@@ -1,6 +1,27 @@
+###########################################################
+# SIOC::Forum
+# Forum class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC::Forum;
 use base qw( SIOC::Container );
+
+use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+
 {
+    my %sioc_has_host :ATTR;
+    my %sioc_has_moderator :ATTR;
+    my %sioc_scope_of :ATTR;
+}
+
+1;
+__END__
     
 =head1 NAME
 
@@ -46,25 +67,13 @@ SIOC::Forum.
 
 The Site that hosts this Forum.
 
-=cut
-
-my %sioc_has_host :ATTR;
-
 =item has_moderator 
 
 A User who is a moderator of this Forum.
 
-=cut
-
-my %sioc_has_moderator :ATTR;
-
 =item scope_of 
 
 A Role that has a scope of this Forum.
-
-=cut
-
-my %sioc_scope_of :ATTR;
 
 =back
 
@@ -145,8 +154,3 @@ the same terms as Perl itself. See L<perlartistic>.  This program is
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.
-
-=cut
-
-}
-1;

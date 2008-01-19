@@ -1,7 +1,26 @@
+###########################################################
+# SIOC::Space
+# Space class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
 package SIOC::Space;
 use base qw( SIOC );
+
+use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+
 {
-    
+    my %sioc_has_usergroup :ATTR;
+    my %has_space :ATTR;
+    my %sioc_space_of :ATTR;
+}
+1;
+__END__
+
 =head1 NAME
 
 SIOC::Space -- SIOC Space class
@@ -34,29 +53,17 @@ be linked to it using the sioc:has_space property.
 Points to a Usergroup that has certain access to this
 Space.
 
-=cut
-
-my %sioc_has_usergroup :ATTR;
-
 =item has_space 
 
 A data Space which this resource is a part of.
-
-=cut
-
-my %has_space :ATTR;
 
 =item space_of 
 
 A resource which belongs to this data Space.
 
-=cut
-
-my %sioc_space_of :ATTR;
-
 =back
 
-=head1 METHODS
+=head1 SUBROUTINES/METHODS
 
 A separate section listing the public components of the module's interface.
 
@@ -69,11 +76,6 @@ Name the section accordingly.
 In an object-oriented module, this section should begin with a sentence (of the
 form "An object of this class represents ...") to give the reader a high-level
 context to help them understand the methods that are subsequently described.
-
-=cut
-
-}
-1;
 
 =head1 DIAGNOSTICS
 

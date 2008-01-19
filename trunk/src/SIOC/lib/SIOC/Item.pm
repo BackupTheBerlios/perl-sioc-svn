@@ -1,6 +1,40 @@
+###########################################################
+# SIOC::Item
+# Item class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC::Item;
 use base qw( SIOC );
+
+use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+
 {
+    my %sioc_about :ATTR;
+    my %sioc_has_container :ATTR;
+    my %sioc_has_creator :ATTR;
+    my %sioc_has_modifier :ATTR;
+    my %sioc_has_reply :ATTR;
+    my %sioc_ip_address :ATTR;
+    my %sioc_next_by_date :ATTR;
+    my %sioc_next_version :ATTR;
+    my %num_views :ATTR;  # TODO: does it rather belong to the SIOC class?
+    my %sioc_previous_by_date :ATTR;
+    my %sioc_previous_version :ATTR;
+    my %sioc_reply_of :ATTR;
+    my %dc_subject :ATTR;
+    my %dc_title :ATTR;
+    my %dcterms_created :ATTR;
+    my %dcterms_modified :ATTR;
+}
+
+1;
+__END__
     
 =head1 NAME
 
@@ -39,42 +73,22 @@ Items can be contained within Containers.
 Specifies that this Item is about a particular resource, e.g., a
 Post describing a book, hotel, etc.
 
-=cut
-
-my %sioc_about :ATTR;
-
 =item has_container 
 
 The Container to which this Item belongs.
-
-=cut
-
-my %sioc_has_container :ATTR;
 
 =item has_creator 
 
 This is the User who made this Item.
 
-=cut
-
-my %sioc_has_creator :ATTR;
-
 =item has_modifier 
 
 A User who modified this Item.
-
-=cut
-
-my %sioc_has_modifier :ATTR;
 
 =item has_reply 
 
 Points to an Item or Post that is a reply or response to
 this Item or Post.
-
-=cut
-
-my %sioc_has_reply :ATTR;
 
 =item ip_address 
 
@@ -82,100 +96,56 @@ The IP address used when creating this Item. This can be
 associated with a creator. Some wiki articles list the IP addresses for the
 creator or modifiers when the usernames are absent.
 
-=cut
-
-my %sioc_ip_address :ATTR;
-
 =item next_by_date 
 
 Next Item or Post in a given Container sorted by date.
 
-=cut
-
-my %sioc_next_by_date :ATTR;
-
 =item next_version 
 
 Links to the next revision of this Item or Post.
-
-=cut
-
-my %sioc_next_version :ATTR;
 
 =item num_views 
 
 The number of times this Item, Thread, User profile, etc.
 has been viewed.
 
-=cut
-
-my %num_views :ATTR;  # TODO: does it rather belong to the SIOC class?
-
 =item previous_by_date 
 
 Previous Item or Post in a given Container sorted by
 date.
 
-=cut
-
-my %sioc_previous_by_date :ATTR;
-
 =item previous_version 
 
 Links to a previous revision of this Item or Post.
-
-=cut
-
-my %sioc_previous_version :ATTR;
 
 =item reply_of 
 
 Links to an Item or Post which this Item or Post is a reply
 to.
 
-=cut
-
-my %sioc_reply_of :ATTR;
-
 =item dc:subject 
 
 Can be used for keywords describing the subject of an Item
 or Post. See also: sioc:topic.
-
-=cut
-
-my %dc_subject :ATTR;
 
 =item dc:title 
 
 Specifies the title of a resource. Usually used to describe
 the title of an Item or Post.
 
-=cut
-
-my %dc_title :ATTR;
-
 =item dcterms:created 
 
 Details the date and time when a resource was created.
 Usually used as a property of an Item or Post.
-
-=cut
-
-my %dcterms_created :ATTR;
 
 =item dcterms:modified 
 
 Details the date and time when a resource was
 modified. Usually used as a property of an Item or Post.
 
-=cut
-
-my %dcterms_modified :ATTR;
-
 =back
 
-=head1 METHODS
+=head1 SUBROUTINES/METHODS
 
 A separate section listing the public components of the module's interface.
 
@@ -188,11 +158,6 @@ Name the section accordingly.
 In an object-oriented module, this section should begin with a sentence (of the
 form "An object of this class represents ...") to give the reader a high-level
 context to help them understand the methods that are subsequently described.
-
-=cut
-
-}
-1;
 
 =head1 DIAGNOSTICS
 

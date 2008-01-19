@@ -1,6 +1,25 @@
+###########################################################
+# SIOC::Usergroup
+# Usergroup class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC::Usergroup;
+
+use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+
 use base qw( SIOC );
 {
+    my %sioc_has_member :ATTR;
+    my %sioc_usergroup_of :ATTR;
+}
+1;
+__END__
     
 =head1 NAME
 
@@ -35,21 +54,13 @@ a certain Role, for example, moderators or administrators.
 
 A User who is a member of this Usergroup.
 
-=cut
-
-my %sioc_has_member :ATTR;
-
 =item usergroup_of 
 
 A Space that the Usergroup has access to.
 
-=cut
-
-my %sioc_usergroup_of :ATTR;
-
 =back
 
-=head1 METHODS
+=head1 SUBROUTINES/METHODS
 
 A separate section listing the public components of the module's interface.
 
@@ -62,11 +73,6 @@ Name the section accordingly.
 In an object-oriented module, this section should begin with a sentence (of the
 form "An object of this class represents ...") to give the reader a high-level
 context to help them understand the methods that are subsequently described.
-
-=cut
-
-}
-1;
 
 =head1 DIAGNOSTICS
 

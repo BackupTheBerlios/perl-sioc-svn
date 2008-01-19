@@ -1,6 +1,28 @@
+###########################################################
+# SIOC::Container
+# Container class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC::Container;
 use base qw( SIOC );
+
+use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+
 {
+    my %sioc_container_of :ATTR;
+    my %sioc_has_owner :ATTR;
+    my %sioc_has_parent :ATTR;
+    my %sioc_has_subscriber :ATTR;
+    my %sioc_parent_of :ATTR;
+}
+1;
+__END__
     
 =head1 NAME
 
@@ -40,43 +62,23 @@ contains additional, more specific subclasses of SIOC::Container.
 
 An Item that this Container contains.
 
-=cut
-
-my %sioc_container_of :ATTR;
-
 =item has_owner 
 
 A User that this Container is owned by.
-
-=cut
-
-my %sioc_has_owner :ATTR;
 
 =item has_parent 
 
 A Container or Forum that this Container or Forum is a
 child of.
 
-=cut
-
-my %sioc_has_parent :ATTR;
-
 =item has_subscriber 
 
 A User who is subscribed to this Container.
-
-=cut
-
-my %sioc_has_subscriber :ATTR;
 
 =item parent_of 
 
 A child Container or Forum that this Container or Forum is a
 parent of.
-
-=cut
-
-my %sioc_parent_of :ATTR;
 
 =back
 
@@ -157,8 +159,3 @@ the same terms as Perl itself. See L<perlartistic>.  This program is
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.
-
-=cut
-
-}
-1;

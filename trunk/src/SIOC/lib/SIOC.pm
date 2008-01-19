@@ -1,10 +1,40 @@
+###########################################################
+# SIOC
+# Base class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC;
-    
-use warnings;
+
 use strict;
+use warnings;
+use Carp;
+use Readonly;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
 
 use Class::Std;
 {
+
+    my %id :ATTR;
+    my %name :ATTR;
+    my %topic :ATTR;
+    my %feed :ATTR;
+    my %link :ATTR;
+    my %links_to :ATTR;
+
+    Readonly my $ABSTRACT_CLASS => "This is an abstract class. Please use a subclass!\n";
+    
+    sub as_string :STRINGIFY {
+        croak $ABSTRACT_CLASS;
+    }
+
+}
+
+1;
+__END__
 
 =head1 NAME
 
@@ -57,65 +87,36 @@ An identifier of a SIOC concept instance. For example, a user ID.
 Must be unique for instances of each type of SIOC concept within the same
 site.
 
-=cut
-
-my %id :ATTR;
-
 =item name 
 
 The name of a SIOC instance, e.g. a username for a User, group
 name for a Usergroup, etc.
-
-=cut
-
-my %name :ATTR;
 
 =item topic 
 
 A topic of interest, linking to the appropriate URI, e.g., in
 the Open Directory Project or of a SKOS category.
 
-=cut
-
-my %topic :ATTR;
-
 =item feed 
 
 A feed (e.g., RSS, Atom, etc.) pertaining to this resource (e.g.,
 for a Forum, Site, User, etc.).
 
-=cut
-
-my %feed :ATTR;
-
 =item link 
 
 A URI of a document which contains this SIOC object.
-
-=cut
-
-my %link :ATTR;
 
 =item links_to 
 
 Links extracted from hyperlinks within a SIOC concept, e.g.,
 Post or Site.
 
-=cut
-
-my %links_to :ATTR;
 
 =back
 
-=head1 METHODS
+=head1 SUBROUTINES/METHODS
 
 =head2 as_string
-
-=cut
-
-sub as_string :STRINGIFY {
-    print "This is an abstract class. Please use only its subclasses!\n";
-}
 
 =head1 DIAGNOSTICS
 
@@ -125,7 +126,10 @@ one or more likely causes, and any suggested remedies.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
-SIOC requires no configuration files or environment variables.
+A full explanation of any configuration system(s) used by the module, including
+the names and locations of any configuration files, and the meaning of any
+environment variables or properties that can be set. These descriptions must
+also include details of any configuration language used.
 
 =head1 DEPENDENCIES
 
@@ -182,8 +186,3 @@ the same terms as Perl itself. See L<perlartistic>.  This program is
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.
-
-=cut
-
-}
-1;

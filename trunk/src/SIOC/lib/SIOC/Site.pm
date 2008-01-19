@@ -1,6 +1,26 @@
+###########################################################
+# SIOC::Site
+# Site class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC::Site;
 use base qw( SIOC::Space );
+
+use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+
 {
+    my %sioc_has_administrator :ATTR;
+    my %sioc_host_of :ATTR;
+}
+
+1;
+__END__
     
 =head1 NAME
 
@@ -34,21 +54,13 @@ formed by Posts in a distributed Forum on a peer-to-peer environment Space).
 
 A User who is an administrator of this Site.
 
-=cut
-
-my %sioc_has_administrator :ATTR;
-
 =item host_of 
 
 A Forum that is hosted on this Site.
 
-=cut
-
-my %sioc_host_of :ATTR;
-
 =back
 
-=head1 METHODS
+=head1 SUBROUTINES/METHODS
 
 A separate section listing the public components of the module's interface.
 
@@ -61,11 +73,6 @@ Name the section accordingly.
 In an object-oriented module, this section should begin with a sentence (of the
 form "An object of this class represents ...") to give the reader a high-level
 context to help them understand the methods that are subsequently described.
-
-=cut
-
-}
-1;
 
 =head1 DIAGNOSTICS
 

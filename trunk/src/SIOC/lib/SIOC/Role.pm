@@ -1,6 +1,26 @@
+###########################################################
+# SIOC::Role
+# Role class for the SIOC ontology
+###########################################################
+#
+# $Id$
+#
+
 package SIOC::Role;
 use base qw( SIOC );
+
+use strict;
+use warnings;
+
+our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+
 {
+    my %sioc_function_of :ATTR;
+    my %sioc_has_scope :ATTR;
+}
+
+1;
+__END__
     
 =head1 NAME
 
@@ -33,21 +53,13 @@ may have.
 
 A User who has this Role.
 
-=cut
-
-my %sioc_function_of :ATTR;
-
 =item has_scope 
 
 A Forum that this Role applies to.
 
-=cut
-
-my %sioc_has_scope :ATTR;
-
 =back
 
-=head1 METHODS
+=head1 SUBROUTINES/METHODS
 
 A separate section listing the public components of the module's interface.
 
@@ -124,8 +136,3 @@ the same terms as Perl itself. See L<perlartistic>.  This program is
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.
-
-=cut
-
-}
-1;

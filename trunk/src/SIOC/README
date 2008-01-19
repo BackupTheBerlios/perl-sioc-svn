@@ -1,6 +1,6 @@
 SIOC
 
-This class distribution implements the SIOC ontology, enabling community
+This Perl class distribution implements the SIOC ontology, enabling community
 platforms like weblogs or bulletin boards to export their information in a
 machine-readable format.
 
@@ -34,8 +34,8 @@ You can also look for information at:
     Search CPAN
         http://search.cpan.org/dist/SIOC
 
-    CPAN Request Tracker:
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=SIOC
+    BerliOS bug tracker:
+        http://developer.berlios.de/mantis/set_project.php?project_id=9232
 
     AnnoCPAN, annotated CPAN documentation:
         http://annocpan.org/dist/SIOC
