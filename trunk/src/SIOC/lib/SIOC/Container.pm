@@ -15,11 +15,11 @@ use warnings;
 our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
 
 {
-    my %sioc_container_of :ATTR;
-    my %sioc_has_owner :ATTR;
-    my %sioc_has_parent :ATTR;
-    my %sioc_has_subscriber :ATTR;
-    my %sioc_parent_of :ATTR;
+    my %sioc_container_of :ATTR( :default<undef> );
+    my %sioc_has_owner :ATTR( :default<undef> );
+    my %sioc_has_parent :ATTR( :default<undef> );
+    my %sioc_has_subscriber :ATTR( :default<undef> );
+    my %sioc_parent_of :ATTR( :default<undef> );
 }
 1;
 __END__

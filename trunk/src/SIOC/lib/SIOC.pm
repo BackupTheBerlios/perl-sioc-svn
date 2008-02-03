@@ -11,29 +11,88 @@ package SIOC;
 use strict;
 use warnings;
 use Carp;
+
+use Class::Std;  # we're using inside-out objects
+
 use Readonly;
+use Template;
+use Template::Provider::FromData;
 
-our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+use version; our $VERSION = qv(1.0.0);
 
-use Class::Std;
 {
+    # mandatory attributes
+    my %id          :ATTR( :name<id> );
+    my %title       :ATTR( :name<title> );
+    my %url         :ATTR( :name<url> );
+    
+    # optional attributes
+    my %export_url  :ATTR( :name<export_url>, :default('...') );
+    my %description :ATTR( :name<description>, :default<undef> );
+    my %comment     :ATTR( :name<comment>, :default<undef> );
+    my %topic       :ATTR( :name<topic>, :default<undef> );
+    my %feed        :ATTR( :name<feed>, :default<undef> );
+    my %link        :ATTR( :name<link>, :default<undef> );
+    my %links_to    :ATTR( :name<links_to>, :default<undef> );
 
-    my %id :ATTR;
-    my %name :ATTR;
-    my %topic :ATTR;
-    my %feed :ATTR;
-    my %link :ATTR;
-    my %links_to :ATTR;
+    # internal attributes
+    my %_provider   :ATTR( :name<_provider>, :default<undef> );
+    
+    sub BUILD {
+        my ($self, $obj_ID, $arg_ref) = @_;
 
-    Readonly my $ABSTRACT_CLASS => "This is an abstract class. Please use a subclass!\n";
+        $_provider{$obj_ID} = Template::Provider::FromDATA->new({
+            CLASSES => ref $self,
+        });
+        
+        return 1;
+    }
+
+    sub _init_template {
+        my ($self) = @_;
+        
+        my $template = Template->new({
+            LOAD_TEMPLATES => [ $self->get__provider() ]
+        });
+        return $template;
+    }
+
+    sub _set_template_vars {
+        my ($self, $vars) = @_;
+
+        $vars->{export_url}     = $self->get_export_url();
+        $vars->{id}             = $self->get_id();
+        $vars->{title}          = $self->get_title();
+        $vars->{url}            = $self->get_url();
+        $vars->{description}    = $self->get_description();
+        $vars->{comment}        = $self->get_comment();
+        
+        return 1;
+    }
     
     sub as_string :STRINGIFY {
-        croak $ABSTRACT_CLASS;
+        my ($self) = @_;
+        
+        my $template_vars = {};
+        $self->_set_template_vars($template_vars);
+
+        my $template = $self->_init_template();
+        my $output;
+        my $ok = $template->process('rdfoutput', $template_vars, \$output);
+        if (! $ok) {
+            croak $template->error();
+        }
+        return $output;
     }
 
 }
 
 1;
+__DATA__
+__rdfoutput__
+<sioc:Object>
+    <rdfs:comment>Generic SIOC Object named [% title %]</rdfs:comment>
+</sioc:Object>\n";
 __END__
 
 =head1 NAME
@@ -116,7 +175,13 @@ Post or Site.
 
 =head1 SUBROUTINES/METHODS
 
+=head2 BUILD
+
+Base class constructor.
+
 =head2 as_string
+
+Returns the object's information in RDF format.
 
 =head1 DIAGNOSTICS
 

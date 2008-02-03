@@ -15,12 +15,46 @@ use warnings;
 our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
 
 {
-    my %sioc_has_host :ATTR;
-    my %sioc_has_moderator :ATTR;
-    my %sioc_scope_of :ATTR;
+    my %sioc_has_host :ATTR( :default<undef> );
+    my %sioc_has_moderator :ATTR( :default<undef> );
+    my %sioc_scope_of :ATTR( :default<undef> );
 }
 
 1;
+__DATA__
+__rdfoutput__
+<sioc:Forum rdf:about="[% url %]">
+    <sioc:link rdf:resource="[% export_url %]"/>
+[% IF title %]
+    <dc:title>[% title %]</dc:title>
+[% END %]
+[% IF description %]
+    <dc:description>[% description %]</dc:description>
+[% END %]
+[% IF comment %]
+    <rdfs:comment>[% comment %]</rdfs:comment>
+[% END %]
+
+[% FOREACH thread = threads %]
+    <sioc:parent_of>
+        <sioc:Thread rdf:about="[% thread.get_url %]">
+            <rdfs:seeAlso rdf:resource="[% thread.get_export_url %]"/>
+        </sioc:Thread>
+    </sioc:parent_of>
+[% END %]
+
+[% FOREACH post = posts %]
+    <sioc:container_of>
+        <sioc:Post rdf:about="[% post.get_url %]">
+            <rdfs:seeAlso rdf:resource="[% post.get_sioc_url %]"/>
+        </sioc:Post>
+    </sioc:container_of>
+[% END %]
+
+[% IF next_page_url %]
+    <rdfs:seeAlso rdf:resource="[% next_page_url %]"/>
+[% END %]
+</sioc:Forum>
 __END__
     
 =head1 NAME

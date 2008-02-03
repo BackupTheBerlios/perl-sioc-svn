@@ -12,14 +12,73 @@ use base qw( SIOC::Space );
 use strict;
 use warnings;
 
-our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+use Readonly;
+
+use version; our $VERSION = qv(1.0.0);
 
 {
-    my %sioc_has_administrator :ATTR;
-    my %sioc_host_of :ATTR;
+    my %administrators :ATTR( :get<administrators>, :default([]) );
+    my %forums :ATTR( :get<forums>, :default([]) );
+
+    my %authors_usergroup :ATTR( :name<authors_usergroup>, :default('authors') );
+    
+    sub add_forum {
+        my ($self, $forum) = @_;
+        
+        push @{$forums{ident $self}}, $forum;
+        return 1;
+    }
+    
+    sub add_administrator {
+        my ($self, $admin) = @_;
+       
+        push @{$administrators{ident $self}}, $admin;
+        return 1;
+    }
+    
+    sub _set_template_vars {
+        my ($self, $vars) = @_;
+
+        $self->SUPER::_set_template_vars($vars);
+        $vars->{forums} = $self->get_forums();
+        $vars->{authors_ug} = $self->get_authors_usergroup();
+        return $vars;
+    }
+    
 }
 
 1;
+__DATA__
+__rdfoutput__
+<sioc:Site rdf:about="[% url %]">
+    <dc:title>[% title %]</dc:title>
+    <dc:description>[% description %]</dc:description>
+    <sioc:link rdf:resource="[% url %]"/>
+[% FOREACH forum = forums %]
+    <sioc:host_of rdf:resource="[% forum.get_export_url %]"/>
+[% END %]
+    <sioc:has_Usergroup rdf:nodeID="[% authors_ug %]"/>
+</sioc:Site>
+
+[% FOREACH forum = forums %]
+<sioc:Forum rdf:about="[% forum.get_url %]">
+    <sioc:link rdf:resource="[% forum.get_url %]"/>
+    <rdfs:seeAlso rdf:resource="[% forum.get_export_url %]"/>
+</sioc:Forum>
+[% END %]
+
+[% IF users %]
+<sioc:Usergroup rdf:nodeID="[% authors_ug %]">
+    <sioc:name>Authors for "[% name %]"</sioc:name>
+[% FOREACH user = users %]
+    <sioc:has_member>
+        <sioc:User rdf:about="[% user.get_url %]">
+            <rdfs:seeAlso rdf:resource="[% user.get_export_url %]"/>
+        </sioc:User>
+    </sioc:has_member>
+[% END %]
+</sioc:Usergroup>
+[% END %]
 __END__
     
 =head1 NAME
@@ -60,19 +119,16 @@ A Forum that is hosted on this Site.
 
 =back
 
+
 =head1 SUBROUTINES/METHODS
 
-A separate section listing the public components of the module's interface.
+=head2 add_administrator
 
-These normally consist of either subroutines that may be exported, or methods
-that may be called on objects belonging to the classes that the module
-provides.
+Add a SIOC::User object to the list of administrators.
 
-Name the section accordingly.
+=head2 add_forum
 
-In an object-oriented module, this section should begin with a sentence (of the
-form "An object of this class represents ...") to give the reader a high-level
-context to help them understand the methods that are subsequently described.
+Add a SIOC::Forum object to the list of forums.
 
 =head1 DIAGNOSTICS
 

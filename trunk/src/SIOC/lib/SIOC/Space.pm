@@ -14,9 +14,17 @@ use warnings;
 our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
 
 {
-    my %sioc_has_usergroup :ATTR;
-    my %has_space :ATTR;
-    my %sioc_space_of :ATTR;
+    my %usergroups :ATTR( :get<usergroups>, :default<[]> );
+    my %spaces :ATTR;
+    my %parent_space :ATTR;
+
+    sub add_usergroup {
+        my ($self, $group) = @_;
+        
+        push @{$usergroups{ident $self}}, $group;
+        return 1;
+    }
+    
 }
 1;
 __END__
@@ -65,17 +73,9 @@ A resource which belongs to this data Space.
 
 =head1 SUBROUTINES/METHODS
 
-A separate section listing the public components of the module's interface.
+=head2 add_usergroup
 
-These normally consist of either subroutines that may be exported, or methods
-that may be called on objects belonging to the classes that the module
-provides.
-
-Name the section accordingly.
-
-In an object-oriented module, this section should begin with a sentence (of the
-form "An object of this class represents ...") to give the reader a high-level
-context to help them understand the methods that are subsequently described.
+Adds a SIOC::Usergroup object to the list of usergroups defined in that space.
 
 =head1 DIAGNOSTICS
 

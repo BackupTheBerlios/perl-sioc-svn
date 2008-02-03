@@ -12,7 +12,7 @@ use base qw( SIOC );
 use strict;
 use warnings;
 
-our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+use version; our $VERSION = qv(1.0.0);
 
 {
     my %sioc_account_of :ATTR;
@@ -37,7 +37,7 @@ SIOC::User -- SIOC User class
 
 =head1 VERSION
 
-This documentation refers to SIOC::User version 0.0.1.
+This documentation refers to SIOC::User version 1.0.0.
 
 =head1 SYNOPSIS
 
