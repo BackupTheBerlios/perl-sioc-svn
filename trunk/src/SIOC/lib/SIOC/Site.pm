@@ -11,20 +11,24 @@ use base qw( SIOC::Space );
 
 use strict;
 use warnings;
-
+use Carp;
 use Readonly;
 
 use version; our $VERSION = qv(1.0.0);
 
 {
+    # optional arguments
     my %administrators :ATTR( :get<administrators>, :default([]) );
     my %forums :ATTR( :get<forums>, :default([]) );
-
     my %authors_usergroup :ATTR( :name<authors_usergroup>, :default('authors') );
     
     sub add_forum {
         my ($self, $forum) = @_;
-        
+
+        if ( ((ref $forum) !~ / ^SIOC:: /mx) 
+            || (! $forum->isa('SIOC::Forum')) ) {
+            croak "FATAL: Argument is not a SIOC::Forum!\n";
+        }
         push @{$forums{ident $self}}, $forum;
         return 1;
     }
@@ -32,6 +36,10 @@ use version; our $VERSION = qv(1.0.0);
     sub add_administrator {
         my ($self, $admin) = @_;
        
+        if ( ((ref $admin) !~ / ^SIOC:: /mx) 
+            || (! $admin->isa('SIOC::User')) ) {
+            croak "FATAL: Argument is not a SIOC::User!\n";
+        }
         push @{$administrators{ident $self}}, $admin;
         return 1;
     }

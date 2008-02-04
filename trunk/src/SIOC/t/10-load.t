@@ -17,5 +17,3 @@ BEGIN {
     use_ok( 'SIOC::User');
     use_ok( 'SIOC::Usergroup');
 }
-
-diag( "Testing SIOC $SIOC::VERSION, Perl $], $^X" );

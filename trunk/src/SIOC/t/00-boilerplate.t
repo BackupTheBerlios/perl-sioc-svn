@@ -2,7 +2,10 @@
 
 use strict;
 use warnings;
-use Test::More tests => 15;
+use Test::More tests => 16;
+
+use_ok('SIOC');
+diag( "Testing SIOC $SIOC::VERSION, Perl $], $^X" );
 
 sub not_in_file_ok {
     my ($filename, %regex) = @_;

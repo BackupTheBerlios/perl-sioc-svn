@@ -11,24 +11,62 @@ use base qw( SIOC );
 
 use strict;
 use warnings;
+use Carp;
+use Digest::SHA1;
 
 use version; our $VERSION = qv(1.0.0);
 
 {
-    my %sioc_account_of :ATTR;
-    my %sioc_administrator_of :ATTR;
-    my %sioc_avatar :ATTR;
-    my %sioc_creator_of :ATTR;
-    my %sioc_email :ATTR;
-    my %sioc_email_sha1 :ATTR;
-    my %sioc_has_function :ATTR;
-    my %sioc_member_of :ATTR;
-    my %sioc_moderator_of :ATTR;
-    my %sioc_modifier_of :ATTR;
-    my %sioc_owner_of :ATTR;
-    my %sioc_subscriber_of :ATTR;
+    # mandatory attributes
+    my %email :ATTR( :name<email> );
+    
+    # optional attributes
+    my %account_of :ATTR( :name<account_of>, :default<undef> );
+    my %administered_forums :ATTR( :name<administered_forums>, :default<undef> );
+    my %avatar :ATTR( :name<avatar>, :default<undef> );
+    my %created_forums :ATTR( :name<created_forums>, :default<undef> );
+    my %function :ATTR( :name<function>, :default<undef> );
+    my %sioc_member_of :ATTR( :name<member_of>, :default<undef> );
+    my %sioc_moderator_of :ATTR( :name<moderator_of>, :default<undef> );
+    my %sioc_modifier_of :ATTR( :name<modifier_of>, :default<undef> );
+    my %sioc_owner_of :ATTR( :name<owner_of>, :default<undef> );
+    my %sioc_subscriber_of :ATTR( :name<subscriber_of>, :default<undef> );
+    
+    # internal attributes
+    my %_email_sha1 :ATTR( :name<_email_sha1>, :default<undef> );
+    
 }
 1;
+__DATA__
+__rdfoutput__
+<foaf:Person rdf:about="[% foaf_uri %]">
+[% IF name %]
+    <foaf:name>[% name %]</foaf:name>
+[% END %]
+[% IF email %]
+    <foaf:mbox_sha1sum>[% email_sha1 %]</foaf:mbox_sha1sum>
+[% END %]
+    <foaf:holdsAccount>
+        <sioc:User rdf:about="[% url %]">
+[% IF nick %]
+            <sioc:name>[% nick %]</sioc:name>
+[% END %]
+[% IF email %]
+[% IF export_email %]
+            <sioc:email rdf:resource="[% email %]"/>
+[% END %]
+            <sioc:email_sha1>[% email_sha1 %]</sioc:email_sha1>
+[% END %]
+[% IF role %]
+            <sioc:has_function>
+                <sioc:Role>
+                    <sioc:name>[% role %]</sioc:name>
+                </sioc:Role>
+            </sioc:has_function>
+[% END %]
+        </sioc:User>  
+    </foaf:holdsAccount>
+</foaf:Person>
 __END__
     
 =head1 NAME
