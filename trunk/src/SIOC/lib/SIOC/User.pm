@@ -18,25 +18,35 @@ use version; our $VERSION = qv(1.0.0);
 
 {
     # mandatory attributes
-    my %email :ATTR( :name<email> );
+    my %name                :ATTR( :name<name> );
+    my %email               :ATTR( :name<email> );
+    my %foaf_uri            :ATTR( :name<foaf_uri> );
     
     # optional attributes
-    my %account_of :ATTR( :name<account_of>, :default<undef> );
+    my %email_sha1          :ATTR( :name<_email_sha1>, :default<undef> );
+    my %account_of          :ATTR( :name<account_of>, :default<undef> );
     my %administered_forums :ATTR( :name<administered_forums>, :default<undef> );
-    my %avatar :ATTR( :name<avatar>, :default<undef> );
-    my %created_forums :ATTR( :name<created_forums>, :default<undef> );
-    my %function :ATTR( :name<function>, :default<undef> );
-    my %sioc_member_of :ATTR( :name<member_of>, :default<undef> );
-    my %sioc_moderator_of :ATTR( :name<moderator_of>, :default<undef> );
-    my %sioc_modifier_of :ATTR( :name<modifier_of>, :default<undef> );
-    my %sioc_owner_of :ATTR( :name<owner_of>, :default<undef> );
-    my %sioc_subscriber_of :ATTR( :name<subscriber_of>, :default<undef> );
+    my %avatar              :ATTR( :name<avatar>, :default<undef> );
+    my %created_forums      :ATTR( :name<created_forums>, :default<undef> );
+    my %function            :ATTR( :name<function>, :default<undef> );
+    my %member_of           :ATTR( :name<member_of>, :default<undef> );
+    my %moderator_of        :ATTR( :name<moderator_of>, :default<undef> );
+    my %modifier_of         :ATTR( :name<modifier_of>, :default<undef> );
+    my %owner_of            :ATTR( :name<owner_of>, :default<undef> );
+    my %subscriber_of       :ATTR( :name<subscriber_of>, :default<undef> );
     
-    # internal attributes
-    my %_email_sha1 :ATTR( :name<_email_sha1>, :default<undef> );
-    
+    sub _set_template_vars {
+        my ($self, $vars) = @_;
+        
+        $self->SUPER::_set_template_vars($vars);
+        $vars->{name} = $self->get_name();
+        $vars->{email} = $self->get_email();
+        return $vars;
+    }
 }
+
 1;
+
 __DATA__
 __rdfoutput__
 <foaf:Person rdf:about="[% foaf_uri %]">
@@ -52,9 +62,9 @@ __rdfoutput__
             <sioc:name>[% nick %]</sioc:name>
 [% END %]
 [% IF email %]
-[% IF export_email %]
             <sioc:email rdf:resource="[% email %]"/>
 [% END %]
+[% IF email_sha1 %]
             <sioc:email_sha1>[% email_sha1 %]</sioc:email_sha1>
 [% END %]
 [% IF role %]

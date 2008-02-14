@@ -12,14 +12,57 @@ use base qw( SIOC );
 use strict;
 use warnings;
 
-our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+use version; our $VERSION = qv(1.0.0);
 
 {
-    my %sioc_container_of :ATTR( :default<undef> );
-    my %sioc_has_owner :ATTR( :default<undef> );
-    my %sioc_has_parent :ATTR( :default<undef> );
-    my %sioc_has_subscriber :ATTR( :default<undef> );
-    my %sioc_parent_of :ATTR( :default<undef> );
+    ### mandatory attributes
+    
+    ### optional attributes
+    
+    # parent container/forum
+    my %parent :ATTR( :default<undef> );
+
+    # child containers/forums
+    my %children :ATTR( :default<undef> );
+
+    # contained items/posts
+    my %items :ATTR( :name<items>, :default<[]> );
+
+    # user that owns this container
+    my %owner :ATTR( :name<owner>, :default<undef> );
+
+    # users that subscribe to this container
+    my %subscribers :ATTR( :default<undef> );
+
+    ### methods
+    
+    sub add_child {
+        my ($self, $child) = @_;
+
+        $self->_assert_family($child, 'SIOC::Container');
+        $self->_push_array_attribute(\%children, $child);
+        return 1;
+    }
+    
+    sub add_item {
+        my ($self, $item) = @_;
+
+        $self->_assert_family($item, 'SIOC::Item');        
+        push @{$items{ident $self}}, $item;
+        return 1;
+    }
+    
+    sub _set_template_vars {
+        my ($self, $vars) = @_;
+        
+        $self->SUPER::_set_template_vars($vars);
+        $vars->{owner} = $self->get_owner();
+        $vars->{items} = $self->get_items();
+        return $vars;
+    }
+    
+    
+    
 }
 1;
 __END__

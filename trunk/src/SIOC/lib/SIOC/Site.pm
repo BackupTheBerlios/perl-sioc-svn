@@ -25,22 +25,16 @@ use version; our $VERSION = qv(1.0.0);
     sub add_forum {
         my ($self, $forum) = @_;
 
-        if ( ((ref $forum) !~ / ^SIOC:: /mx) 
-            || (! $forum->isa('SIOC::Forum')) ) {
-            croak "FATAL: Argument is not a SIOC::Forum!\n";
-        }
-        push @{$forums{ident $self}}, $forum;
+        $self->_assert_family($forum, 'SIOC::Forum');        
+        $self->_push_array_attribute(\%forums, $forum);
         return 1;
     }
     
     sub add_administrator {
         my ($self, $admin) = @_;
        
-        if ( ((ref $admin) !~ / ^SIOC:: /mx) 
-            || (! $admin->isa('SIOC::User')) ) {
-            croak "FATAL: Argument is not a SIOC::User!\n";
-        }
-        push @{$administrators{ident $self}}, $admin;
+        $self->_assert_family($admin, 'SIOC::User');
+        $self->_push_array_attribute(\%administrators, $admin);
         return 1;
     }
     

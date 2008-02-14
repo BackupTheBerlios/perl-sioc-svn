@@ -17,6 +17,7 @@ use Class::Std;  # we're using inside-out objects
 use Readonly;
 use Template;
 use Template::Provider::FromData;
+use Scalar::Util qw( blessed );
 
 use version; our $VERSION = qv(1.0.0);
 
@@ -30,9 +31,9 @@ use version; our $VERSION = qv(1.0.0);
     my %export_url  :ATTR( :name<export_url>, :default('...') );
     my %description :ATTR( :name<description>, :default<undef> );
     my %comment     :ATTR( :name<comment>, :default<undef> );
-    my %topic       :ATTR( :name<topic>, :default<undef> );
+    my %topics      :ATTR( :name<topic>, :default<[]> );
+    my %links       :ATTR( :name<link>, :default<[]> );
     my %feed        :ATTR( :name<feed>, :default<undef> );
-    my %link        :ATTR( :name<link>, :default<undef> );
     my %links_to    :ATTR( :name<links_to>, :default<undef> );
 
     # internal attributes
@@ -82,9 +83,26 @@ use version; our $VERSION = qv(1.0.0);
         if (! $ok) {
             croak $template->error();
         }
+        $output =~ s/\s+$//xmsg;
         return $output;
     }
 
+    sub _assert_family {
+        my ($self, $object, $classname) = @_;
+        
+        if ( (blessed $object)
+            && (! $object->isa($classname)) ) {
+            croak "FATAL: Argument object is not a $classname!\n";
+        }
+        
+        return 1;
+    }
+
+    sub _push_array_attribute {
+        my ($self, $attr_hash_ref, $element) = @_;
+        
+        push @{$attr_hash_ref->{ident $self}}, $element;
+    }
 }
 
 1;
@@ -92,7 +110,7 @@ __DATA__
 __rdfoutput__
 <sioc:Object>
     <rdfs:comment>Generic SIOC Object named [% title %]</rdfs:comment>
-</sioc:Object>\n";
+</sioc:Object>
 __END__
 
 =head1 NAME

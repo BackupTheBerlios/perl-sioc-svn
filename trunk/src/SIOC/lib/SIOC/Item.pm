@@ -12,25 +12,26 @@ use base qw( SIOC );
 use strict;
 use warnings;
 
-our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+use version; our $VERSION = qv(1.0.0);
 
 {
-    my %sioc_about :ATTR;
-    my %sioc_has_container :ATTR;
-    my %sioc_has_creator :ATTR;
-    my %sioc_has_modifier :ATTR;
-    my %sioc_has_reply :ATTR;
-    my %sioc_ip_address :ATTR;
-    my %sioc_next_by_date :ATTR;
-    my %sioc_next_version :ATTR;
-    my %num_views :ATTR;  # TODO: does it rather belong to the SIOC class?
-    my %sioc_previous_by_date :ATTR;
-    my %sioc_previous_version :ATTR;
-    my %sioc_reply_of :ATTR;
-    my %dc_subject :ATTR;
-    my %dc_title :ATTR;
-    my %dcterms_created :ATTR;
-    my %dcterms_modified :ATTR;
+    # mandatory attributes
+    my %created :ATTR;
+    my %creator :ATTR;
+    
+    # optional attributes
+    my %modified :ATTR;
+    my %modifier :ATTR;
+    my %view_count :ATTR;
+    my %about :ATTR;
+    my %container :ATTR;
+    my %parents :ATTR;
+    my %replies :ATTR;
+    my %ip_address :ATTR;
+    my %previous_by_date :ATTR;
+    my %next_by_date :ATTR;
+    my %previous_version :ATTR;
+    my %next_version :ATTR;
 }
 
 1;
@@ -38,7 +39,7 @@ __END__
     
 =head1 NAME
 
-SIOC::Item -- SIOC Forum class
+SIOC::Item -- SIOC Item class
 
 =head1 VERSION
 

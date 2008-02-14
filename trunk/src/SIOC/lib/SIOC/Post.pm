@@ -12,19 +12,92 @@ use base qw( SIOC::Item );
 use strict;
 use warnings;
 
-our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+use version; our $VERSION = qv(1.0.0);
 
 {
-    my %sioc_attachment :ATTR;
-    my %sioc_content :ATTR;
-    my %sioc_note :ATTR;
-    my %sioc_num_replies :ATTR;
-    my %sioc_related_to :ATTR;
-    my %sioc_sibling :ATTR;
-    my %content_encoded :ATTR;
+    # mandatory attributes
+    my %content :ATTR;
+    my %encoded_content :ATTR;
+
+    # optional attributes
+    my %attachments :ATTR;
+    my %related_to :ATTR;
+    my %siblings :ATTR;
+    
 }
 
 1;
+
+__DATA__
+__rdf_output__
+<sioc:Post rdf:about="[% clean(url) %]">
+[% IF title %]
+    <dc:title>[% title %]</dc:title>
+[% END %]
+[% IF creator %]
+    [% IF creator.id %]
+    <sioc:has_creator>
+        <sioc:User rdf:about="[% clean(creator.get_url) %]">
+            <rdfs:seeAlso rdf:resource="[% siocURL('user', creator.get_id) %]"/>
+        </sioc:User>
+    </sioc:has_creator>
+    <foaf:maker>
+        <foaf:Person rdf:about="[% clean(creator.get_foaf_uri) %]">
+            <rdfs:seeAlso rdf:resource="[% siocURL('user', creator.get_id) %]"/>
+        </foaf:Person>
+    </foaf:maker>
+    [% ELSE %]
+    <foaf:maker>
+        <foaf:Person
+        [% IF creator.name %]
+            foaf:name="[% creator.get_name %]"
+        [% END %]
+        [% IF creator.sha1 %]
+            foaf:mbox_sha1sum="[% creator.get_sha1 %]"
+        [% END %]
+        [% IF creator.homepage %]
+        >
+            <foaf:homepage rdf:resource="[% creator.get_homepage %]"/>
+        </foaf:Person>
+        [% ELSE %]
+        />
+        [% END %]
+    </foaf:maker>
+    [% END %]
+
+    <dcterms:created>[% created %]</dcterms:created>
+    [% IF updated && created != updated %]
+    <dcterms:modified>[% modified %]</dcterms:modified>
+    [% END %]
+
+    <sioc:content>[% content %]</sioc:content>
+    <content:encoded><![CDATA[[% content_encoded %]]]></content:encoded>
+    
+    [% FOREACH topic = topics %]
+    <sioc:topic rdfs:label="[% topic.name %]" rdf:resource="[% topic.url %]"/>
+    [% END %]
+
+    [% FOREACH link = links %]
+    <sioc:links_to rdfs:label="[% link.name %]" rdf:resource="[% link.url %]"/>
+    [% END %]
+    
+    [% FOREACH parent = parents %]
+    <sioc:reply_of>
+        <sioc:Post rdf:about="[% parent.get_url %]">
+            <rdfs:seeAlso rdf:resource="[% siocURL('post', $id) %]"/>
+        </sioc:Post>
+    </sioc:reply_of>
+    [% END %]
+    
+    [% FOREACH reply = replies %]
+    <sioc:has_reply>
+        <sioc:Post rdf:about="[% reply.get_url %]">
+            <rdfs:seeAlso rdf:resource="[% siocURL('comment', reply.get_id) %]"/>
+        </sioc:Post>
+    </sioc:has_reply>
+    [% END %]
+    
+</sioc:Post>
 __END__
     
 =head1 NAME

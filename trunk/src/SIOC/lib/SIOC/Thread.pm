@@ -12,9 +12,62 @@ use base qw( SIOC::Container );
 use strict;
 use warnings;
 
-our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+use version; our $VERSION = qv(1.0.0);
+
+{
+    # mandatory attributes
+	my %page        :ATTR( :name<page> );
+
+    # optional attributes
+    my %posts       :ATTR( :name<posts>, :default([]) );
+	my %next        :ATTR( :name<next>, :default(undef) );
+	my %views       :ATTR( :name<views>, :default<0> );
+	my %topics      :ATTR( :name<topics>, :default<[]> );
+
+    sub add_post {
+        my ($self, $post) = @_;
+
+        if ( (blessed $post)
+            && (! $post->isa('SIOC::Post')) ) {
+            croak "FATAL: Argument is not a SIOC::Post!\n";
+        }
+        return $self->add_item($post);
+    }
+    
+
+}
 
 1;
+__DATA__
+__rdfoutput__
+<sioc:Thread rdf:about="[% url %]">
+    <sioc:link rdf:resource="[% url %]"/>
+[% IF views %]
+    <sioc:num_views>[% views %]</sioc:num_views>
+[% END %]
+[% IF note %]
+    <rdfs:comment>[% note %]</rdfs:comment>
+[% END %]
+[% FOREACH topic = topics %]
+    <sioc:topic>[% topic %]</sioc:topic>
+[% END %]
+[% FOREACH data = posts %]
+    <sioc:container_of>
+        <sioc:Post rdf:about="[% clean(data.url) %]">
+            <rdfs:seeAlso rdf:resource="[% siocURL('post', $id) %]"/>
+[% IF data.prev %]
+		    <sioc:previous_by_date rdf:resource="[% clean(data.prev) %]"/>
+[% END %]
+[% IF data.next %]
+		    <sioc:next_by_date rdf:resource="[% clean(data.next) %]"/>
+[% END %]
+        </sioc:Post>
+    </sioc:container_of>
+[% END %]
+[% IF next %]
+    <rdfs:seeAlso rdf:resource="[% $exp->siocURL('thread', $this->_id, $this->_page+1) %]"/>
+[% END %]
+</sioc:Thread>
 __END__
     
 =head1 NAME

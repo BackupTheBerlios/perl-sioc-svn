@@ -12,12 +12,28 @@ use base qw( SIOC::Container );
 use strict;
 use warnings;
 
-our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+use version; our $VERSION = qv(1.0.0);
 
 {
-    my %sioc_has_host :ATTR( :default<undef> );
-    my %sioc_has_moderator :ATTR( :default<undef> );
-    my %sioc_scope_of :ATTR( :default<undef> );
+    my %host            :ATTR( :name<host> );
+    my %moderator       :ATTR( :name<moderator>, :default<[]> );
+    my %scope_of        :ATTR( :name<scope>, :default<[]> );
+    
+    sub add_post {
+        my ($self, $post) = @_;
+        
+        $self->_assert_family($post, 'SIOC::Post');
+        $self->add_item($post);
+        
+        return 1;
+    }
+    
+    sub _set_template_vars {
+        my ($self, $vars) = @_;
+        
+        $self->SUPER::_set_template_vars($vars);
+        return $vars;
+    }
 }
 
 1;
