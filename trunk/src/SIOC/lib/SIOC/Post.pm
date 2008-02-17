@@ -7,57 +7,92 @@
 #
 
 package SIOC::Post;
-use base qw( SIOC::Item );
 
 use strict;
 use warnings;
 
 use version; our $VERSION = qv(1.0.0);
 
-{
-    # mandatory attributes
-    my %content :ATTR;
-    my %encoded_content :ATTR;
+use Moose;
+use MooseX::AttributeHelpers;
 
-    # optional attributes
-    my %attachments :ATTR;
-    my %related_to :ATTR;
-    my %siblings :ATTR;
+extends 'SIOC::Item';
+
+### required attributes
+
+has 'content' => (
+    isa => 'Str',
+    is => 'rw',
+    required => 1,
+    );
+has 'encoded_content' => (
+    isa => 'Str',
+    is => 'rw',
+    required => 1,
+    );
+
+### optional attributes
+
+has 'attachments' => (
+    isa => 'HashRef[Str]',
+    metaclass => 'Collection::Hash',
+    is => 'rw',
+    default => sub { {} },
+    );
+has 'related_to' => (
+    isa => 'ArrayRef[SIOC::Item]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    default => sub { [] },
+    );
+has 'siblings' => (
+    isa => 'ArrayRef[SIOC::Item]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    default => sub { [] },
+    );
+
+### methods
+
+after 'fill_template' => sub {
+    my ($self) = @_;
     
-}
+    $self->set_template_var(content => $self->content);
+    $self->set_template_var(encoded_content => $self->encoded_content);
+};
 
 1;
 
 __DATA__
 __rdf_output__
-<sioc:Post rdf:about="[% clean(url) %]">
+<sioc:Post rdf:about="[% url | url %]">
 [% IF title %]
     <dc:title>[% title %]</dc:title>
 [% END %]
 [% IF creator %]
     [% IF creator.id %]
     <sioc:has_creator>
-        <sioc:User rdf:about="[% clean(creator.get_url) %]">
-            <rdfs:seeAlso rdf:resource="[% siocURL('user', creator.get_id) %]"/>
+        <sioc:User rdf:about="[% creator.url | url %]">
+            <rdfs:seeAlso rdf:resource="[% siocURL('user', creator.id) %]"/>
         </sioc:User>
     </sioc:has_creator>
     <foaf:maker>
-        <foaf:Person rdf:about="[% clean(creator.get_foaf_uri) %]">
-            <rdfs:seeAlso rdf:resource="[% siocURL('user', creator.get_id) %]"/>
+        <foaf:Person rdf:about="[% creator.foaf_uri | url %]">
+            <rdfs:seeAlso rdf:resource="[% siocURL('user', creator.id) %]"/>
         </foaf:Person>
     </foaf:maker>
     [% ELSE %]
     <foaf:maker>
         <foaf:Person
         [% IF creator.name %]
-            foaf:name="[% creator.get_name %]"
+            foaf:name="[% creator.name %]"
         [% END %]
         [% IF creator.sha1 %]
-            foaf:mbox_sha1sum="[% creator.get_sha1 %]"
+            foaf:mbox_sha1sum="[% creator.sha1 %]"
         [% END %]
         [% IF creator.homepage %]
         >
-            <foaf:homepage rdf:resource="[% creator.get_homepage %]"/>
+            <foaf:homepage rdf:resource="[% creator.homepage | url %]"/>
         </foaf:Person>
         [% ELSE %]
         />
@@ -74,25 +109,25 @@ __rdf_output__
     <content:encoded><![CDATA[[% content_encoded %]]]></content:encoded>
     
     [% FOREACH topic = topics %]
-    <sioc:topic rdfs:label="[% topic.name %]" rdf:resource="[% topic.url %]"/>
+    <sioc:topic rdfs:label="[% topic.name %]" rdf:resource="[% topic.url | url %]"/>
     [% END %]
 
     [% FOREACH link = links %]
-    <sioc:links_to rdfs:label="[% link.name %]" rdf:resource="[% link.url %]"/>
+    <sioc:links_to rdfs:label="[% link.name %]" rdf:resource="[% link.url | url %]"/>
     [% END %]
     
     [% FOREACH parent = parents %]
     <sioc:reply_of>
-        <sioc:Post rdf:about="[% parent.get_url %]">
-            <rdfs:seeAlso rdf:resource="[% siocURL('post', $id) %]"/>
+        <sioc:Post rdf:about="[% parent.url | url %]">
+            <rdfs:seeAlso rdf:resource="[% siocURL('post', parent.id) %]"/>
         </sioc:Post>
     </sioc:reply_of>
     [% END %]
     
     [% FOREACH reply = replies %]
     <sioc:has_reply>
-        <sioc:Post rdf:about="[% reply.get_url %]">
-            <rdfs:seeAlso rdf:resource="[% siocURL('comment', reply.get_id) %]"/>
+        <sioc:Post rdf:about="[% reply.url | url %]">
+            <rdfs:seeAlso rdf:resource="[% siocURL('comment', reply.id) %]"/>
         </sioc:Post>
     </sioc:has_reply>
     [% END %]

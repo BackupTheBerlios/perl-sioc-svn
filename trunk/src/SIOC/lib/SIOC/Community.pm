@@ -7,12 +7,15 @@
 #
 
 package SIOC::Community;
-use base qw( SIOC );
 
 use strict;
 use warnings;
 
 use version; our $VERSION = qv(1.0.0);
+
+use Moose;
+
+extends 'SIOC';
 
 1;
 __END__
@@ -23,7 +26,7 @@ SIOC::Community -- SIOC Community class
 
 =head1 VERSION
 
-This documentation refers to <Module::Name> version 0.0.1.
+This documentation refers to SIOC::Community version 1.0.0.
 
 =head1 SYNOPSIS
 

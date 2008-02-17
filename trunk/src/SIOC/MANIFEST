@@ -16,8 +16,12 @@ lib/SIOC/Space.pm
 lib/SIOC/Thread.pm
 lib/SIOC/User.pm
 lib/SIOC/Usergroup.pm
-t/00-load.t
-t/boilerplate.t
-t/pod-coverage.t
-t/pod.t
-t/critic.t
+t/00-boilerplate.t
+t/00-pod-coverage.t
+t/00-pod.t
+t/05-perlcritic.t
+t/10-load.t
+t/20-sioc_base.t
+t/21-sioc_community.t
+t/21-sioc_site.t
+t/21-sioc_user.t

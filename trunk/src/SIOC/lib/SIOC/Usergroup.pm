@@ -7,17 +7,48 @@
 #
 
 package SIOC::Usergroup;
-use base qw( SIOC );
 
 use strict;
 use warnings;
 
 use version; our $VERSION = qv(1.0.0);
 
-{
-    my %members :ATTR;
-    my %parent_space :ATTR;
-}
+use Moose;
+
+extends 'SIOC';
+
+### required attributes
+
+has members => (
+    isa => 'ArrayRef[SIOC::User]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    default => sub { [] },
+    provides => {
+        'push' => 'add_members',
+    },
+    required => 1,
+    );
+    
+### optional attributes
+
+# parent space
+has 'space' => (
+    isa => 'SIOC::Space',
+    is => 'rw',
+    );
+
+### methods
+
+after 'fill_template' => sub {
+    my ($self) = @_;
+    
+    $self->set_template_var(members => $self->members);
+    $self->set_tempalte_var(space => $self->space);
+};
+
+### EOC
+
 1;
 __END__
     
@@ -27,9 +58,7 @@ SIOC::Usergroup -- SIOC Usergroup class
 
 =head1 VERSION
 
-The initial template usually just has:
-
-This documentation refers to SIOC::Usergroup version 0.0.1.
+This documentation refers to SIOC::Usergroup version 1.0.0.
 
 =head1 SYNOPSIS
 

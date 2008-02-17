@@ -9,7 +9,7 @@ BEGIN { use_ok( 'SIOC::Site' ); }
 require_ok( 'SIOC::Site' );
 
 # check methods
-can_ok( 'SIOC::Site', 'as_string' );
+can_ok( 'SIOC::Site', 'export_rdf' );
 
 # initialization
 {
@@ -19,10 +19,10 @@ can_ok( 'SIOC::Site', 'as_string' );
         url => 'http://www.example.com/'
     });
     is( ref $s, 'SIOC::Site' );
-    is( $s->get_id, 'site1' );
-    is( $s->get_title, 'Test' );
-    ok(! eval { $s->add_forum(10) });
-    ok(! eval { $s->add_forum({ test => 1}) });
+    is( $s->id, 'site1' );
+    is( $s->title, 'Test' );
+    ok(! eval { $s->add_forums(10) });
+    ok(! eval { $s->add_forums({ test => 1}) });
     
     use SIOC::Forum;
     my $forum = SIOC::Forum->new({
@@ -30,5 +30,5 @@ can_ok( 'SIOC::Site', 'as_string' );
         title => 'Test forum',
         url => 'http://www.example.com/forum/test'
     });
-    ok(eval { $s->add_forum($forum) });
+    ok(eval { $s->add_forums($forum) });
 }

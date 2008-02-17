@@ -7,32 +7,88 @@
 #
 
 package SIOC::Item;
-use base qw( SIOC );
 
 use strict;
 use warnings;
 
 use version; our $VERSION = qv(1.0.0);
 
-{
-    # mandatory attributes
-    my %created :ATTR;
-    my %creator :ATTR;
+use Moose;
+use MooseX::AttributeHelpers;
+
+extends 'SIOC';
+
+### required attributes
+
+has 'created' => (
+    isa => 'Str',
+    is => 'rw',
+    );
+has 'creator' => (
+    isa => 'SIOC::User',
+    is => 'rw',
+    );
+
+### optional attributes
+
+has 'modified' => (
+    isa => 'Str',
+    is => 'rw'
+    );
+has 'modifier' => (
+    isa => 'SIOC::User',
+    is => 'rw',
+    );
+has 'view_count' => (
+    isa => 'Num',
+    is => 'rw',
+    );
+has 'about' => (
+    isa => 'Str',
+    is => 'rw',
+    );
+has 'container' => (
+    isa => 'SIOC::Container',
+    is => 'rw',
+    );
+has 'parent_posts' => (
+    isa => 'ArrayRef[SIOC::Item]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    default => sub { [] },
+    provides => {
+        'push' => 'add_parent_posts',
+    },
+    );
+has 'ip_address' => (
+    isa => 'Str',
+    is => 'rw',
+    );
+has 'previous_by_date' => (
+    isa => 'SIOC::Item',
+    is => 'rw',
+    );
+has 'next_by_date' => (
+    isa => 'SIOC::Item',
+    is => 'rw',
+    );
+has 'previous_version' => (
+    isa => 'SIOC::Item',
+    is => 'rw',
+    );
+has 'next_version' => (
+    isa => 'SIOC::Item',
+    is => 'rw',
+    );
+
+### methods
+
+after 'fill_template' => sub {
+    my ($self) = @_;
     
-    # optional attributes
-    my %modified :ATTR;
-    my %modifier :ATTR;
-    my %view_count :ATTR;
-    my %about :ATTR;
-    my %container :ATTR;
-    my %parents :ATTR;
-    my %replies :ATTR;
-    my %ip_address :ATTR;
-    my %previous_by_date :ATTR;
-    my %next_by_date :ATTR;
-    my %previous_version :ATTR;
-    my %next_version :ATTR;
-}
+    $self->set_template_var(created => $self->created);
+    $self->set_template_var(creator => $self->creator);
+};
 
 1;
 __END__

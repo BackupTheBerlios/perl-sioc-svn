@@ -7,34 +7,45 @@
 #
 
 package SIOC::Forum;
-use base qw( SIOC::Container );
 
 use strict;
 use warnings;
 
 use version; our $VERSION = qv(1.0.0);
 
-{
-    my %host            :ATTR( :name<host> );
-    my %moderator       :ATTR( :name<moderator>, :default<[]> );
-    my %scope_of        :ATTR( :name<scope>, :default<[]> );
+use Moose;
+use MooseX::AttributeHelpers;
+
+extends 'SIOC::Container';
+
+### optional attributes
+
+has 'host' => (
+    isa => 'SIOC::Site',
+    is => 'rw'
+    );
+
+has 'moderator' => (
+    isa => 'SIOC::User',
+    is => 'rw',
+    );
+
+has 'scope_of' => (
+    isa => 'ArrayRef[SIOC::Role]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    default => sub { [] },
+    );
+
+### methods
+
+after 'fill_template' => sub {
+    my ($self) = @_;
     
-    sub add_post {
-        my ($self, $post) = @_;
-        
-        $self->_assert_family($post, 'SIOC::Post');
-        $self->add_item($post);
-        
-        return 1;
-    }
-    
-    sub _set_template_vars {
-        my ($self, $vars) = @_;
-        
-        $self->SUPER::_set_template_vars($vars);
-        return $vars;
-    }
-}
+    $self->set_template_var(host => $self->host);
+    $self->set_template_var(moderator => $self->moderator);
+    $self->set_template_var(scope_of => $self->scope_of);
+};
 
 1;
 __DATA__

@@ -11,98 +11,130 @@ package SIOC;
 use strict;
 use warnings;
 use Carp;
-
-use Class::Std;  # we're using inside-out objects
-
 use Readonly;
+
 use Template;
 use Template::Provider::FromData;
-use Scalar::Util qw( blessed );
+use Data::Dumper qw( Dumper );
 
 use version; our $VERSION = qv(1.0.0);
 
-{
-    # mandatory attributes
-    my %id          :ATTR( :name<id> );
-    my %title       :ATTR( :name<title> );
-    my %url         :ATTR( :name<url> );
-    
-    # optional attributes
-    my %export_url  :ATTR( :name<export_url>, :default('...') );
-    my %description :ATTR( :name<description>, :default<undef> );
-    my %comment     :ATTR( :name<comment>, :default<undef> );
-    my %topics      :ATTR( :name<topic>, :default<[]> );
-    my %links       :ATTR( :name<link>, :default<[]> );
-    my %feed        :ATTR( :name<feed>, :default<undef> );
-    my %links_to    :ATTR( :name<links_to>, :default<undef> );
+use Moose;
+use MooseX::AttributeHelpers;
 
-    # internal attributes
-    my %_provider   :ATTR( :name<_provider>, :default<undef> );
-    
-    sub BUILD {
-        my ($self, $obj_ID, $arg_ref) = @_;
+### required attributes
 
-        $_provider{$obj_ID} = Template::Provider::FromDATA->new({
+has 'id' => (
+    isa => 'Str',
+    is => 'rw',
+    required => 1,
+    );
+has 'title' => (
+    isa => 'Str',
+    is => 'rw',
+    required => 1,
+    );
+has 'url' => (
+    isa => 'Str',
+    is => 'rw',
+    required => 1,
+    );
+    
+### optional attributes
+
+has 'export_url' => (
+    isa => 'Str',
+    is => 'ro', 
+    );
+has 'description' => (
+    isa => 'Str',
+    is => 'rw',
+    );
+has 'comment' => (
+    isa => 'Str',
+    is => 'rw',
+    );
+has 'topics' => (
+    isa => 'ArrayRef[Str]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    provides => {
+        'push' => 'add_topics',
+    },
+    );
+has 'feed' => (
+    isa => 'Str',
+    is => 'rw',
+    );
+has 'links' => (
+    isa => 'ArrayRef[Str]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    provides => {
+        'push' => 'add_links'
+    },
+    );
+
+### internal attributes
+
+has '_provider' => (
+    is => 'ro', 
+    isa => 'Template::Provider::FromDATA',
+    default => sub {
+        my ($self) = @_; 
+        Template::Provider::FromDATA->new({
             CLASSES => ref $self,
         });
-        
-        return 1;
-    }
-
-    sub _init_template {
-        my ($self) = @_;
-        
-        my $template = Template->new({
-            LOAD_TEMPLATES => [ $self->get__provider() ]
-        });
-        return $template;
-    }
-
-    sub _set_template_vars {
-        my ($self, $vars) = @_;
-
-        $vars->{export_url}     = $self->get_export_url();
-        $vars->{id}             = $self->get_id();
-        $vars->{title}          = $self->get_title();
-        $vars->{url}            = $self->get_url();
-        $vars->{description}    = $self->get_description();
-        $vars->{comment}        = $self->get_comment();
-        
-        return 1;
-    }
+    },
+    );
+has '_template_vars' => (
+    isa => 'HashRef',
+    metaclass => 'Collection::Hash',
+    is => 'rw',
+    default => sub { {} },
+    provides => {
+        'set' => 'set_template_var',
+    },
+    );
     
-    sub as_string :STRINGIFY {
-        my ($self) = @_;
-        
-        my $template_vars = {};
-        $self->_set_template_vars($template_vars);
+### methods
 
-        my $template = $self->_init_template();
-        my $output;
-        my $ok = $template->process('rdfoutput', $template_vars, \$output);
-        if (! $ok) {
-            croak $template->error();
-        }
-        $output =~ s/\s+$//xmsg;
-        return $output;
-    }
+sub _init_template {
+    my ($self) = @_;
 
-    sub _assert_family {
-        my ($self, $object, $classname) = @_;
-        
-        if ( (blessed $object)
-            && (! $object->isa($classname)) ) {
-            croak "FATAL: Argument object is not a $classname!\n";
-        }
-        
-        return 1;
-    }
+    # create new Template object
+    my $template = Template->new({
+        LOAD_TEMPLATES => [ $self->_provider ]
+    });
 
-    sub _push_array_attribute {
-        my ($self, $attr_hash_ref, $element) = @_;
-        
-        push @{$attr_hash_ref->{ident $self}}, $element;
+    return $template;
+}
+
+sub fill_template {
+    my ($self) = @_;
+
+    $self->set_template_var(export_url => $self->export_url);
+    $self->set_template_var(id => $self->id);
+    $self->set_template_var(title => $self->title);
+    $self->set_template_var(url => $self->url);
+    $self->set_template_var(description => $self->description);
+    $self->set_template_var(comment => $self->comment);
+    
+    return 1;
+}
+
+sub export_rdf {
+    my ($self) = @_;
+    
+    my $template = $self->_init_template();
+    $self->fill_template();
+    my $output;
+    my $ok = $template->process('rdfoutput', $self->_template_vars, \$output);
+    if (! $ok) {
+        croak $template->error();
     }
+    $output =~ s/\s+$//xmsg;
+    return $output;
 }
 
 1;
@@ -115,7 +147,7 @@ __END__
 
 =head1 NAME
 
-SIOC -- Abstract SIOC base class
+SIOC -- The SIOC Core Ontology
 
 =head1 VERSION
 
@@ -131,7 +163,13 @@ The SIOC (Semantically-Interlinked Online Communities) Core Ontology provides
 the main concepts and properties required to describe information from online
 communities (e.g., message boards, wikis, weblogs, etc.) on the Semantic Web.
 
-This class implements an abstract base class for the various SIOC subclasses like
+This distribution implements the various SIOC subclasses like SIOC::Site,
+SIOC::User, SIOC::Forum or SIOC::Post. It also contains an exporter class
+(SIOC::Exporter) that Perl-based community software can use to generate a
+semantic RDF representation of its data.
+
+This class implements an abstract base class for the various SIOC subclasses
+like
 
 =over
 
@@ -193,11 +231,11 @@ Post or Site.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 BUILD
+=head2 fill_template
 
-Base class constructor.
+Provide template variables from class attributes to Template Toolkit.
 
-=head2 as_string
+=head2 export_rdf
 
 Returns the object's information in RDF format.
 

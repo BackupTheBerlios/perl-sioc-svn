@@ -9,7 +9,7 @@ BEGIN { use_ok( 'SIOC::Community' ); }
 require_ok( 'SIOC::Community' );
 
 # check methods
-can_ok( 'SIOC::Community', 'as_string' );
+can_ok( 'SIOC::Community', 'export_rdf' );
 
 # initialization
 {
@@ -19,6 +19,6 @@ can_ok( 'SIOC::Community', 'as_string' );
         url => 'http://www.example.com/sioc/community/1'
     });
     is( ref $s, 'SIOC::Community' );
-    is( $s->get_id, 1 );
-    is( $s->get_title, 'Test' );
+    is( $s->id, 1 );
+    is( $s->title, 'Test' );
 }

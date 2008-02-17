@@ -6,26 +6,57 @@
 # $Id$
 #
 package SIOC::Space;
-use base qw( SIOC );
 
 use strict;
 use warnings;
 
 our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
 
-{
-    my %usergroups :ATTR( :get<usergroups>, :default<[]> );
-    my %spaces :ATTR;
-    my %parent_space :ATTR;
+use Moose;
+use MooseX::AttributeHelpers;
 
-    sub add_usergroup {
-        my ($self, $group) = @_;
-        
-        push @{$usergroups{ident $self}}, $group;
-        return 1;
-    }
+extends 'SIOC';
+
+### optional attributes
+
+# Space which this resource is a part of
+has 'parent' => (
+    isa => 'SIOC::Space',
+    is => 'rw',
+);
+
+# Resources which belong to this Space
+has 'space_of' => (
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    isa => 'ArrayRef[SIOC]',
+    default => sub { [] },
+    provides => {
+        'push' => 'make_space_of',
+    },
+);
+
+# Usergroups that have certain access to this Space
+has 'usergroups' => (
+    isa => 'ArrayRef[SIOC::Usergroup]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    default => sub { [] },
+    provides => {
+        'push' => 'add_usergroups',
+    },
+);
+
+### methods
+
+after 'fill_template' => sub {
+    my ($self) = @_;
     
-}
+    $self->set_template_var(parent => $self->parent);
+    $self->set_template_var(usergroups => $self->usergroups);
+    $self->set_template_var(space_of => $self->space_of);
+};
+
 1;
 __END__
 

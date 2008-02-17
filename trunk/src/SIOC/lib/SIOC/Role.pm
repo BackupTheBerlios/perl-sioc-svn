@@ -7,17 +7,37 @@
 #
 
 package SIOC::Role;
-use base qw( SIOC );
 
 use strict;
 use warnings;
 
 our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
 
-{
-    my %sioc_function_of :ATTR;
-    my %sioc_has_scope :ATTR;
-}
+use Moose;
+
+extends 'SIOC';
+
+### optional attributes
+
+has 'function_of' => (
+    isa => 'SIOC::User',
+    is => 'rw',
+    );
+has 'scope' => (
+    isa => 'SIOC::Forum',
+    is => 'rw',
+    );
+
+### methods
+
+after 'fill_template' => sub {
+    my ($self) = @_;
+    
+    $self->set_template_var(function_of => $self->function_of);
+    $self->set_template_var(scope => $self->scope);
+};
+
+### EOC
 
 1;
 __END__

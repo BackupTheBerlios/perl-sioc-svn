@@ -7,7 +7,6 @@
 #
 
 package SIOC::Site;
-use base qw( SIOC::Space );
 
 use strict;
 use warnings;
@@ -16,56 +15,61 @@ use Readonly;
 
 use version; our $VERSION = qv(1.0.0);
 
-{
-    # optional arguments
-    my %administrators :ATTR( :get<administrators>, :default([]) );
-    my %forums :ATTR( :get<forums>, :default([]) );
-    my %authors_usergroup :ATTR( :name<authors_usergroup>, :default('authors') );
-    
-    sub add_forum {
-        my ($self, $forum) = @_;
+use Moose;
+use MooseX::AttributeHelpers;
 
-        $self->_assert_family($forum, 'SIOC::Forum');        
-        $self->_push_array_attribute(\%forums, $forum);
-        return 1;
-    }
-    
-    sub add_administrator {
-        my ($self, $admin) = @_;
-       
-        $self->_assert_family($admin, 'SIOC::User');
-        $self->_push_array_attribute(\%administrators, $admin);
-        return 1;
-    }
-    
-    sub _set_template_vars {
-        my ($self, $vars) = @_;
+extends 'SIOC::Space';
 
-        $self->SUPER::_set_template_vars($vars);
-        $vars->{forums} = $self->get_forums();
-        $vars->{authors_ug} = $self->get_authors_usergroup();
-        return $vars;
-    }
+### optional attributes
+
+has 'administrators' => (
+    metaclass => 'Collection::Array',
+    is => 'rw', 
+    isa => 'ArrayRef[SIOC::User]',
+    default => sub { [] },
+    provides => {
+        'push' => 'add_administrators',
+    },
+    );
+has 'forums' => (
+    metaclass => 'Collection::Array',
+    is => 'rw', 
+    isa => 'ArrayRef[SIOC::Forum]',
+    default => sub { [] },
+    provides => {
+        'push' => 'add_forums',
+    },
+    );
+has 'authors_usergroup' => (is => 'rw', default => sub { 'authors' });
+
+### methods
+
+after 'fill_template' => sub {
+    my ($self) = @_;
     
-}
+    $self->set_template_var(forums => $self->forums);
+    $self->set_template_var(authors_ug => $self->authors_usergroup);
+};
+
+### EOC
 
 1;
 __DATA__
 __rdfoutput__
-<sioc:Site rdf:about="[% url %]">
+<sioc:Site rdf:about="[% url | url %]">
     <dc:title>[% title %]</dc:title>
     <dc:description>[% description %]</dc:description>
-    <sioc:link rdf:resource="[% url %]"/>
+    <sioc:link rdf:resource="[% url | url %]"/>
 [% FOREACH forum = forums %]
-    <sioc:host_of rdf:resource="[% forum.get_export_url %]"/>
+    <sioc:host_of rdf:resource="[% forum.export_url %]"/>
 [% END %]
     <sioc:has_Usergroup rdf:nodeID="[% authors_ug %]"/>
 </sioc:Site>
 
 [% FOREACH forum = forums %]
-<sioc:Forum rdf:about="[% forum.get_url %]">
-    <sioc:link rdf:resource="[% forum.get_url %]"/>
-    <rdfs:seeAlso rdf:resource="[% forum.get_export_url %]"/>
+<sioc:Forum rdf:about="[% forum.url | url %]">
+    <sioc:link rdf:resource="[% forum.url | url %]"/>
+    <rdfs:seeAlso rdf:resource="[% forum.export_url %]"/>
 </sioc:Forum>
 [% END %]
 
@@ -74,8 +78,8 @@ __rdfoutput__
     <sioc:name>Authors for "[% name %]"</sioc:name>
 [% FOREACH user = users %]
     <sioc:has_member>
-        <sioc:User rdf:about="[% user.get_url %]">
-            <rdfs:seeAlso rdf:resource="[% user.get_export_url %]"/>
+        <sioc:User rdf:about="[% user.url | url %]">
+            <rdfs:seeAlso rdf:resource="[% user.export_url %]"/>
         </sioc:User>
     </sioc:has_member>
 [% END %]

@@ -10,6 +10,8 @@ WriteMakefile(
     PL_FILES            => {},
     PREREQ_PM => {
         'Test::More' => 0,
+        'Moose' => 0,
+        'MooseX::AttributeHelpers' => 0,
         'Template' => 0,
         'Template::Provider::FromData' => 0,
     },

@@ -9,7 +9,7 @@ BEGIN { use_ok( 'SIOC' ); }
 require_ok( 'SIOC' );
 
 # check methods
-can_ok( 'SIOC', 'as_string' );
+can_ok( 'SIOC', 'export_rdf' );
 
 # initialization
 {
@@ -19,7 +19,7 @@ can_ok( 'SIOC', 'as_string' );
         url => 'http://www.example.com/sioc/base/1'
     });
     is( ref $s, 'SIOC' );
-    is( $s->get_id, 1 );
-    is( $s->get_title, 'Test' );
+    is( $s->id, 1 );
+    is( $s->title, 'Test' );
 }
 

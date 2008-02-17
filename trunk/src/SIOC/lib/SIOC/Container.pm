@@ -7,63 +7,75 @@
 #
 
 package SIOC::Container;
-use base qw( SIOC );
 
 use strict;
 use warnings;
 
 use version; our $VERSION = qv(1.0.0);
 
-{
-    ### mandatory attributes
-    
-    ### optional attributes
-    
-    # parent container/forum
-    my %parent :ATTR( :default<undef> );
+use Moose;
 
-    # child containers/forums
-    my %children :ATTR( :default<undef> );
+extends 'SIOC';
 
-    # contained items/posts
-    my %items :ATTR( :name<items>, :default<[]> );
+### optional attributes
 
-    # user that owns this container
-    my %owner :ATTR( :name<owner>, :default<undef> );
+# parent container/forum
+has 'parent' => (
+    isa => 'SIOC::Container',
+    is => 'rw',
+    );
 
-    # users that subscribe to this container
-    my %subscribers :ATTR( :default<undef> );
+# child containers/forums
+has 'children' => (
+    isa => 'ArrayRef[SIOC::Container]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    default => sub { [] },
+    provides => {
+        'push' => 'add_children',
+    },
+    );
 
-    ### methods
-    
-    sub add_child {
-        my ($self, $child) = @_;
+# contained items/posts
+has 'items' => (
+    isa => 'ArrayRef[SIOC::Item]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    default => sub { [] },
+    provides => {
+        'push' => 'add_items',
+    },
+    );
 
-        $self->_assert_family($child, 'SIOC::Container');
-        $self->_push_array_attribute(\%children, $child);
-        return 1;
-    }
-    
-    sub add_item {
-        my ($self, $item) = @_;
+# user that owns this container
+has 'owner' => (
+    isa => 'SIOC::User',
+    is => 'rw',
+    );
 
-        $self->_assert_family($item, 'SIOC::Item');        
-        push @{$items{ident $self}}, $item;
-        return 1;
-    }
-    
-    sub _set_template_vars {
-        my ($self, $vars) = @_;
-        
-        $self->SUPER::_set_template_vars($vars);
-        $vars->{owner} = $self->get_owner();
-        $vars->{items} = $self->get_items();
-        return $vars;
-    }
-    
-    
-    
-}
+# users that subscribe to this container
+has 'subscribers' => (
+    isa => 'ArrayRef[SIOC::User]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    default => sub { [] },
+    provides => {
+        'push' => 'add_subscribers',
+    },
+    );
+
+### methods
+
+after 'fill_template' => sub {
+    my ($self) = @_;
+
+    $self->set_template_var(parent => $self->parent);
+    $self->set_template_var(children => $self->children);
+    $self->set_template_var(items => $self->items);
+    $self->set_template_var(owner => $self->owner);
+    $self->set_template_var(subscribers => $self->subscribers);
+};    
+   
 1;
 __END__
     

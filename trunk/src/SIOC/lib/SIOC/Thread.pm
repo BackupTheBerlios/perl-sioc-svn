@@ -7,41 +7,37 @@
 #
 
 package SIOC::Thread;
-use base qw( SIOC::Container );
 
 use strict;
 use warnings;
 
 use version; our $VERSION = qv(1.0.0);
 
-{
-    # mandatory attributes
-	my %page        :ATTR( :name<page> );
+use Moose;
 
-    # optional attributes
-    my %posts       :ATTR( :name<posts>, :default([]) );
-	my %next        :ATTR( :name<next>, :default(undef) );
-	my %views       :ATTR( :name<views>, :default<0> );
-	my %topics      :ATTR( :name<topics>, :default<[]> );
+extends 'SIOC::Container';
 
-    sub add_post {
-        my ($self, $post) = @_;
+### required attributes
 
-        if ( (blessed $post)
-            && (! $post->isa('SIOC::Post')) ) {
-            croak "FATAL: Argument is not a SIOC::Post!\n";
-        }
-        return $self->add_item($post);
-    }
+has 'page' => (
+    isa => 'Num',
+    is => 'ro',
+    required => 1,
+    );
+
+### methods
+
+after 'fill_template' => sub {
+    my ($self) = @_;
     
-
-}
+    $self->set_template_var(page => $self->page);
+};
 
 1;
 __DATA__
 __rdfoutput__
-<sioc:Thread rdf:about="[% url %]">
-    <sioc:link rdf:resource="[% url %]"/>
+<sioc:Thread rdf:about="[% url | url %]">
+    <sioc:link rdf:resource="[% url | url %]"/>
 [% IF views %]
     <sioc:num_views>[% views %]</sioc:num_views>
 [% END %]
@@ -51,21 +47,21 @@ __rdfoutput__
 [% FOREACH topic = topics %]
     <sioc:topic>[% topic %]</sioc:topic>
 [% END %]
-[% FOREACH data = posts %]
+[% FOREACH post = items %]
     <sioc:container_of>
-        <sioc:Post rdf:about="[% clean(data.url) %]">
-            <rdfs:seeAlso rdf:resource="[% siocURL('post', $id) %]"/>
-[% IF data.prev %]
-		    <sioc:previous_by_date rdf:resource="[% clean(data.prev) %]"/>
+        <sioc:Post rdf:about="[% post.url | url %]">
+            <rdfs:seeAlso rdf:resource="[% siocURL('post', post.id) %]"/>
+[% IF post.prev_by_date %]
+		    <sioc:previous_by_date rdf:resource="[% post.prev_by_date | url %]"/>
 [% END %]
-[% IF data.next %]
-		    <sioc:next_by_date rdf:resource="[% clean(data.next) %]"/>
+[% IF post.next_by_date %]
+		    <sioc:next_by_date rdf:resource="[% post.next_by_date | url %]"/>
 [% END %]
         </sioc:Post>
     </sioc:container_of>
 [% END %]
 [% IF next %]
-    <rdfs:seeAlso rdf:resource="[% $exp->siocURL('thread', $this->_id, $this->_page+1) %]"/>
+    <rdfs:seeAlso rdf:resource="[% siocURL('thread', id, page+1) %]"/>
 [% END %]
 </sioc:Thread>
 __END__

@@ -7,57 +7,120 @@
 #
 
 package SIOC::User;
-use base qw( SIOC );
 
 use strict;
 use warnings;
 use Carp;
-use Digest::SHA1;
+use Data::Dumper qw( Dumper );
 
 use version; our $VERSION = qv(1.0.0);
 
-{
-    # mandatory attributes
-    my %name                :ATTR( :name<name> );
-    my %email               :ATTR( :name<email> );
-    my %foaf_uri            :ATTR( :name<foaf_uri> );
+use Moose;
+use MooseX::AttributeHelpers;
+
+extends 'SIOC';
+
+### required attributes
+
+has 'name' => (
+    isa => 'Str',
+    is => 'rw',
+    required => 1,
+);
+
+has 'email' => (
+    isa => 'Str',
+    is => 'rw',
+    required => 1,
+);
     
-    # optional attributes
-    my %email_sha1          :ATTR( :name<_email_sha1>, :default<undef> );
-    my %account_of          :ATTR( :name<account_of>, :default<undef> );
-    my %administered_forums :ATTR( :name<administered_forums>, :default<undef> );
-    my %avatar              :ATTR( :name<avatar>, :default<undef> );
-    my %created_forums      :ATTR( :name<created_forums>, :default<undef> );
-    my %function            :ATTR( :name<function>, :default<undef> );
-    my %member_of           :ATTR( :name<member_of>, :default<undef> );
-    my %moderator_of        :ATTR( :name<moderator_of>, :default<undef> );
-    my %modifier_of         :ATTR( :name<modifier_of>, :default<undef> );
-    my %owner_of            :ATTR( :name<owner_of>, :default<undef> );
-    my %subscriber_of       :ATTR( :name<subscriber_of>, :default<undef> );
-    
-    sub _set_template_vars {
-        my ($self, $vars) = @_;
-        
-        $self->SUPER::_set_template_vars($vars);
-        $vars->{name} = $self->get_name();
-        $vars->{email} = $self->get_email();
-        return $vars;
+has 'foaf_uri' => (
+    isa => 'Str',
+    is => 'rw',
+    required => 1,
+    );
+
+### optional attributes
+
+has 'email_sha1' => (
+    isa => 'Str',
+    is => 'rw',
+);
+
+has 'account_of' => (
+    is => 'rw',
+);
+
+has 'avatar' => (
+    is => 'rw',
+);
+
+has 'function' => (is => 'rw');
+
+has 'usergroups' => (
+    is => 'rw'
+);
+
+has 'created_forums' => (
+    isa => 'ArrayRef[SIOC::Forum]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    provides => {
+        'push' => 'add_created_forums',
+    },
+);
+
+has 'administered_forums' => (
+    is => 'rw',
+);
+
+has 'moderated_forums' => (
+    is => 'rw',
+);
+
+has 'modified_items' => (
+    is => 'rw',
+);
+
+has 'owned_containers' => (
+    is => 'rw',
+);
+
+has 'subscriptions' => (
+    isa => 'ArrayRef[SIOC::Container]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    default => sub { [] },
+    provides => {
+        'push' => 'add_subscription',
     }
-}
+);
+
+### methods
+
+after 'fill_template' => sub {
+    my ($self) = @_;
+    
+    $self->set_template_var(name => $self->name);
+    $self->set_template_var(email => $self->email); 
+    $self->set_template_var(foaf_uri => $self->foaf_uri);
+    $self->set_template_var(email_sha1 => $self->email_sha1);
+    $self->set_template_var(avatar => $self->avatar);
+};
 
 1;
 
 __DATA__
 __rdfoutput__
-<foaf:Person rdf:about="[% foaf_uri %]">
+<foaf:Person rdf:about="[% foaf_uri | url %]">
 [% IF name %]
     <foaf:name>[% name %]</foaf:name>
 [% END %]
-[% IF email %]
+[% IF email_sha1 %]
     <foaf:mbox_sha1sum>[% email_sha1 %]</foaf:mbox_sha1sum>
 [% END %]
     <foaf:holdsAccount>
-        <sioc:User rdf:about="[% url %]">
+        <sioc:User rdf:about="[% url | url %]">
 [% IF nick %]
             <sioc:name>[% nick %]</sioc:name>
 [% END %]
