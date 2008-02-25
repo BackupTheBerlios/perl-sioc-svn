@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- generator="WP SIOC Plugin - v. 1.22 - http://rdfs.org/sioc/wordpress/" -->
+<rdf:RDF
+	xmlns="http://xmlns.com/foaf/0.1/"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:rss="http://purl.org/rss/1.0/"
+	xmlns:admin="http://webns.net/mvcb/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:sioc="http://rdfs.org/sioc/ns#">
+
+<!-- sioc_type = site -->
+
+<sioc:Usergroup rdf:about="http://johnbreslin.com/blog/index.php?sioc_type=site#authors">
+	<dc:title>Authors at "Cloudlands"</dc:title>
+	<sioc:has_member>
+		<sioc:User rdf:about="http://www.johnbreslin.com/blog/author/cloud/" rdfs:label="Cloud">
+			<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=user&amp;sioc_id=1"/>
+		</sioc:User>
+	</sioc:has_member>
+</sioc:Usergroup>
+
+<foaf:Document rdf:about="">
+	<dc:title>SIOC Site profile for "Cloudlands"</dc:title>
+	<dc:description>A SIOC profile describes the structure and contents of a weblog in a machine readable form. For more information please refer to http://sioc-project.org/.</dc:description>
+	<foaf:primaryTopic rdf:resource="http://www.johnbreslin.com/blog/"/>
+	<admin:generatorAgent rdf:resource="http://rdfs.org/sioc/wp-sioc.php?version=1.22"/>
+</foaf:Document>
+
+<sioc:Site rdf:about="http://www.johnbreslin.com/blog/">
+	<dc:title>Cloudlands</dc:title>
+	<dc:description>Weblog: Cloudlands</dc:description>
+	<sioc:link rdf:resource="http://www.johnbreslin.com/blog/"/>
+	<sioc:host_of rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=site#weblog"/>
+	<sioc:has_group rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=site#authors"/>
+</sioc:Site>
+
+<sioc:Forum rdf:about="http://johnbreslin.com/blog/index.php?sioc_type=site#weblog">
+	<sioc:name>Main blog at Cloudlands</sioc:name>
+	<sioc:link rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=site#weblog/"/>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.johnbreslin.com/blog/2008/02/15/a-funny-thing-happened-on-the-way-to-the-forum-article-in-indo-about-10-years-of-boardsie/" dc:title="&#8220;A funny thing happened on the way to the forum&#8221;: Article in Indo about 10 years of boards.ie">
+			<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=post&amp;sioc_id=1489"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.johnbreslin.com/blog/2008/02/12/10-years-of-posts-on-boardsie-today/" dc:title="10 years of posts on boards.ie today!">
+			<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=post&amp;sioc_id=1488"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.johnbreslin.com/blog/2008/02/12/sound-byte-faoi-eolas-pearsanta-agus-an-idirlion-ar-tg4-areir/" dc:title="&#8220;Sound byte&#8221; faoi eolas pearsanta agus an Idirlíon ar TG4 aréir">
+			<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=post&amp;sioc_id=1486"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.johnbreslin.com/blog/2008/02/07/10-years-of-post-history-on-boardsie-next-week-why-do-people-use-it/" dc:title="10 years of post history on boards.ie next week / why do people use it?">
+			<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=post&amp;sioc_id=1484"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.johnbreslin.com/blog/2008/02/06/xcellerate-2008-bringing-silicon-valley-to-ireland-iwtc-clash/" dc:title="xCellerate 2008: &#8220;Bringing Silicon Valley to Ireland&#8221; (IWTC clash)">
+			<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=post&amp;sioc_id=1482"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.johnbreslin.com/blog/2008/02/04/the-google-social-graph-api-the-good-and-the-bad/" dc:title="The Google Social Graph API: the good and the bad">
+			<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=post&amp;sioc_id=1481"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.johnbreslin.com/blog/2008/02/04/proposed-association-for-the-irish-digital-media-industry/" dc:title="Proposed association for the Irish digital media industry">
+			<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=post&amp;sioc_id=1479"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.johnbreslin.com/blog/2008/02/01/interviewed-for-data-portability-article-on-pcworldcom-washingtonpostcom-sioc-mentioned/" dc:title="Interviewed for Data Portability article on PCWorld.com / WashingtonPost.com; SIOC mentioned">
+			<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=post&amp;sioc_id=1478"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.johnbreslin.com/blog/2008/01/29/inbox-crises-jmj-i102-104-tests/" dc:title="Inbox crises / JMJ / i102-104 tests">
+			<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=post&amp;sioc_id=1477"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://www.johnbreslin.com/blog/2008/01/23/programme-announced-for-blogtalk-2008/" dc:title="Programme announced for BlogTalk 2008">
+			<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=post&amp;sioc_id=1472"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<rdfs:seeAlso rdf:resource="http://johnbreslin.com/blog/index.php?sioc_type=site&amp;paged=2"/>
+</sioc:Forum>
+
+</rdf:RDF>

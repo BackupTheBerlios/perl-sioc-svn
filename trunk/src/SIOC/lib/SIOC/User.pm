@@ -55,10 +55,12 @@ has 'avatar' => (
     is => 'rw',
 );
 
-has 'function' => (is => 'rw');
+has 'function' => (
+    is => 'rw'
+);
 
 has 'usergroups' => (
-    is => 'rw'
+    is => 'rw',
 );
 
 has 'created_forums' => (

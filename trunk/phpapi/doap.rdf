@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:doap="http://usefulinc.com/ns/doap#">
+  
+<doap:Project rdf:nodeID="siocexportapi">
+  <doap:name>SIOC PHP Export API</doap:name>
+  <doap:shortname>sioc-export-api</doap:shortname>
+  <doap:shortdesc xml:lang="en">PHP API to create SIOC exporters</doap:shortdesc>
+  <doap:description xml:lang="en">SIOC PHP Export API provides an easy to write SIOC exporters for any PHP application.</doap:description>
+  <doap:homepage rdf:resource="http://esw.w3.org/topic/SIOC/PHPExportAPI" />
+  <doap:download-page rdf:resource="http://esw.w3.org/topic/SIOC/PHPExportAPI" />
+  <doap:programming-language>PHP</doap:programming-language>
+  <doap:license rdf:resource="http://usefulinc.com/doap/licenses/gpl" />
+  <doap:maintainer rdf:resource="http://apassant.net/doap.rdf" />
+  <doap:maintainer rdf:resource="http://captsolo.net/semweb/foaf-captsolo.rdf" />
+  <doap:developer rdf:resource="http://apassant.net/doap.rdf" />
+  <doap:developer rdf:resource="http://captsolo.net/semweb/foaf-captsolo.rdf" />
+  <doap:repository>
+    <doap:SVNRepository>
+      <doap:location rdf:resource='http://sw.deri.org/svn/sw/2005/08/sioc/phpapi/' />
+    </doap:SVNRepository>
+  </doap:repository>
+</doap:Project>
+
+</rdf:RDF>

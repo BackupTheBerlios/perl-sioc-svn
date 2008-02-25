@@ -11,11 +11,169 @@ package SIOC::Exporter;
 use strict;
 use warnings;
 
-our $VERSION = do { if (q$Revision$ =~ /Revision: (?:\d+)/mx) { sprintf "1.0-%03d", $1; }; };
+use version; our $VERSION = qv(1.0.0);
 
-use Class::Std;
+use Moose;
+use MooseX::AttributeHelpers;
+use Data::Dumper qw( Dumper );
+use Carp;
+
+### required attributes
+
+has 'host' => (
+    isa => 'Str',
+    is => 'rw',
+    required => 1,
+);
+
+### optional attributes
+
+has 'encoding' => (
+    isa => 'Str',
+    is => 'ro',
+    default => sub { 'utf-8' },
+);
+has 'generator' => (
+    isa => 'Str',
+    is => 'ro',
+    default => sub { 'perl-SIOC' },
+);
+has 'export_email' => (
+    isa => 'Str',
+    is => 'ro',
+    default => sub { 0 },
+);
+    
+### internal attributes
+
+has '_provider' => (
+    is => 'ro', 
+    isa => 'Template::Provider::FromDATA',
+    default => sub {
+        my ($self) = @_; 
+        Template::Provider::FromDATA->new({
+            CLASSES => ref $self,
+        });
+    },
+);
+has '_object' => (
+    isa => 'SIOC',
+    is => 'rw',
+);
+has '_url' => (
+    isa => 'Str',
+    is => 'ro',
+    default => sub { 'http://wiki.sioc.org/...' },
+);
+has '_version' => (
+    isa => 'Str',
+    is => 'ro',
+    default => sub { "$VERSION" },    
+);
+
+### methods
+
+sub _init_template {
+    my ($self) = @_;
+
+    # create new Template object
+    my $template = Template->new({
+        LOAD_TEMPLATES => [ $self->_provider ]
+    });
+
+    return $template;
+}
+
+sub register_object {
+    my ($self, $object) = @_;
+    
+    my $export_url = $self->object_export_url($object);
+    $object->export_url($export_url);
+    
+    return $export_url;
+}
+
+sub export_object {
+    my ($self, $object) = @_;
+    
+    $self->_object($object);
+};
+
+sub object_export_url {
+    my ($self, $object) = @_;
+    
+    my $url = sprintf("%s/sioc.pl?class=%s&id=%s", 
+        $self->host,
+        $object->type, 
+        $object->id
+    );
+
+    return $url;
+}
+
+sub output {
+    my ($self) = @_;
+
+    # prepare template engine
+    my $template = $self->_init_template();
+    my $output;
+
+    my $object_rdf = '';
+
+    # set object url attribute
+    $self->_object->export_url($self->object_export_url($self->_object));
+
+    # fill template variables
+    my $template_vars = {
+        encoding => $self->encoding,
+        exporter_url => $self->_url,
+        exporter_version => $VERSION,
+        exporter_generator => 'perl-SIOC',
+        object => $self->_object,
+    };
+
+    # process template
+    my $ok = $template->process('rdfoutput', $template_vars, \$output);
+    if (! $ok) {
+        croak $template->error();
+    }
+
+    return $output;
+}
 
 1;
+__DATA__
+__rdfoutput__
+Content-Type: application/rdf+xml; charset=[% encoding %]
+
+<?xml version="1.0" encoding="[% encoding %]" ?>
+<rdf:RDF
+    xmlns="http://xmlns.com/foaf/0.1/"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:admin="http://webns.net/mvcb/"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:sioc="http://rdfs.org/sioc/ns#">
+
+<foaf:Document rdf:about="">
+	<dc:title>SIOC profile for [% object.title %]</dc:title>
+	<dc:description>A SIOC profile describes the structure and contents of a community site (e.g., weblog) in a machine processable form. For more information refer to the <a href="http://rdfs.org/sioc">SIOC project page</a>'></dc:description>
+	<foaf:primaryTopic rdf:resource="[% object.url | url %]"/>
+	<admin:generatorAgent rdf:resource="[% exporter_url | url %]?version=[% exporter_version | uri %]"/>
+	<admin:generatorAgent rdf:resource="[% exporter_generator %]"/>
+</foaf:Document>
+
+[% IF rdf_content %][% rdf_content %][% END %]
+
+[% IF object %]
+<!-- type: [% object.type %], id: [% object.id %] -->
+[% object.export_rdf %]
+[% END %]
+
+</rdf:RDF>
 __END__
 
 =head1 NAME

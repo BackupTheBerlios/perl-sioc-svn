@@ -10,15 +10,14 @@ package SIOC;
 
 use strict;
 use warnings;
-use Carp;
-use Readonly;
-
-use Template;
-use Template::Provider::FromData;
-use Data::Dumper qw( Dumper );
 
 use version; our $VERSION = qv(1.0.0);
 
+use Carp;
+use Readonly;
+use Template;
+use Template::Provider::FromData;
+use Data::Dumper qw( Dumper );
 use Moose;
 use MooseX::AttributeHelpers;
 
@@ -44,7 +43,7 @@ has 'url' => (
 
 has 'export_url' => (
     isa => 'Str',
-    is => 'ro', 
+    is => 'rw',
     );
 has 'description' => (
     isa => 'Str',
@@ -108,6 +107,16 @@ sub _init_template {
     });
 
     return $template;
+}
+
+sub type {
+    my ($self) = @_;
+    
+    my $type = ref $self;
+    $type =~ s/SIOC:://xms;
+    $type =~ tr/A-Z/a-z/;
+    
+    return $type;
 }
 
 sub fill_template {

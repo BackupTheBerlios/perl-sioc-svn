@@ -64,22 +64,22 @@ __rdfoutput__
 
 [% FOREACH thread = threads %]
     <sioc:parent_of>
-        <sioc:Thread rdf:about="[% thread.get_url %]">
-            <rdfs:seeAlso rdf:resource="[% thread.get_export_url %]"/>
+        <sioc:Thread rdf:about="[% thread.url %]">
+            <rdfs:seeAlso rdf:resource="[% thread.export_url %]"/>
         </sioc:Thread>
     </sioc:parent_of>
 [% END %]
 
-[% FOREACH post = posts %]
+[% FOREACH post = items %]
     <sioc:container_of>
-        <sioc:Post rdf:about="[% post.get_url %]">
-            <rdfs:seeAlso rdf:resource="[% post.get_sioc_url %]"/>
+        <sioc:Post rdf:about="[% post.url %]">
+            <rdfs:seeAlso rdf:resource="[% post.export_url %]"/>
         </sioc:Post>
     </sioc:container_of>
 [% END %]
 
 [% IF next_page_url %]
-    <rdfs:seeAlso rdf:resource="[% next_page_url %]"/>
+    <rdfs:seeAlso rdf:resource="[% next_page_url | url %]"/>
 [% END %]
 </sioc:Forum>
 __END__

@@ -32,7 +32,7 @@ has 'children' => (
     is => 'rw',
     default => sub { [] },
     provides => {
-        'push' => 'add_children',
+        'push' => 'add_child',
     },
     );
 
@@ -43,7 +43,7 @@ has 'items' => (
     is => 'rw',
     default => sub { [] },
     provides => {
-        'push' => 'add_items',
+        'push' => 'add_item',
     },
     );
 
@@ -60,7 +60,7 @@ has 'subscribers' => (
     is => 'rw',
     default => sub { [] },
     provides => {
-        'push' => 'add_subscribers',
+        'push' => 'add_subscriber',
     },
     );
 

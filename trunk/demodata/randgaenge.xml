@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- generator="WP SIOC Plugin - v. 1.25 - http://rdfs.org/sioc/wordpress/" -->
+<rdf:RDF
+	xmlns="http://xmlns.com/foaf/0.1/"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:rss="http://purl.org/rss/1.0/"
+	xmlns:admin="http://webns.net/mvcb/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:dcterms="http://purl.org/dc/terms/"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:sioc="http://rdfs.org/sioc/ns#">
+
+<!-- sioc_type = site -->
+
+<sioc:Usergroup rdf:about="http://randgaenge.net/index.php?sioc_type=site#authors">
+	<dc:title>Authors at ".:|randgaenge|:."</dc:title>
+	<sioc:has_member>
+		<sioc:User rdf:about="http://randgaenge.net/author/admin/" rdfs:label="Thomas N. Burg">
+			<rdfs:seeAlso rdf:resource="http://randgaenge.net/index.php?sioc_type=user&amp;sioc_id=1"/>
+		</sioc:User>
+	</sioc:has_member>
+	<sioc:has_member>
+		<sioc:User rdf:about="http://randgaenge.net/author/http://randgaenge.net/" rdfs:label="Thomas N. Burg">
+			<rdfs:seeAlso rdf:resource="http://randgaenge.net/index.php?sioc_type=user&amp;sioc_id=6"/>
+		</sioc:User>
+	</sioc:has_member>
+</sioc:Usergroup>
+
+<foaf:Document rdf:about="">
+	<dc:title>SIOC Site profile for ".:|randgaenge|:."</dc:title>
+	<dc:description>A SIOC profile describes the structure and contents of a weblog in a machine readable form. For more information please refer to http://sioc-project.org/.</dc:description>
+	<foaf:primaryTopic rdf:resource="http://randgaenge.net/"/>
+	<admin:generatorAgent rdf:resource="http://rdfs.org/sioc/wp-sioc.php?version=1.25"/>
+</foaf:Document>
+
+<sioc:Site rdf:about="http://randgaenge.net/">
+	<dc:title>.:|randgaenge|:.</dc:title>
+	<dc:description>Weblog: .:|randgaenge|:.</dc:description>
+	<sioc:link rdf:resource="http://randgaenge.net/"/>
+	<sioc:host_of rdf:resource="http://randgaenge.net/index.php?sioc_type=site#weblog"/>
+	<sioc:has_group rdf:resource="http://randgaenge.net/index.php?sioc_type=site#authors"/>
+</sioc:Site>
+
+<sioc:Forum rdf:about="http://randgaenge.net/index.php?sioc_type=site#weblog">
+	<sioc:name>Main blog at .:|randgaenge|:.</sioc:name>
+	<sioc:link rdf:resource="http://randgaenge.net/index.php?sioc_type=site#weblog/"/>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://randgaenge.net/2008/02/17/virality_patterns/" dc:title="patterns of virality">
+			<rdfs:seeAlso rdf:resource="http://randgaenge.net/index.php?sioc_type=post&amp;sioc_id=2693"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://randgaenge.net/2008/02/16/links-37/" dc:title="Links">
+			<rdfs:seeAlso rdf:resource="http://randgaenge.net/index.php?sioc_type=post&amp;sioc_id=2686"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://randgaenge.net/2008/02/12/samba-catalunya/" dc:title="Samba Catalunya">
+			<rdfs:seeAlso rdf:resource="http://randgaenge.net/index.php?sioc_type=post&amp;sioc_id=2691"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<sioc:container_of>
+		<sioc:Post rdf:about="http://randgaenge.net/2008/02/11/world-mobile-congress/" dc:title="World Mobile Congress">
+			<rdfs:seeAlso rdf:resource="http://randgaenge.net/index.php?sioc_type=post&amp;sioc_id=2690"/>
+		</sioc:Post>
+	</sioc:container_of>
+	<rdfs:seeAlso rdf:resource="http://randgaenge.net/index.php?sioc_type=site&amp;paged=2"/>
+</sioc:Forum>
+
+</rdf:RDF>

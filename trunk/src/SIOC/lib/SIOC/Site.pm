@@ -28,19 +28,25 @@ has 'administrators' => (
     isa => 'ArrayRef[SIOC::User]',
     default => sub { [] },
     provides => {
-        'push' => 'add_administrators',
+        'push' => 'add_administrator',
     },
-    );
+);
+
 has 'forums' => (
     metaclass => 'Collection::Array',
     is => 'rw', 
     isa => 'ArrayRef[SIOC::Forum]',
     default => sub { [] },
     provides => {
-        'push' => 'add_forums',
+        'push' => 'add_forum',
     },
-    );
-has 'authors_usergroup' => (is => 'rw', default => sub { 'authors' });
+);
+
+has 'admin_usergroup' => (
+    isa => 'Str',
+    is => 'rw', 
+    default => sub { 'admin' },
+);
 
 ### methods
 
@@ -48,7 +54,8 @@ after 'fill_template' => sub {
     my ($self) = @_;
     
     $self->set_template_var(forums => $self->forums);
-    $self->set_template_var(authors_ug => $self->authors_usergroup);
+    $self->set_template_var(admin_ug => $self->admin_usergroup);
+    $self->set_template_var(administrators => $self->administrators);
 };
 
 ### EOC
@@ -63,7 +70,7 @@ __rdfoutput__
 [% FOREACH forum = forums %]
     <sioc:host_of rdf:resource="[% forum.export_url %]"/>
 [% END %]
-    <sioc:has_Usergroup rdf:nodeID="[% authors_ug %]"/>
+    <sioc:has_Usergroup rdf:nodeID="[% admin_ug %]"/>
 </sioc:Site>
 
 [% FOREACH forum = forums %]
@@ -73,10 +80,10 @@ __rdfoutput__
 </sioc:Forum>
 [% END %]
 
-[% IF users %]
-<sioc:Usergroup rdf:nodeID="[% authors_ug %]">
-    <sioc:name>Authors for "[% name %]"</sioc:name>
-[% FOREACH user = users %]
+[% IF administrators %]
+<sioc:Usergroup rdf:nodeID="[% admin_ug %]">
+    <sioc:name>Administrators for "[% title %]"</sioc:name>
+[% FOREACH user = administrators %]
     <sioc:has_member>
         <sioc:User rdf:about="[% user.url | url %]">
             <rdfs:seeAlso rdf:resource="[% user.export_url %]"/>

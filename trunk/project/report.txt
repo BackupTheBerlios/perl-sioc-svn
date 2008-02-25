@@ -1,0 +1,99 @@
+# Überblick
+
+## Allgemeines
+
+Im Rahmen des Projekts Perl-SIOC soll eine Software entwickelt werden, die Informationen über Benutzer und deren Beiträge auf einer Community-Website mit Hilfe der SIOC-Ontologie für das Semantische Web exportiert.
+
+SIOC ist die Abkürzung für "Semantically-Interlinked Online Communities" und stellt die hauptsächlichen Konzepte und Kriterien bereit, die nötig sind, um Informationen aus Online-Communitys (Foren, Wikis, Weblogs usw.) im Semantischen Web zu beschreiben.
+
+Ziel des Projekts Perl-SIOC ist es, für die Programmiersprache Perl Objektklassen für einen Exporter und die in der SIOC-Spezifikation definierten Klassen zu entwickeln. Mit Hilfe der SIOC-Klassen sollen Informationen über ein Community-Objekt, sei es die Website selbst, eines ihrer Foren, einer ihrer User oder dessen Beiträge, abgebildet werden. Der Exporter schließlich soll dazu dienen, die ihm übergebenen SIOC-Objekte in einen Zusammenhang zu bringen und ihre Informationen im RDF-Format auszugeben. Auf diese Weise soll Perl-basierte Community-Software in die Lage versetzt werden, ihre Daten dem Semantischen Web hinzuzufügen.
+
+
+## Projekt-Websites
+
+Für das Projekte wurde auf http://sioc.socialware.at ein Wiki eingerichtet, um die Grundlagen und Fortschritte des Projekts zu dokumentieren.
+
+Um Anwendern von Perl-SIOC Zugriff auf den Quellcode, auf ein Bug-Tracking-System und andere Werkzeuge zur Zusammenarbeit zu geben, wurde ein Projekt auf BerliOS eingerichtet. Die URL der Entwickler-Website lautet http://developer.berlios.de/perl-SIOC.
+
+
+# Projektvorbereitung
+
+## Durchführung
+
+Das Projekt wurde von Socialware mit folgenden Zuständigkeiten duchgeführt:
+
+* Thomas Burg: Projektleitung (Zeitplan und Kontrolle des Fortschritts)
+* Jochen Lillich: Software-Entwicklung (Design, Implementierung und Dokumentation)
+
+
+## Ergebnisse der Projektvorbereitung
+
+Derzeit existiert noch keine Umsetzung der SIOC-Ontologie in Perl, die es in Perl programmierter Community-Software erlauben würde, ihre Informationen im Semantischen Web zu veröffentlichen. Im Gegensatz dazu gibt es seit geraumer Zeit einen in PHP implementierten SIOC-Exporter, der bereits in Community-Projekten wie dem Content-Management-System Drupal eingesetzt wird.
+
+Der PHP-Exporter fußt auf einem pragmatischen Ansatz und bildet nur die nötigsten SIOC-Klassen ab. Für den Perl-Exporter wurde hingegen entschieden, die in der SIOC-Spezifikation definierten Klassenhierarchie 1:1 umzusetzen, um den Standard bestmöglich abzubilden und die einfache spätere Erweiterbarkeit zu gewährleisten.
+
+
+
+# Implementierung
+
+## Wichtige Design- und Implementierungs-Entscheidungen
+
+### Getreue Abbildung der SIOC-Spezifikation:
+
+Bei der Entwicklung von Perl-SIOC soll die SIOC-Spezifikation möglichst konzeptgetreu nachgebildet werden. 
+
+Neben dem Exporter sind daher folgende Klassen zu implementieren:
+
+* Community
+* Container
+* Exporter
+* Forum
+* Item
+* Post
+* Role
+* Site
+* Space
+* Thread
+* User
+* Usergroup
+
+Alle Klassen werden der abstrakten Basisklasse "SIOC" und dem gleichnamigen Namensraum untergeordnet, was zu den Perl-Klassen "SIOC::Community", "SIOC::Container" usw. führt.
+
+
+
+### Wiederverwendung
+
+Bei der Implementierung sollen nach Möglichkeit vorhandene Perl-Module aus dem Comprehensive Perl Archive Network (CPAN) eingesetzt werden. Auf diese Weise soll der Umfang der zu pflegenden Software-Bestandteile auf die SIOC-Logik beschränkt werden. 
+
+
+### Template-Mechanismen
+
+Die Ausgabe von RDF-Daten soll auf Templates gestützt werden, also auf Schablonen, die getrennt vom Programmcode gepflegt werden können. Templates definieren die festen Bestandteile der Programmausgabe und sehen Platzhalter an den Stellen vor, an denen die Software ihre Informationen einfügen kann.
+
+
+### Qualitätssicherung
+
+In seinem Buch "Perl Best Practices" bespricht Damian Conway zahlreiche Beispiele auf, wo unter Perl-Entwicklern übliche Idiome zu schwer zu wartendem oder sogar fehlerhaftem Code führen. In jedem Fall zeigt er alternative Ansätze auf, die Perl-Code besser zu verstehen und leichter zu pflegen machen.
+
+Auf Basis dieser Regeln stellt das Perl-Modul Perl::Critic ein Werkzeug zur Verfügung, um Quellcode auf die genannten Fallen zu untersuchen. Durch Perl::Critic wird der gesamte Quellcode eines Projekts auf die in PBP sowie ggf. anderweitig definierten Regeln geprüft.
+
+Zur automatisierten Qualitätssicherung wurde Perl::Critic in die Unit-Tests des Projekts integriert.
+
+
+## Timeline
+
+### 7. bis 23. Januar 2008
+
+* Einarbeitung in die SIOC-Spezifikation. Erkenntnisse: SIOC, in Kombination mit FOAF, stellt einen hervorragenden Weg zu Veröffentlichung und Transfer von Informationen sozialer Websites dar. Nebenbei könnten die durch den zu entwickelnden Exporter generierte RDF-Daten auch zur Migration zwischen Blog- oder Forumsplattformen eingesetzt werden.
+
+* Ausarbeitung einer Perl-Klassenhierarchie, die das Modell der SIOC-Spezifikation abbildet. Basisklasse wird "SIOC" sein, darunter die Subklassen "SIOC::Forum", "SIOC::Post", "SIOC::User" usw. Hinzu kommt die Exporter-Klasse "SIOC::Exporter", die als zentrale Schnittstelle für SN-Software dienen wird.
+
+* Einrichtung einer Entwicklungsplattform auf BerliOS.de, die für das Projekt Funktionen wie Sourcecode-Repository, Bugtracking usw. zur Verfügung stellen wird.
+
+### 14. bis 20. Januar 2008
+
+* Rohe Implementierung der Klassen in Form von Perl-Modulen (SIOC.pm, SIOC/Forum.pm usw.). Definition geeigneter Tests zur Integration aller Module in eine automatische Qualitätssicherung durch Test::More und Perl::Critic.
+
+### 21. bis 27. Januar 2008
+
+### 28. bis 31. Januar 2008

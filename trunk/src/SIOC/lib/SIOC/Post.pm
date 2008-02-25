@@ -64,39 +64,21 @@ after 'fill_template' => sub {
 1;
 
 __DATA__
-__rdf_output__
+__rdfoutput__
 <sioc:Post rdf:about="[% url | url %]">
-[% IF title %]
+    [% IF title %]
     <dc:title>[% title %]</dc:title>
-[% END %]
-[% IF creator %]
-    [% IF creator.id %]
+    [% END %]
+    [% IF creator %]
     <sioc:has_creator>
         <sioc:User rdf:about="[% creator.url | url %]">
-            <rdfs:seeAlso rdf:resource="[% siocURL('user', creator.id) %]"/>
+            <rdfs:seeAlso rdf:resource="[% creator.export_url | url %]"/>
         </sioc:User>
     </sioc:has_creator>
     <foaf:maker>
         <foaf:Person rdf:about="[% creator.foaf_uri | url %]">
-            <rdfs:seeAlso rdf:resource="[% siocURL('user', creator.id) %]"/>
+            <rdfs:seeAlso rdf:resource="[% creator.export_url | url %]"/>
         </foaf:Person>
-    </foaf:maker>
-    [% ELSE %]
-    <foaf:maker>
-        <foaf:Person
-        [% IF creator.name %]
-            foaf:name="[% creator.name %]"
-        [% END %]
-        [% IF creator.sha1 %]
-            foaf:mbox_sha1sum="[% creator.sha1 %]"
-        [% END %]
-        [% IF creator.homepage %]
-        >
-            <foaf:homepage rdf:resource="[% creator.homepage | url %]"/>
-        </foaf:Person>
-        [% ELSE %]
-        />
-        [% END %]
     </foaf:maker>
     [% END %]
 
@@ -106,7 +88,7 @@ __rdf_output__
     [% END %]
 
     <sioc:content>[% content %]</sioc:content>
-    <content:encoded><![CDATA[[% content_encoded %]]]></content:encoded>
+    <content:encoded><![CDATA[[% encoded_content %]]]></content:encoded>
     
     [% FOREACH topic = topics %]
     <sioc:topic rdfs:label="[% topic.name %]" rdf:resource="[% topic.url | url %]"/>
@@ -119,7 +101,7 @@ __rdf_output__
     [% FOREACH parent = parents %]
     <sioc:reply_of>
         <sioc:Post rdf:about="[% parent.url | url %]">
-            <rdfs:seeAlso rdf:resource="[% siocURL('post', parent.id) %]"/>
+            <rdfs:seeAlso rdf:resource="[% parent.export_url | url %]"/>
         </sioc:Post>
     </sioc:reply_of>
     [% END %]
@@ -127,7 +109,7 @@ __rdf_output__
     [% FOREACH reply = replies %]
     <sioc:has_reply>
         <sioc:Post rdf:about="[% reply.url | url %]">
-            <rdfs:seeAlso rdf:resource="[% siocURL('comment', reply.id) %]"/>
+            <rdfs:seeAlso rdf:resource="[% reply.export_url | url %]"/>
         </sioc:Post>
     </sioc:has_reply>
     [% END %]
