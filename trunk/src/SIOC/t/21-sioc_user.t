@@ -15,7 +15,6 @@ can_ok( 'SIOC::User', 'export_rdf' );
 {
     my $s = SIOC::User->new({
         id => '1',
-        title => 'John Doe',
         name => 'John Doe',
         url => 'http://www.example.com/sioc/community/1',
         foaf_uri => 'foaf',
@@ -23,5 +22,5 @@ can_ok( 'SIOC::User', 'export_rdf' );
     });
     is( ref $s, 'SIOC::User' );
     is( $s->id, 1 );
-    is( $s->title, 'John Doe' );
+    is( $s->name, 'John Doe' );
 }

@@ -15,20 +15,20 @@ can_ok( 'SIOC::Site', 'export_rdf' );
 {
     my $s = SIOC::Site->new({
         id => 'site1',
-        title => 'Test',
+        name => 'Test',
         url => 'http://www.example.com/'
     });
     is( ref $s, 'SIOC::Site' );
     is( $s->id, 'site1' );
-    is( $s->title, 'Test' );
-    ok(! eval { $s->add_forums(10) });
-    ok(! eval { $s->add_forums({ test => 1}) });
+    is( $s->name, 'Test' );
+    ok(! eval { $s->add_forum(10) });
+    ok(! eval { $s->add_forum({ test => 1}) });
     
     use SIOC::Forum;
     my $forum = SIOC::Forum->new({
         id => 'forum1',
-        title => 'Test forum',
+        name => 'Test forum',
         url => 'http://www.example.com/forum/test'
     });
-    ok(eval { $s->add_forums($forum) });
+    ok(eval { $s->add_forum($forum) });
 }

@@ -27,52 +27,56 @@ has 'id' => (
     isa => 'Str',
     is => 'rw',
     required => 1,
-    );
-has 'title' => (
+);
+has 'name' => (
     isa => 'Str',
     is => 'rw',
     required => 1,
-    );
+);
 has 'url' => (
     isa => 'Str',
     is => 'rw',
     required => 1,
-    );
+);
     
 ### optional attributes
 
-has 'export_url' => (
-    isa => 'Str',
-    is => 'rw',
-    );
 has 'description' => (
     isa => 'Str',
     is => 'rw',
-    );
+);
 has 'comment' => (
     isa => 'Str',
     is => 'rw',
-    );
+);
 has 'topics' => (
     isa => 'ArrayRef[Str]',
     metaclass => 'Collection::Array',
     is => 'rw',
     provides => {
-        'push' => 'add_topics',
+        'push' => 'add_topic',
     },
-    );
+);
 has 'feed' => (
-    isa => 'Str',
+    isa => 'ArrayRef[Str]',
+    metaclass => 'Collection::Array',
     is => 'rw',
-    );
+    provides => {
+        'push' => 'add_feed'
+    },
+);
 has 'links' => (
     isa => 'ArrayRef[Str]',
     metaclass => 'Collection::Array',
     is => 'rw',
     provides => {
-        'push' => 'add_links'
+        'push' => 'add_link'
     },
-    );
+);
+has 'export_url' => (
+    isa => 'Str',
+    is => 'rw',
+);
 
 ### internal attributes
 
@@ -122,9 +126,9 @@ sub type {
 sub fill_template {
     my ($self) = @_;
 
-    $self->set_template_var(export_url => $self->export_url);
+    $self->set_template_var(export_url => $self->_export_url);
     $self->set_template_var(id => $self->id);
-    $self->set_template_var(title => $self->title);
+    $self->set_template_var(name => $self->name);
     $self->set_template_var(url => $self->url);
     $self->set_template_var(description => $self->description);
     $self->set_template_var(comment => $self->comment);
@@ -134,6 +138,10 @@ sub fill_template {
 
 sub export_rdf {
     my ($self) = @_;
+    
+    if (! defined $self->_export_url) {
+        croak "Object not registered with SIOC::Exporter!\n";
+    }
     
     my $template = $self->_init_template();
     $self->fill_template();
@@ -150,7 +158,7 @@ sub export_rdf {
 __DATA__
 __rdfoutput__
 <sioc:Object>
-    <rdfs:comment>Generic SIOC Object named [% title %]</rdfs:comment>
+    <rdfs:comment>Generic SIOC Object named [% name %]</rdfs:comment>
 </sioc:Object>
 __END__
 
@@ -211,48 +219,121 @@ An identifier of a SIOC concept instance. For example, a user ID.
 Must be unique for instances of each type of SIOC concept within the same
 site.
 
+This attribute is required and must be set in the creation of a class instance
+with new().
+
 =item name 
 
 The name of a SIOC instance, e.g. a username for a User, group
 name for a Usergroup, etc.
 
-=item topic 
+This attribute is required and must be set in the creation of a class instance
+with new().
 
-A topic of interest, linking to the appropriate URI, e.g., in
-the Open Directory Project or of a SKOS category.
+=item url
 
-=item feed 
+The URL of this resource on the Web.
 
-A feed (e.g., RSS, Atom, etc.) pertaining to this resource (e.g.,
+This attribute is required and must be set in the creation of a class instance
+with new().
+
+=item description
+
+A textual description of the resource.
+
+=item comment
+
+A comment on the SIOC instance.
+
+=item topics
+
+Topics the resource is connected to.
+
+=item feeds 
+
+Feeds (e.g., RSS, Atom, etc.) pertaining to this resource (e.g.,
 for a Forum, Site, User, etc.).
 
-=item link 
+=item links 
 
-A URI of a document which contains this SIOC object.
-
-=item links_to 
-
-Links extracted from hyperlinks within a SIOC concept, e.g.,
-Post or Site.
-
+URIs of documents which contain this SIOC object.
 
 =back
 
 =head1 SUBROUTINES/METHODS
 
-=head2 fill_template
+=head2 id([$newid])
 
-Provide template variables from class attributes to Template Toolkit.
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 name([$newname])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 url([$newurl])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 description([$newdescription])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 comment([$comment])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 add_topic($newtopic)
+
+Adds a new value to the corresponding array attribute.
+
+For $newtopic, a string is expected.
+
+=head2 add_feed($newfeed)
+
+Adds a new value to the corresponding array attribute.
+
+For $newfeed, a string is expected.
+
+=head2 add_link($newlink)
+
+Adds a new value to the corresponding array attribute.
+
+For $newlink, a string is expected.
+
+=head2 type()
+
+Returns a string representation of the SIOC subclass. For an instance of
+SIOC::Forum, it returns 'forum', for SIOC::Post 'post' and so on.
 
 =head2 export_rdf
 
 Returns the object's information in RDF format.
 
+=head2 fill_template
+
+This method is called by export_rdf() to provide template variables needed by
+Template Toolkit. Use the set_template_var method for each variable.
+
+It always returns 1.
+
+=head2 set_template_var($name => $value)
+
+Set the template variable $name to value $value.
+
+
 =head1 DIAGNOSTICS
 
-A list of every error and warning message that the module can generate (even
-the ones that will "never happen"), with a full explanation of each problem,
-one or more likely causes, and any suggested remedies.
+For diagnostics information, see the SIOC base class.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
@@ -263,13 +344,13 @@ also include details of any configuration language used.
 
 =head1 DEPENDENCIES
 
-SIOC depends on the following modules:
+This module depends on the following modules:
 
 =over
 
 =item *
 
-Class::Std
+Moose -- OOP framework
 
 =back
 

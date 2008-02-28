@@ -15,10 +15,10 @@ can_ok( 'SIOC::Community', 'export_rdf' );
 {
     my $s = SIOC::Community->new({
         id => '1',
-        title => 'Test',
+        name => 'Test',
         url => 'http://www.example.com/sioc/community/1'
     });
     is( ref $s, 'SIOC::Community' );
     is( $s->id, 1 );
-    is( $s->title, 'Test' );
+    is( $s->name, 'Test' );
 }

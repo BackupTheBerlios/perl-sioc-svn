@@ -39,7 +39,7 @@ print $exporter->output(), "\n\n";
 
 my $site = SIOC::Site->new({
     id => 1,
-    title => 'My Site',
+    name => 'My Site',
     url => 'http://www.example.com',
 });
 $exporter->register_object($user1);
@@ -52,7 +52,7 @@ $site->add_administrator($user1);
 my $forum = SIOC::Forum->new({
     id => 1,
     host => $site,
-    title => 'My First Forum',
+    name => 'My First Forum',
     url => 'http://www.example.com/forum/First',
 });
 $exporter->register_object($forum);
@@ -64,12 +64,12 @@ $site->add_forum($forum);
 
 my $post = SIOC::Post->new({
     id => 3,
-    created => '2008-02-25 22:04',
+    url => $forum->url . '/3',
+    name => 'Testpost',
     creator => $user1,
+    created => '2008-02-25 22:04',
     encoded_content => 'Foo',
     content => 'Foo',
-    url => 'http://www.exmaple.com/forum/First/3',
-    title => 'Testpost',
 });
 $exporter->register_object($post);
 

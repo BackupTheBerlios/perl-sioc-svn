@@ -64,7 +64,7 @@ after 'fill_template' => sub {
 __DATA__
 __rdfoutput__
 <sioc:Site rdf:about="[% url | url %]">
-    <dc:title>[% title %]</dc:title>
+    <dc:title>[% name %]</dc:title>
     <dc:description>[% description %]</dc:description>
     <sioc:link rdf:resource="[% url | url %]"/>
 [% FOREACH forum = forums %]
@@ -145,23 +145,27 @@ Add a SIOC::Forum object to the list of forums.
 
 =head1 DIAGNOSTICS
 
-A list of every error and warning message that the module can generate (even
-the ones that will "never happen"), with a full explanation of each problem,
-one or more likely causes, and any suggested remedies.
+For diagnostics information, see the SIOC base class.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
-A full explanation of any configuration system(s) used by the module, including
-the names and locations of any configuration files, and the meaning of any
-environment variables or properties that can be set. These descriptions must
-also include details of any configuration language used.
+This module doesn't need configuration.
 
 =head1 DEPENDENCIES
 
-A list of all of the other modules that this module relies upon, including any
-restrictions on versions, and an indication of whether these required modules
-are part of the standard Perl distribution, part of the module's distribution,
-or must be installed separately.
+This module depends on the following modules:
+
+=over
+
+=item *
+
+Moose -- OOP framework (CPAN)
+
+=item *
+
+SIOC -- SIOC abstract base class (part of this module's distribution)
+
+=back
 
 =head1 INCOMPATIBILITIES
 

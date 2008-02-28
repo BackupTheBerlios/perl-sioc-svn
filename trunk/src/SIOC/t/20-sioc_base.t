@@ -15,11 +15,11 @@ can_ok( 'SIOC', 'export_rdf' );
 {
     my $s = SIOC->new({
         id => '1',
-        title => 'Test',
+        name => 'Test',
         url => 'http://www.example.com/sioc/base/1'
     });
     is( ref $s, 'SIOC' );
     is( $s->id, 1 );
-    is( $s->title, 'Test' );
+    is( $s->name, 'Test' );
 }
 
