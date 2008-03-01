@@ -126,7 +126,7 @@ sub type {
 sub fill_template {
     my ($self) = @_;
 
-    $self->set_template_var(export_url => $self->_export_url);
+    $self->set_template_var(export_url => $self->export_url);
     $self->set_template_var(id => $self->id);
     $self->set_template_var(name => $self->name);
     $self->set_template_var(url => $self->url);
@@ -139,7 +139,7 @@ sub fill_template {
 sub export_rdf {
     my ($self) = @_;
     
-    if (! defined $self->_export_url) {
+    if (! defined $self->export_url) {
         croak "Object not registered with SIOC::Exporter!\n";
     }
     
@@ -260,15 +260,21 @@ URIs of documents which contain this SIOC object.
 
 =back
 
+
 =head1 SUBROUTINES/METHODS
 
-=head2 id([$newid])
+=head2 new(\%args)
+
+Creates a new class instance. Arguments are passed as a hash reference. See
+the ATTRIBUTES section above for required arguments.
+
+=head2 id([$new_id])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 name([$newname])
+=head2 name([$new_name])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
@@ -356,44 +362,47 @@ Moose -- OOP framework
 
 =head1 INCOMPATIBILITIES
 
-A list of any modules that this module cannot be used in conjunction with.
-This may be due to name conflicts in the interface, or competition for system
-or program resources, or due to internal limitations of Perl (for example, many
-modules that use source code filters are mutually incompatible).
+There are no known incompatibilities.
 
 =head1 BUGS AND LIMITATIONS
 
-A list of known problems with the module, together with some indication of
-whether they are likely to be fixed in an upcoming release.
-
-Also, a list of restrictions on the features the module does provide: data types
-that cannot be handled, performance issues and the circumstances in which they
-may arise, practical limitations on the size of data sets, special cases that
-are not (yet) handled, etc.
-
-The initial template usually just has:
-
 There are no known bugs in this module.
 
-Please report problems to <Maintainer name(s)> (<contact address>)
+Please report problems via the bug tracking system on the perl-SIOC project
+website: L<http://developer.berlios.de/projects/perl-sioc/>.
 
 Patches are welcome.
 
 =head1 AUTHOR
 
-Jochen Lillich  (<geewiz@cpan.org>)
-
-=head1 SEE ALSO
-
-SIOC Core Ontology Specification: L<http://rdfs.org/sioc/spec/>
+Jochen Lillich <geewiz@cpan.org>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) 2007 Jochen Lillich (<geewiz@cpan.org>).
+Copyright (c) 2008, Jochen Lillich <geewiz@cpan.org>
 All rights reserved.
 
-This module is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself. See L<perlartistic>.  This program is
-distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+    * The names of its contributors may not be used to endorse or promote
+      products derived from this software without specific prior written
+      permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

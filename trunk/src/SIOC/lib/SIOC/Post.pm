@@ -34,24 +34,41 @@ has 'encoded_content' => (
 ### optional attributes
 
 has 'attachments' => (
-    isa => 'HashRef[Str]',
     metaclass => 'Collection::Hash',
+    isa => 'HashRef[Str]',
     is => 'rw',
     default => sub { {} },
+    provides => {
+        'set' => 'set_attachment',
+        'get' => 'get_attachment',
+    },
 );
-has 'related_to' => (
+has 'related' => (
     isa => 'ArrayRef[SIOC::Item]',
     metaclass => 'Collection::Array',
     is => 'rw',
     default => sub { [] },
+    provides => {
+        'push' => 'add_related',
+    },
 );
 has 'siblings' => (
     isa => 'ArrayRef[SIOC::Item]',
     metaclass => 'Collection::Array',
     is => 'rw',
     default => sub { [] },
+    provides => {
+        'push' => 'add_sibling',
+    },
 );
-
+has 'note' => (
+    isa => 'Str',
+    is => 'rw',
+);
+has 'reply_count' => (
+    isa => 'Num',
+    is => 'rw',
+);
 ### methods
 
 # add additional template variables
@@ -124,17 +141,11 @@ SIOC::Post - SIOC Post class
 
 =head1 VERSION
 
-The initial template usually just has:
-
-This documentation refers to <Module::Name> version 0.0.1.
+This documentation refers to SIOC::Post version 1.0.0.
 
 =head1 SYNOPSIS
 
-   use <Module::Name>;
-
-   # Brief but working code example(s) here showing the most common usage(s)
-   # This section will be as far as many users bother reading, so make it as
-   # educational and exemplary as possible.
+   use SIOC::Post;
 
 =head1 DESCRIPTION
 
@@ -151,55 +162,87 @@ subclasses of SIOC::Post.
 
 =over
 
-=item attachment 
-
-The URI of a file attached to a Post.
-
 =item content 
 
 The content of the Post in plain text format.
 
-=item note 
+This attribute is required and must be set in the creation of a class instance
+with new().
 
-A note associated with this Post, for example, if it has been
-edited by a User.
+=item encoded_content
 
-=item num_replies 
+Used to describe the encoded content of a Post, contained in CDATA areas.
 
-The number of replies that this Post has. Useful for when
-the reply structure is absent.
+This attribute is required and must be set in the creation of a class instance
+with new().
 
-=item related_to 
+=item attachments 
+
+The URIs of files attached to a Post.
+
+=item related
 
 Related Posts for this Post, perhaps determined implicitly
 from topics or references.
 
-=item sibling 
+=item siblings
 
 A Post may have a sibling or a twin that exists in a different
 Forum, but the siblings may differ in some small way (for example, language,
 category, etc.). The sibling of this Post should be self-describing (that is,
 it should contain all available information).
 
-=item content_encoded 
+=item note 
 
-Used to describe the encoded content of a Post, contained in CDATA areas.
+A note associated with this Post, for example, if it has been
+edited by a User.
+
+=item reply_count 
+
+The number of replies that this Post has. Useful for when
+the reply structure is absent.
 
 =back
 
+
 =head1 SUBROUTINES/METHODS
 
-A separate section listing the public components of the module's interface.
+=head2 content([$content])
 
-These normally consist of either subroutines that may be exported, or methods
-that may be called on objects belonging to the classes that the module
-provides.
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
 
-Name the section accordingly.
+=head2 encoded_content([$content])
 
-In an object-oriented module, this section should begin with a sentence (of the
-form "An object of this class represents ...") to give the reader a high-level
-context to help them understand the methods that are subsequently described.
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 add_attachment($attachment)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_related($item)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_sibling($item)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 note([$note])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 reply_count([$num])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
 
 =head1 DIAGNOSTICS
 
@@ -227,44 +270,47 @@ SIOC -- SIOC abstract base class (part of this module's distribution)
 
 =head1 INCOMPATIBILITIES
 
-A list of any modules that this module cannot be used in conjunction with.
-This may be due to name conflicts in the interface, or competition for system
-or program resources, or due to internal limitations of Perl (for example, many
-modules that use source code filters are mutually incompatible).
+There are no known incompatibilities.
 
 =head1 BUGS AND LIMITATIONS
 
-A list of known problems with the module, together with some indication of
-whether they are likely to be fixed in an upcoming release.
-
-Also, a list of restrictions on the features the module does provide: data types
-that cannot be handled, performance issues and the circumstances in which they
-may arise, practical limitations on the size of data sets, special cases that
-are not (yet) handled, etc.
-
-The initial template usually just has:
-
 There are no known bugs in this module.
 
-Please report problems to <Maintainer name(s)> (<contact address>)
+Please report problems via the bug tracking system on the perl-SIOC project
+website: L<http://developer.berlios.de/projects/perl-sioc/>.
 
 Patches are welcome.
 
 =head1 AUTHOR
 
-<Author name(s)>  (<contact address>)
+Jochen Lillich <geewiz@cpan.org>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) <year> <copyright holder> (<contact address>).
+Copyright (c) 2008, Jochen Lillich <geewiz@cpan.org>
 All rights reserved.
 
-followed by whatever license you wish to release it under.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-For Perl code that is often just:
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
 
-This module is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself. See L<perlartistic>.  This program is
-distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+    * The names of its contributors may not be used to endorse or promote
+      products derived from this software without specific prior written
+      permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

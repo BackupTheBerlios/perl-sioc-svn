@@ -23,63 +23,86 @@ extends 'SIOC';
 has 'created' => (
     isa => 'Str',
     is => 'rw',
-    );
+    required => 1,
+);
+
 has 'creator' => (
     isa => 'SIOC::User',
     is => 'rw',
-    );
+    required => 1,
+);
 
 ### optional attributes
 
 has 'modified' => (
     isa => 'Str',
     is => 'rw'
-    );
+);
+
 has 'modifier' => (
     isa => 'SIOC::User',
     is => 'rw',
-    );
+);
+
 has 'view_count' => (
     isa => 'Num',
     is => 'rw',
-    );
+);
+
 has 'about' => (
     isa => 'Str',
     is => 'rw',
-    );
+);
+
 has 'container' => (
     isa => 'SIOC::Container',
     is => 'rw',
-    );
+);
+
 has 'parent_posts' => (
     isa => 'ArrayRef[SIOC::Item]',
     metaclass => 'Collection::Array',
     is => 'rw',
     default => sub { [] },
     provides => {
-        'push' => 'add_parent_posts',
+        'push' => 'add_parent_post',
     },
-    );
+);
+
+has 'reply_posts' => (
+    isa => 'ArrayRef[SIOC::Item]',
+    metaclass => 'Collection::Array',
+    is => 'rw',
+    default => sub { [] },
+    provides => {
+        'push' => 'add_reply_post',
+    },
+);
+
 has 'ip_address' => (
     isa => 'Str',
     is => 'rw',
-    );
+);
+
 has 'previous_by_date' => (
     isa => 'SIOC::Item',
     is => 'rw',
-    );
+);
+
 has 'next_by_date' => (
     isa => 'SIOC::Item',
     is => 'rw',
     );
+
 has 'previous_version' => (
     isa => 'SIOC::Item',
     is => 'rw',
-    );
+);
+
 has 'next_version' => (
     isa => 'SIOC::Item',
     is => 'rw',
-    );
+);
 
 ### methods
 
@@ -125,27 +148,48 @@ Items can be contained within Containers.
 
 =over
 
-=item about 
+=item created 
 
-Specifies that this Item is about a particular resource, e.g., a
-Post describing a book, hotel, etc.
+Details the date and time when a resource was created.
 
-=item has_container 
+This attribute is required and must be set in the creation of a class instance
+with new().
 
-The Container to which this Item belongs.
-
-=item has_creator 
+=item creator 
 
 This is the User who made this Item.
 
-=item has_modifier 
+This attribute is required and must be set in the creation of a class instance
+with new().
+
+=item modified 
+
+Details the date and time when a resource was modified.
+
+=item modifier 
 
 A User who modified this Item.
 
-=item has_reply 
+=item view_count 
 
-Points to an Item or Post that is a reply or response to
-this Item or Post.
+The number of times this Item, Thread, User profile, etc. has been viewed.
+
+=item about 
+
+Specifies that this Item is about a particular resource, e.g., a Post
+describing a book, hotel, etc.
+
+=item container 
+
+The Container to which this Item belongs.
+
+=item parent_posts 
+
+Links to Items or Posts which this Item or Post is a reply to.
+
+=item reply_posts 
+
+Points to Items or Posts that are a reply or response to this Item or Post.
 
 =item ip_address 
 
@@ -153,68 +197,101 @@ The IP address used when creating this Item. This can be
 associated with a creator. Some wiki articles list the IP addresses for the
 creator or modifiers when the usernames are absent.
 
+=item previous_by_date 
+
+Previous Item or Post in a given Container sorted by date.
+
 =item next_by_date 
 
 Next Item or Post in a given Container sorted by date.
-
-=item next_version 
-
-Links to the next revision of this Item or Post.
-
-=item num_views 
-
-The number of times this Item, Thread, User profile, etc.
-has been viewed.
-
-=item previous_by_date 
-
-Previous Item or Post in a given Container sorted by
-date.
 
 =item previous_version 
 
 Links to a previous revision of this Item or Post.
 
-=item reply_of 
+=item next_version 
 
-Links to an Item or Post which this Item or Post is a reply
-to.
-
-=item dc:subject 
-
-Can be used for keywords describing the subject of an Item
-or Post. See also: sioc:topic.
-
-=item dc:title 
-
-Specifies the title of a resource. Usually used to describe
-the title of an Item or Post.
-
-=item dcterms:created 
-
-Details the date and time when a resource was created.
-Usually used as a property of an Item or Post.
-
-=item dcterms:modified 
-
-Details the date and time when a resource was
-modified. Usually used as a property of an Item or Post.
+Links to the next revision of this Item or Post.
 
 =back
 
+
 =head1 SUBROUTINES/METHODS
 
-A separate section listing the public components of the module's interface.
+=head2 created([$new_creation_date])
 
-These normally consist of either subroutines that may be exported, or methods
-that may be called on objects belonging to the classes that the module
-provides.
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
 
-Name the section accordingly.
+=head2 creator([$new_creator])
 
-In an object-oriented module, this section should begin with a sentence (of the
-form "An object of this class represents ...") to give the reader a high-level
-context to help them understand the methods that are subsequently described.
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 modified([$new_modified_date])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 modifier([$new_modifier])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 view_count($new_count)
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 about([$new_about])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 container([$new_container])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 add_parent_post($post)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_reply_post
+
+Adds a new value to the corresponding array attribute.
+
+=head2 ip_address([$new_ip])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 previous_by_date([$post])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 next_by_date([%post])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 previous_version([$post])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
 
 =head1 DIAGNOSTICS
 
@@ -242,44 +319,47 @@ SIOC -- SIOC abstract base class (part of this module's distribution)
 
 =head1 INCOMPATIBILITIES
 
-A list of any modules that this module cannot be used in conjunction with.
-This may be due to name conflicts in the interface, or competition for system
-or program resources, or due to internal limitations of Perl (for example, many
-modules that use source code filters are mutually incompatible).
+There are no known incompatibilities.
 
 =head1 BUGS AND LIMITATIONS
 
-A list of known problems with the module, together with some indication of
-whether they are likely to be fixed in an upcoming release.
-
-Also, a list of restrictions on the features the module does provide: data types
-that cannot be handled, performance issues and the circumstances in which they
-may arise, practical limitations on the size of data sets, special cases that
-are not (yet) handled, etc.
-
-The initial template usually just has:
-
 There are no known bugs in this module.
 
-Please report problems to <Maintainer name(s)> (<contact address>)
+Please report problems via the bug tracking system on the perl-SIOC project
+website: L<http://developer.berlios.de/projects/perl-sioc/>.
 
 Patches are welcome.
 
 =head1 AUTHOR
 
-<Author name(s)>  (<contact address>)
+Jochen Lillich <geewiz@cpan.org>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (c) <year> <copyright holder> (<contact address>).
+Copyright (c) 2008, Jochen Lillich <geewiz@cpan.org>
 All rights reserved.
 
-followed by whatever license you wish to release it under.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-For Perl code that is often just:
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
 
-This module is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself. See L<perlartistic>.  This program is
-distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+
+    * The names of its contributors may not be used to endorse or promote
+      products derived from this software without specific prior written
+      permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
