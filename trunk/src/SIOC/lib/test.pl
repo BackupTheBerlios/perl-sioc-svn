@@ -20,6 +20,7 @@ my $exporter = SIOC::Exporter->new({
 
 # SIOC::User
 
+# create user
 print "SIOC::User:\n\n";
 my $user1 = SIOC::User->new({
     id => 1,
@@ -31,8 +32,22 @@ my $user1 = SIOC::User->new({
 });
 
 # output user
-
 $exporter->export_object($user1);
+print $exporter->output(), "\n\n";
+
+# create user
+print "SIOC::User:\n\n";
+my $user2 = SIOC::User->new({
+    id => 2,
+    name => 'Jochen Lillich',
+    url => 'http://www.perl-programmieren.de',
+    title => 'Jochen Lillich',
+    email => 'webmaster@perl-programmieren.de',
+    foaf_uri => 'http://www.foaf.com/Dummy URI'
+});
+
+# output user
+$exporter->export_object($user2);
 print $exporter->output(), "\n\n";
 
 # SIOC::Site

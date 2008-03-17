@@ -159,7 +159,7 @@ sub export_rdf {
         croak "Object not registered with SIOC::Exporter!\n";
     }
     
-    my $template = $self->_template;
+    my $template = $self->_init_template;
     $self->fill_template();
     my $output;
     my $ok = $template->process('rdfoutput', $self->_template_vars, \$output);
