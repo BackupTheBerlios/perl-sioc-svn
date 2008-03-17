@@ -89,7 +89,19 @@ has '_provider' => (
             CLASSES => ref $self,
         });
     },
-    );
+);
+
+has '_template' => (
+    is => 'ro', 
+    isa => 'Template',
+    default => sub {
+        my ($self) = @_; 
+        Template->new({
+            LOAD_TEMPLATES => [ $self->_provider ]
+        });
+    },
+);
+
 has '_template_vars' => (
     isa => 'HashRef',
     metaclass => 'Collection::Hash',
@@ -98,7 +110,7 @@ has '_template_vars' => (
     provides => {
         'set' => 'set_template_var',
     },
-    );
+);
     
 ### methods
 
@@ -143,7 +155,7 @@ sub export_rdf {
         croak "Object not registered with SIOC::Exporter!\n";
     }
     
-    my $template = $self->_init_template();
+    my $template = $self->_template;
     $self->fill_template();
     my $output;
     my $ok = $template->process('rdfoutput', $self->_template_vars, \$output);
