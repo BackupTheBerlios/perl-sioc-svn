@@ -31,6 +31,28 @@ my $exporter = SIOC::Exporter->new({
 
 # connect to database
 
-my $dbh = DBI->connect($DSN, $DBUSER, $DBPW);
+my $dbh = DBI->connect($DSN, $DBUSER, $DBPW) or croak $dbh->errstr;
 
-$dbh->disconnect;
+# export users
+
+my $sth = $dbh->prepare("SELECT id, name FROM users");
+$sth->execute();
+
+while (my $ref = $sth->fetchrow_hashref()) {
+    my $user = SIOC::User->new({
+        id => $ref->{id},
+        name => $ref->{name},
+        url => 'http://www.perl-programmieren.de',
+        title => 'Jochen Lillich',
+        email => 'webmaster@perl-programmieren.de',
+        foaf_uri => 'http://www.foaf.com/Dummy URI'
+    });
+    $exporter->export_object($user1);
+    print $exporter->output(), "\n\n";
+}
+
+$sth->finish();
+
+# disconnect from database
+
+$dbh->disconnect();
