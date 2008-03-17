@@ -16,10 +16,10 @@ use SIOC::Exporter;
 
 # constants
 
-Readonly $DBNAME => 'sioctest';
-Readonly $DBUSER => 'sioctest';
-Readonly $DWPW => 'sioctest';
-Readonly $DSN => 'DBI:mysql:database=$DBNAME';
+Readonly my $DBNAME => 'sioctest';
+Readonly my $DBUSER => 'sioctest';
+Readonly my $DBPW => 'sioctest';
+Readonly my $DSN => "DBI:mysql:database=$DBNAME";
 
 # create exporter
 
