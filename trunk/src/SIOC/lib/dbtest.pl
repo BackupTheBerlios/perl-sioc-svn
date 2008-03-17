@@ -5,6 +5,8 @@ use warnings;
 
 our $VERSION = q(1.0.0);
 
+use Readonly;
+use Carp;
 use DBI;
 
 use SIOC;
@@ -29,6 +31,6 @@ my $exporter = SIOC::Exporter->new({
 
 # connect to database
 
-my $dbh = DBI->connect($dsn, $DBUSER, $DBPW);
+my $dbh = DBI->connect($DSN, $DBUSER, $DBPW);
 
 $dbh->disconnect;
