@@ -97,7 +97,11 @@ has '_template' => (
     default => sub {
         my ($self) = @_; 
         Template->new({
-            LOAD_TEMPLATES => [ $self->_provider ]
+            LOAD_TEMPLATES => [ 
+                Template::Provider::FromDATA->new({
+                    CLASSES => ref $self,
+                })
+            ]
         });
     },
 );
