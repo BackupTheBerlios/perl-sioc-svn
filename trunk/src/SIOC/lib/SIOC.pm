@@ -16,7 +16,7 @@ use version; our $VERSION = qv(1.0.0);
 use Carp;
 use Readonly;
 use Template;
-use Template::Provider::FromData;
+use Template::Provider::FromDATA;
 use Data::Dumper qw( Dumper );
 use Moose;
 use MooseX::AttributeHelpers;
