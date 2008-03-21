@@ -21,6 +21,9 @@ use Data::Dumper qw( Dumper );
 use Moose;
 use MooseX::AttributeHelpers;
 
+# singleton hash of Template::Provider for the SIOC classes 
+my %template_provider;
+
 ### required attributes
 
 has 'id' => (
@@ -80,32 +83,6 @@ has 'export_url' => (
 
 ### internal attributes
 
-has '_provider' => (
-    is => 'ro', 
-    isa => 'Template::Provider::FromDATA',
-    default => sub {
-        my ($self) = @_; 
-        Template::Provider::FromDATA->new({
-            CLASSES => ref $self,
-        });
-    },
-);
-
-has '_template' => (
-    is => 'ro', 
-    isa => 'Template',
-    default => sub {
-        my ($self) = @_; 
-        Template->new({
-            LOAD_TEMPLATES => [ 
-                Template::Provider::FromDATA->new({
-                    CLASSES => ref $self,
-                })
-            ]
-        });
-    },
-);
-
 has '_template_vars' => (
     isa => 'HashRef',
     metaclass => 'Collection::Hash',
@@ -121,9 +98,24 @@ has '_template_vars' => (
 sub _init_template {
     my ($self) = @_;
 
+    # get template provider
+    my $class_name = ref $self;
+    print STDERR "Getting T::P for $class_name\n";
+    if (! exists $template_provider{$class_name}) {
+        print STDERR "Creating T::P for $class_name\n";
+        # create T::Provider for this class
+        $template_provider{$class_name} 
+          = Template::Provider::FromDATA->new({
+            CLASSES => $class_name,
+        })
+    }
+    my $provider = $template_provider{$class_name};
+    
     # create new Template object
     my $template = Template->new({
-        LOAD_TEMPLATES => [ $self->_provider ]
+        LOAD_TEMPLATES => [ 
+            $provider,
+        ]
     });
 
     return $template;
@@ -139,15 +131,27 @@ sub type {
     return $type;
 }
 
+sub set_template_vars {
+    my ($self, $vars) = @_;
+    
+    foreach my $varname (keys %$vars) {
+        $self->set_template_var($varname => $vars->{$varname});
+    } 
+    
+    return 1;
+}
+
 sub fill_template {
     my ($self) = @_;
 
-    $self->set_template_var(export_url => $self->export_url);
-    $self->set_template_var(id => $self->id);
-    $self->set_template_var(name => $self->name);
-    $self->set_template_var(url => $self->url);
-    $self->set_template_var(description => $self->description);
-    $self->set_template_var(comment => $self->comment);
+    $self->set_template_vars({
+        export_url => $self->export_url,
+        id => $self->id,
+        name => $self->name,
+        url => $self->url,
+        description => $self->description,
+        comment => $self->comment
+    });
     
     return 1;
 }
@@ -155,18 +159,20 @@ sub fill_template {
 sub export_rdf {
     my ($self) = @_;
     
+    print STDERR "Called export_rdf\n";
+    
     if (! defined $self->export_url) {
         croak "Object not registered with SIOC::Exporter!\n";
     }
     
-    my $template = $self->_init_template;
+    my $template = $self->_init_template();
     $self->fill_template();
+    
     my $output;
-    my $ok = $template->process('rdfoutput', $self->_template_vars, \$output);
-    if (! $ok) {
-        croak $template->error();
-    }
+    $template->process('rdfoutput', $self->_template_vars, \$output) 
+        || croak $template->error();
     $output =~ s/\s+$//xmsg;
+    
     return $output;
 }
 
@@ -184,7 +190,7 @@ SIOC -- The SIOC Core Ontology
 
 =head1 VERSION
 
-This documentation refers to SIOC version 0.0.1.
+This documentation refers to SIOC version 1.0.0.
 
 =head1 SYNOPSIS
 

@@ -18,6 +18,25 @@ my $exporter = SIOC::Exporter->new({
     host => 'http://www.example.com',
 });
 
+# SIOC base class
+print "SIOC:\n\n";
+my $sioc1 = SIOC->new({
+    id => '1',
+    name => 'Test 1',
+    url => 'http://www.example.com',
+});
+$exporter->export_object($sioc1);
+print $exporter->output(), "\n\n";    
+
+print "SIOC:\n\n";
+my $sioc2 = SIOC->new({
+    id => '2',
+    name => 'Test 2',
+    url => 'http://www.example.com',
+});
+$exporter->export_object($sioc2);
+print $exporter->output(), "\n\n";    
+
 # SIOC::User
 
 # create user
@@ -35,7 +54,7 @@ my $user1 = SIOC::User->new({
 $exporter->export_object($user1);
 print $exporter->output(), "\n\n";
 
-# create user
+# create another user
 print "SIOC::User:\n\n";
 my $user2 = SIOC::User->new({
     id => 2,

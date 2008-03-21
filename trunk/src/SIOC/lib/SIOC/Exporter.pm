@@ -17,6 +17,11 @@ use Moose;
 use MooseX::AttributeHelpers;
 use Carp;
 
+# singleton Template::Provider for this class
+my $template_provider = Template::Provider::FromDATA->new({
+    CLASSES => __PACKAGE__,
+});
+
 ### required attributes
 
 has 'host' => (
@@ -45,16 +50,6 @@ has 'export_email' => (
     
 ### internal attributes
 
-has '_provider' => (
-    is => 'ro', 
-    isa => 'Template::Provider::FromDATA',
-    default => sub {
-        my ($self) = @_; 
-        Template::Provider::FromDATA->new({
-            CLASSES => ref $self,
-        });
-    },
-);
 has '_object' => (
     isa => 'SIOC',
     is => 'rw',
@@ -77,7 +72,9 @@ sub _init_template {
 
     # create new Template object
     my $template = Template->new({
-        LOAD_TEMPLATES => [ $self->_provider ]
+        LOAD_TEMPLATES => [ 
+            $template_provider,
+        ]
     });
 
     return $template;
