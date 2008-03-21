@@ -100,9 +100,7 @@ sub _init_template {
 
     # get template provider
     my $class_name = ref $self;
-    print STDERR "Getting T::P for $class_name\n";
     if (! exists $template_provider{$class_name}) {
-        print STDERR "Creating T::P for $class_name\n";
         # create T::Provider for this class
         $template_provider{$class_name} 
           = Template::Provider::FromDATA->new({
@@ -158,8 +156,6 @@ sub fill_template {
 
 sub export_rdf {
     my ($self) = @_;
-    
-    print STDERR "Called export_rdf\n";
     
     if (! defined $self->export_url) {
         croak "Object not registered with SIOC::Exporter!\n";
