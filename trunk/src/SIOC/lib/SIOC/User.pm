@@ -262,7 +262,7 @@ Containers that a User is subscribed to.
 
 =head1 SUBROUTINES/METHODS
 
-TODO: describe methods
+TODO: document methods
 
 
 =head1 DIAGNOSTICS

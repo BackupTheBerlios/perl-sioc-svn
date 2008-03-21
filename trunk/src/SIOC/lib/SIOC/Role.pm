@@ -22,19 +22,22 @@ extends 'SIOC';
 has 'owner' => (
     isa => 'SIOC::User',
     is => 'rw',
-    );
+);
+
 has 'scope' => (
     isa => 'SIOC::Forum',
     is => 'rw',
-    );
+);
 
 ### methods
 
 after 'fill_template' => sub {
     my ($self) = @_;
     
-    $self->set_template_var(function_of => $self->function_of);
-    $self->set_template_var(scope => $self->scope);
+    $self->set_template_vars({
+        function_of => $self->function_of,
+        scope => $self->scope
+    });
 };
 
 ### EOC
@@ -76,7 +79,7 @@ Forums that this Role applies to.
 
 =head1 SUBROUTINES/METHODS
 
-TODO: describe methods
+TODO: document methods
 
 
 =head1 DIAGNOSTICS

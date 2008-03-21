@@ -96,7 +96,7 @@ Spaces that the Usergroup has access to.
 
 =head1 SUBROUTINES/METHODS
 
-TODO: describe methods
+TODO: document methods
 
 
 =head1 DIAGNOSTICS

@@ -101,7 +101,7 @@ Points to Usergroups that have certain access to this Space.
 
 =head1 SUBROUTINES/METHODS
 
-TODO: describe methods
+TODO: document methods
 
 
 =head1 DIAGNOSTICS

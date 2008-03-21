@@ -132,7 +132,7 @@ sub type {
 sub set_template_vars {
     my ($self, $vars) = @_;
     
-    foreach my $varname (keys %$vars) {
+    foreach my $varname (keys %{$vars}) {
         $self->set_template_var($varname => $vars->{$varname});
     } 
     
@@ -339,20 +339,21 @@ For $newlink, a string is expected.
 Returns a string representation of the SIOC subclass. For an instance of
 SIOC::Forum, it returns 'forum', for SIOC::Post 'post' and so on.
 
-=head2 export_rdf
+=head2 export_rdf()
 
 Returns the object's information in RDF format.
 
 =head2 fill_template
 
 This method is called by export_rdf() to provide template variables needed by
-Template Toolkit. Use the set_template_var method for each variable.
+Template Toolkit. Use the set_template_vars method for each variable.
 
 It always returns 1.
 
-=head2 set_template_var($name => $value)
+=head2 set_template_vars(\%vars)
 
-Set the template variable $name to value $value.
+Set template variables from the key/value pairs of the hash reference passed
+as an argument.
 
 
 =head1 DIAGNOSTICS

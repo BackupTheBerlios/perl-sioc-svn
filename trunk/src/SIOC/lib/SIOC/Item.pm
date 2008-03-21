@@ -292,6 +292,12 @@ Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
+=head2 next_version([$post])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
 
 =head1 DIAGNOSTICS
 

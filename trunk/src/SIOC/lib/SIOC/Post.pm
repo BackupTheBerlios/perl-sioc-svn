@@ -25,6 +25,7 @@ has 'content' => (
     is => 'rw',
     required => 1,
 );
+
 has 'encoded_content' => (
     isa => 'Str',
     is => 'rw',
@@ -43,6 +44,7 @@ has 'attachments' => (
         'get' => 'get_attachment',
     },
 );
+
 has 'related' => (
     isa => 'ArrayRef[SIOC::Item]',
     metaclass => 'Collection::Array',
@@ -52,6 +54,7 @@ has 'related' => (
         'push' => 'add_related',
     },
 );
+
 has 'siblings' => (
     isa => 'ArrayRef[SIOC::Item]',
     metaclass => 'Collection::Array',
@@ -61,22 +64,28 @@ has 'siblings' => (
         'push' => 'add_sibling',
     },
 );
+
 has 'note' => (
     isa => 'Str',
     is => 'rw',
 );
+
 has 'reply_count' => (
     isa => 'Num',
     is => 'rw',
 );
+
+
 ### methods
 
 # add additional template variables
 after 'fill_template' => sub {
     my ($self) = @_;
     
-    $self->set_template_var(content => $self->content);
-    $self->set_template_var(encoded_content => $self->encoded_content);
+    $self->set_template_vars({
+        content => $self->content,
+        encoded_content => $self->encoded_content
+    });
 };
 
 1;
@@ -219,9 +228,13 @@ Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 add_attachment($attachment)
+=head2 set_attachment($name => $data)
 
-Adds a new value to the corresponding array attribute.
+Sets a key/value pair in the corresponding hash attribute.
+
+=head2 get_attachment($name)
+
+Queries a key/value pair in the corresponding hash attribute.
 
 =head2 add_related($item)
 

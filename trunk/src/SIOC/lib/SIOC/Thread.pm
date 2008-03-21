@@ -89,7 +89,7 @@ especially where a sioc:has_reply / reply_of structure is absent.
 
 =head1 SUBROUTINES/METHODS
 
-TODO: describe methods
+TODO: document methods
 
 
 =head1 DIAGNOSTICS

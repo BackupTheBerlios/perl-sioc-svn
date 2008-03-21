@@ -6,10 +6,19 @@ use Test::More qw/no_plan/;
 
 # load module
 BEGIN { use_ok( 'SIOC::User' ); }
-require_ok( 'SIOC::User' );
 
-# check methods
-can_ok( 'SIOC::User', 'export_rdf' );
+# make tests easier
+my $PACKAGE = 'SIOC::User';
+
+# load package
+require_ok( $PACKAGE );
+
+# check existance of documented methods
+foreach my $subroutine qw( new ) {
+        
+    can_ok($PACKAGE, $subroutine);
+
+}
 
 # initialization
 {
@@ -20,7 +29,7 @@ can_ok( 'SIOC::User', 'export_rdf' );
         foaf_uri => 'foaf',
         email => 'user@example.com',
     });
-    is( ref $s, 'SIOC::User' );
+    is( ref $s, $PACKAGE );
     is( $s->id, 1 );
     is( $s->name, 'John Doe' );
 }
