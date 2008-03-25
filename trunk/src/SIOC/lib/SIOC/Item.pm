@@ -106,7 +106,7 @@ has 'next_version' => (
 
 ### methods
 
-after 'fill_template' => sub {
+after '_fill_template' => sub {
     my ($self) = @_;
     
     $self->set_template_var(created => $self->created);
@@ -218,43 +218,43 @@ Links to the next revision of this Item or Post.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 created([$new_creation_date])
+=head2 created([$date])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 creator([$new_creator])
+=head2 creator([$user])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 modified([$new_modified_date])
+=head2 modified([$date])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 modifier([$new_modifier])
+=head2 modifier([$user])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 view_count($new_count)
+=head2 view_count($num)
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 about([$new_about])
+=head2 about([$string])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 container([$new_container])
+=head2 container([$container])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
@@ -264,11 +264,11 @@ argument.
 
 Adds a new value to the corresponding array attribute.
 
-=head2 add_reply_post
+=head2 add_reply_post($post)
 
 Adds a new value to the corresponding array attribute.
 
-=head2 ip_address([$new_ip])
+=head2 ip_address([$string])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
@@ -280,7 +280,7 @@ Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 next_by_date([%post])
+=head2 next_by_date([$post])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as

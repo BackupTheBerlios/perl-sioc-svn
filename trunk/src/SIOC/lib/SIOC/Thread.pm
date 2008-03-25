@@ -27,7 +27,7 @@ has 'page' => (
 
 ### methods
 
-after 'fill_template' => sub {
+after '_fill_template' => sub {
     my ($self) = @_;
     
     $self->set_template_var(page => $self->page);
@@ -89,7 +89,11 @@ especially where a sioc:has_reply / reply_of structure is absent.
 
 =head1 SUBROUTINES/METHODS
 
-TODO: document methods
+=head2 page([$num])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
 
 
 =head1 DIAGNOSTICS

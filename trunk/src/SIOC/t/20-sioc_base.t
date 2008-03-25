@@ -16,7 +16,7 @@ require_ok( $PACKAGE );
 # check existance of documented methods
 foreach my $subroutine qw( new id name url description comment
     add_topic add_feed add_link type export_rdf 
-    fill_template set_template_vars ) {
+    set_template_vars ) {
         
     can_ok($PACKAGE, $subroutine);
 

@@ -68,6 +68,7 @@ has 'feed' => (
         'push' => 'add_feed'
     },
 );
+
 has 'links' => (
     isa => 'ArrayRef[Str]',
     metaclass => 'Collection::Array',
@@ -76,6 +77,7 @@ has 'links' => (
         'push' => 'add_link'
     },
 );
+
 has 'export_url' => (
     isa => 'Str',
     is => 'rw',
@@ -89,7 +91,7 @@ has '_template_vars' => (
     is => 'rw',
     default => sub { {} },
     provides => {
-        'set' => 'set_template_var',
+        'set' => '_set_template_var',
     },
 );
     
@@ -133,13 +135,13 @@ sub set_template_vars {
     my ($self, $vars) = @_;
     
     foreach my $varname (keys %{$vars}) {
-        $self->set_template_var($varname => $vars->{$varname});
+        $self->_set_template_var($varname => $vars->{$varname});
     } 
     
     return 1;
 }
 
-sub fill_template {
+sub _fill_template {
     my ($self) = @_;
 
     $self->set_template_vars({
@@ -162,7 +164,7 @@ sub export_rdf {
     }
     
     my $template = $self->_init_template();
-    $self->fill_template();
+    $self->_fill_template();
     
     my $output;
     $template->process('rdfoutput', $self->_template_vars, \$output) 
@@ -328,20 +330,22 @@ Adds a new value to the corresponding array attribute.
 
 For $newfeed, a string is expected.
 
-=head2 add_link($newlink)
+=head2 add_link($link)
 
 Adds a new value to the corresponding array attribute.
 
-For $newlink, a string is expected.
+For $link, a string is expected.
 
 =head2 type()
 
 Returns a string representation of the SIOC subclass. For an instance of
 SIOC::Forum, it returns 'forum', for SIOC::Post 'post' and so on.
 
-=head2 export_rdf()
+=head2 export_url($url)
 
-Returns the object's information in RDF format.
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
 
 =head2 fill_template
 
@@ -354,6 +358,10 @@ It always returns 1.
 
 Set template variables from the key/value pairs of the hash reference passed
 as an argument.
+
+=head2 export_rdf()
+
+Returns the object's information in RDF format.
 
 
 =head1 DIAGNOSTICS

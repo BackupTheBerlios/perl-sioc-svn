@@ -31,7 +31,7 @@ has 'scope' => (
 
 ### methods
 
-after 'fill_template' => sub {
+after '_fill_template' => sub {
     my ($self) = @_;
     
     $self->set_template_vars({
@@ -79,7 +79,17 @@ Forums that this Role applies to.
 
 =head1 SUBROUTINES/METHODS
 
-TODO: document methods
+=head2 owner([$user])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 scope([$forum])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
 
 
 =head1 DIAGNOSTICS

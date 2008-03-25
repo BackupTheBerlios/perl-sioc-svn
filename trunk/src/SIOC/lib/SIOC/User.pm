@@ -72,7 +72,7 @@ has 'created_items' => (
     metaclass => 'Collection::Array',
     is => 'rw',
     provides => {
-        'push' => 'add_created_forum',
+        'push' => 'add_created_item',
     },
 );
 
@@ -81,7 +81,7 @@ has 'modified_items' => (
     metaclass => 'Collection::Array',
     is => 'rw',
     provides => {
-        'push' => 'add_modified_forum',
+        'push' => 'add_modified_item',
     },
 );
 
@@ -124,16 +124,19 @@ has 'subscriptions' => (
 
 ### methods
 
-after 'fill_template' => sub {
+after '_fill_template' => sub {
     my ($self) = @_;
     
-    $self->set_template_var(name => $self->name);
-    $self->set_template_var(email => $self->email); 
-    $self->set_template_var(foaf_uri => $self->foaf_uri);
-    $self->set_template_var(email_sha1 => $self->email_sha1);
-    $self->set_template_var(avatar => $self->avatar);
+    $self->set_template_vars({
+        name => $self->name, 
+        email => $self->email, 
+        foaf_uri => $self->foaf_uri, 
+        email_sha1 => $self->email_sha1,
+        avatar => $self->avatar,
+    });
 };
 
+### EOC
 1;
 
 __DATA__
@@ -181,6 +184,10 @@ This documentation refers to SIOC::User version 1.0.0.
 =head1 SYNOPSIS
 
    use SIOC::User;
+   
+   my $user = SIOC::User->new({
+       ...
+   })
 
 
 =head1 DESCRIPTION
@@ -208,9 +215,15 @@ describes information about the individual itself.
 
 An electronic mail address of the User.
 
+This attribute is required and must be set in the creation of a class instance
+with new().
+
 =item foaf_uri
 
-Link to a FOAF record.
+A link to a FOAF record.
+
+This attribute is required and must be set in the creation of a class instance
+with new().
 
 =item email_sha1 
 
@@ -262,7 +275,61 @@ Containers that a User is subscribed to.
 
 =head1 SUBROUTINES/METHODS
 
-TODO: document methods
+=head2 new({ email => $email, foaf_uri => $foaf, ...})
+
+Create a new class instance. See the CLASS ATTRIBUTES section for required
+attribute values.
+
+=head2 email([$string])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 foaf_uri([$string])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 email_sha1([$string])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 add_function($role)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_usergroup($usergroup)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_created_item($item)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_modified_item($item)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_administered_site($site)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_moderated_forum($forum)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_owned_container($container)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_subscription($container)
+
+Adds a new value to the corresponding array attribute.
+
 
 
 =head1 DIAGNOSTICS

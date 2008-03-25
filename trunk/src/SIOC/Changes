@@ -1,5 +1,9 @@
 Revision history for SIOC
 
-0.01    2008-01-31
+1.0.0   2008-03-21
         First version, released on an unsuspecting world.
+
+1.0.1   TODO: update before release
+        * Updated documentation
+        * Sanitized a few method names
 

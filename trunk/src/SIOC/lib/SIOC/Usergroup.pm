@@ -27,7 +27,6 @@ has members => (
     provides => {
         'push' => 'add_member',
     },
-    required => 1,
 );
     
 ### optional attributes
@@ -45,11 +44,13 @@ has 'spaces' => (
 
 ### methods
 
-after 'fill_template' => sub {
+after '_fill_template' => sub {
     my ($self) = @_;
     
-    $self->set_template_var(members => $self->members);
-    $self->set_tempalte_var(space => $self->space);
+    $self->set_template_vars({
+        members => $self->members,
+        space => $self->space
+    });
 };
 
 ### EOC
@@ -96,7 +97,18 @@ Spaces that the Usergroup has access to.
 
 =head1 SUBROUTINES/METHODS
 
-TODO: document methods
+=head2 new(\%arguments)
+
+Create a new class instance. See the CLASS ATTRIBUTES section for required
+attribute values.
+
+=head2 add_member($user)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_space($space)
+
+Adds a new value to the corresponding array attribute.
 
 
 =head1 DIAGNOSTICS

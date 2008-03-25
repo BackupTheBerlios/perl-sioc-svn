@@ -50,7 +50,7 @@ has 'admin_usergroup' => (
 
 ### methods
 
-after 'fill_template' => sub {
+after '_fill_template' => sub {
     my ($self) = @_;
     
     $self->set_template_var(forums => $self->forums);
@@ -126,6 +126,10 @@ Users who are administrators of this Site.
 
 Forums that are hosted on this Site.
 
+=item admin_usergroup
+
+Usergroup containing the administrators of this Site.
+
 =back
 
 
@@ -138,6 +142,12 @@ Adds a new value to the corresponding array attribute.
 =head2 add_forum($forum)
 
 Adds a new value to the corresponding array attribute.
+
+=head2 admin_usergroup([$usergroup])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
 
 
 =head1 DIAGNOSTICS

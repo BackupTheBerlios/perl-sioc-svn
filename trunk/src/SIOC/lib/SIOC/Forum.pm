@@ -47,7 +47,7 @@ has 'scopes' => (
 
 ### methods
 
-after 'fill_template' => sub {
+after '_fill_template' => sub {
     my ($self) = @_;
     
     $self->set_template_var(host => $self->host);
@@ -143,17 +143,17 @@ Roles that have a scope of this Forum.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 host([$new_host])
+=head2 host([$site])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 add_moderator($new_moderator)
+=head2 add_moderator($user)
 
 Adds a new value to the corresponding array attribute.
 
-=head2 add_scope($new_scope)
+=head2 add_scope($role)
 
 Adds a new value to the corresponding array attribute.
 

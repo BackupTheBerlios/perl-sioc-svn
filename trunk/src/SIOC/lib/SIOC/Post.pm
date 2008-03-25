@@ -79,7 +79,7 @@ has 'reply_count' => (
 ### methods
 
 # add additional template variables
-after 'fill_template' => sub {
+after '_fill_template' => sub {
     my ($self) = @_;
     
     $self->set_template_vars({
@@ -216,13 +216,13 @@ the reply structure is absent.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 content([$content])
+=head2 content([$string])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 encoded_content([$content])
+=head2 encoded_content([$string])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
@@ -244,7 +244,7 @@ Adds a new value to the corresponding array attribute.
 
 Adds a new value to the corresponding array attribute.
 
-=head2 note([$note])
+=head2 note([$string])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as

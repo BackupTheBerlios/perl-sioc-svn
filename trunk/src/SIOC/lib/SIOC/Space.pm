@@ -25,9 +25,9 @@ has 'parent' => (
 );
 
 has 'space_of' => (
+    isa => 'ArrayRef[SIOC]',
     metaclass => 'Collection::Array',
     is => 'rw',
-    isa => 'ArrayRef[SIOC]',
     default => sub { [] },
     provides => {
         'push' => 'make_space_of',
@@ -46,7 +46,7 @@ has 'usergroups' => (
 
 ### methods
 
-after 'fill_template' => sub {
+after '_fill_template' => sub {
     my ($self) = @_;
     
     $self->set_template_var(parent => $self->parent);
@@ -101,7 +101,19 @@ Points to Usergroups that have certain access to this Space.
 
 =head1 SUBROUTINES/METHODS
 
-TODO: document methods
+=head2 parent([$space])
+
+Accessor for the attribute of the same name. Call without argument to read the
+current value of the attribute; sets attribute when called with new value as
+argument.
+
+=head2 make_space_of($resource)
+
+Adds a new value to the corresponding array attribute.
+
+=head2 add_usergroup($usergroup)
+
+Adds a new value to the corresponding array attribute.
 
 
 =head1 DIAGNOSTICS

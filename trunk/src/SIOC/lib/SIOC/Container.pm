@@ -66,7 +66,7 @@ has 'subscribers' => (
 
 ### methods
 
-after 'fill_template' => sub {
+after '_fill_template' => sub {
     my ($self) = @_;
 
     $self->set_template_var(parent => $self->parent);
@@ -137,27 +137,27 @@ Users who are subscribed to this Container.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 parent([$new_parent])
+=head2 parent([$container])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 add_child($new_child)
+=head2 add_child($container)
 
 Adds a new value to the corresponding array attribute.
 
-=head2 add_item($new_item)
+=head2 add_item($item)
 
 Adds a new value to the corresponding array attribute.
 
-=head2 owner([$new_owner])
+=head2 owner([$user])
 
 Accessor for the attribute of the same name. Call without argument to read the
 current value of the attribute; sets attribute when called with new value as
 argument.
 
-=head2 add_subscriber($new_subscriber)
+=head2 add_subscriber($user)
 
 Adds a new value to the corresponding array attribute.
 
