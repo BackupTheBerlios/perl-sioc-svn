@@ -366,14 +366,11 @@ Returns the object's information in RDF format.
 
 =head1 DIAGNOSTICS
 
-For diagnostics information, see the SIOC base class.
+None so far.
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
-A full explanation of any configuration system(s) used by the module, including
-the names and locations of any configuration files, and the meaning of any
-environment variables or properties that can be set. These descriptions must
-also include details of any configuration language used.
+This module doesn't need configuration.
 
 =head1 DEPENDENCIES
 
@@ -383,7 +380,28 @@ This module depends on the following modules:
 
 =item *
 
-Moose -- OOP framework
+version -- Perl extension for Version Objects
+
+=item *
+
+Readonly -- Facility for creating read-only scalars, arrays, hashes.
+
+=item *
+
+Moose -- A postmodern object system for Perl 5
+
+=item *
+
+MooseX::AttributeHelpers -- Moose extension for array and hash attributes
+
+=item *
+
+Template Toolkit -- Template engine for rendering the RDF output
+
+=item *
+
+Template::Provider::FromDATA -- Template provider thats reads from the DATA
+section of a module
 
 =back
 
