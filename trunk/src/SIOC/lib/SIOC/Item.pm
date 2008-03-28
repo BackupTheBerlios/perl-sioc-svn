@@ -136,11 +136,7 @@ This documentation refers to SIOC::Item version 0.0.1.
 
 =head1 DESCRIPTION
 
-SIOC::Item is a high-level concept for content items. It has subclasses that
-further specify different types of Items. One of these subclasses (which plays
-an important role in SIOC) is SIOC::Post, used to describe articles or messages
-created within online community Sites. The SIOC Types Ontology Module
-describes additional, more specific subclasses of sioc:Item.
+SIOC::Item is a high-level concept for content items. It has subclasses that further specify different types of Items. One of these subclasses (which plays an important role in SIOC) is SIOC::Post, used to describe articles or messages created within online community Sites. The SIOC Types Ontology Module describes additional, more specific subclasses of sioc:Item.
 
 Items can be contained within Containers.
 
@@ -152,15 +148,13 @@ Items can be contained within Containers.
 
 Details the date and time when a resource was created.
 
-This attribute is required and must be set in the creation of a class instance
-with new().
+This attribute is required and must be set in the creation of a class instance with new().
 
 =item creator 
 
 This is the User who made this Item.
 
-This attribute is required and must be set in the creation of a class instance
-with new().
+This attribute is required and must be set in the creation of a class instance with new().
 
 =item modified 
 
@@ -176,8 +170,7 @@ The number of times this Item, Thread, User profile, etc. has been viewed.
 
 =item about 
 
-Specifies that this Item is about a particular resource, e.g., a Post
-describing a book, hotel, etc.
+Specifies that this Item is about a particular resource, e.g., a Post describing a book, hotel, etc.
 
 =item container 
 
@@ -193,9 +186,7 @@ Points to Items or Posts that are a reply or response to this Item or Post.
 
 =item ip_address 
 
-The IP address used when creating this Item. This can be
-associated with a creator. Some wiki articles list the IP addresses for the
-creator or modifiers when the usernames are absent.
+The IP address used when creating this Item. This can be associated with a creator. Some wiki articles list the IP addresses for the creator or modifiers when the usernames are absent.
 
 =item previous_by_date 
 
@@ -220,45 +211,31 @@ Links to the next revision of this Item or Post.
 
 =head2 created([$date])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 creator([$user])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 modified([$date])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 modifier([$user])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 view_count($num)
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 about([$string])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 container([$container])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 add_parent_post($post)
 
@@ -270,33 +247,23 @@ Adds a new value to the corresponding array attribute.
 
 =head2 ip_address([$string])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 previous_by_date([$post])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 next_by_date([$post])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 previous_version([$post])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 next_version([$post])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 
 =head1 DIAGNOSTICS

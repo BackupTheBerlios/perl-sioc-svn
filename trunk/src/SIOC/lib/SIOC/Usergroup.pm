@@ -74,10 +74,7 @@ This documentation refers to SIOC::Usergroup version 1.0.0.
 
 =head1 DESCRIPTION
 
-A Usergroup is a set of members or Users of a community who have a common
-Role, purpose or interest. While a group of Users may be a single community
-that is linked to a certain Forum, they may also be a set of Users who perform
-a certain Role, for example, moderators or administrators.
+A Usergroup is a set of members or Users of a community who have a common Role, purpose or interest. While a group of Users may be a single community that is linked to a certain Forum, they may also be a set of Users who perform a certain Role, for example, moderators or administrators.
 
 
 =head1 CLASS ATTRIBUTES
@@ -99,8 +96,7 @@ Spaces that the Usergroup has access to.
 
 =head2 new(\%arguments)
 
-Create a new class instance. See the CLASS ATTRIBUTES section for required
-attribute values.
+Create a new class instance. See the CLASS ATTRIBUTES section for required attribute values.
 
 =head2 add_member($user)
 

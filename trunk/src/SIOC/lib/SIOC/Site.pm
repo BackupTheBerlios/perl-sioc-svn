@@ -108,11 +108,7 @@ This documentation refers to SIOC::Site version 1.0.0.
 
 =head1 DESCRIPTION
 
-A Site is the location of an online community or set of communities, with
-Users in Usergroups creating content therein. While an individual Forum or
-group of Forums are usually hosted on a centralised Site, in the future the
-concept of a "site" may be extended (for example, a topic Thread could be
-formed by Posts in a distributed Forum on a peer-to-peer environment Space).
+A Site is the location of an online community or set of communities, with Users in Usergroups creating content therein. While an individual Forum or group of Forums are usually hosted on a centralised Site, in the future the concept of a "site" may be extended (for example, a topic Thread could be formed by Posts in a distributed Forum on a peer-to-peer environment Space).
 
 =head1 CLASS ATTRIBUTES
 
@@ -145,9 +141,7 @@ Adds a new value to the corresponding array attribute.
 
 =head2 admin_usergroup([$usergroup])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 
 =head1 DIAGNOSTICS

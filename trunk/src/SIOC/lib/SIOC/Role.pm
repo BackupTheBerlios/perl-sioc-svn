@@ -81,15 +81,11 @@ Forums that this Role applies to.
 
 =head2 owner([$user])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 scope([$forum])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 
 =head1 DIAGNOSTICS

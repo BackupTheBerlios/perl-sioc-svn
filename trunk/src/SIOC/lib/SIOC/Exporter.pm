@@ -253,12 +253,12 @@ the ATTRIBUTES section above for required arguments.
 This method registers a SIOC object with the exporter, assigning a SIOC
 exporter URL to it. This URL is necessary to reference the object in RDF.
 
-=head2 export_object
+=head2 export_object($sioc_object)
 
 Pass the SIOC object you want to export with output() as an argument to this
 method.
 
-=head2 object_export_url
+=head2 object_export_url()
 
 This method generates the URL at which the SIOC data of the object passed as
 an argument will be provided. It's used by register_object().
@@ -266,7 +266,9 @@ an argument will be provided. It's used by register_object().
 Change this method in a derived subclass to reflect your website
 configuration.
 
-=head2 output
+=head2 output()
+
+This method's result is the registered object as an RDF document.
 
 
 =head1 DIAGNOSTICS

@@ -80,20 +80,25 @@ This documentation refers to SIOC::Thread version 1.0.0.
 
 =head1 DESCRIPTION
 
-Mailing lists, forums and blogs on community sites usually employ some
-threaded discussion methods, whereby discussions are initialised by a certain
-user and replied to by others. The Thread container is used to group Posts
-from a single discussion thread together via the sioc:container_of property,
-especially where a sioc:has_reply / reply_of structure is absent.
+Mailing lists, forums and blogs on community sites usually employ some threaded discussion methods, whereby discussions are initialised by a certain user and replied to by others. The Thread container is used to group Posts from a single discussion thread together via the sioc:container_of property, especially where a sioc:has_reply / reply_of structure is absent.
+
+
+=head1 CLASS ATTRIBUTES
+
+=over
+
+=item page
+
+Number of the page this Thread is on.
+
+=back
 
 
 =head1 SUBROUTINES/METHODS
 
 =head2 page([$num])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 
 =head1 DIAGNOSTICS

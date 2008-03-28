@@ -17,6 +17,8 @@ use Moose;
 
 extends 'SIOC';
 
+# TODO: implement attribute "part"
+
 1;
 __END__
     
@@ -34,16 +36,11 @@ This documentation refers to SIOC::Community version 1.0.0.
 
 =head1 DESCRIPTION
 
-Community is a high-level concept that defines an online community and what it
-consists of.
+Community is a high-level concept that defines an online community and what it consists of.
 
-A Community may consist of different types of objects (people, sites, etc.)
-joined by a common topic, interests or goals.
+A Community may consist of different types of objects (people, sites, etc.) joined by a common topic, interests or goals.
 
-A Community is different from a Site: a Site describes a single community site
-whilst a Community can consist of a number of Sites and other resources
-described in SIOC or other ontologies (e.g., FOAF). Community is linked to its
-constituent parts using the property dcterms:hasPart.
+A Community is different from a Site: a Site describes a single community site whilst a Community can consist of a number of Sites and other resources described in SIOC or other ontologies (e.g., FOAF). Community is linked to its constituent parts using the property dcterms:hasPart.
 
 
 =head1 SUBROUTINES/METHODS
@@ -82,8 +79,7 @@ There are no known incompatibilities.
 
 There are no known bugs in this module.
 
-Please report problems via the bug tracking system on the perl-SIOC project
-website: L<http://developer.berlios.de/projects/perl-sioc/>.
+Please report problems via the bug tracking system on the perl-SIOC project website: L<http://developer.berlios.de/projects/perl-sioc/>.
 
 Patches are welcome.
 

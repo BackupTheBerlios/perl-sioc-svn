@@ -158,14 +158,9 @@ This documentation refers to SIOC::Post version 1.0.0.
 
 =head1 DESCRIPTION
 
-A Post is an article or message posted by a User to a Forum. A series of Posts
-may be threaded if they share a common subject and are connected by reply or
-by date relationships. Posts will have content and may also have attached
-files, which can be edited or deleted by the Moderator of the Forum that
-contains the Post.
+A Post is an article or message posted by a User to a Forum. A series of Posts may be threaded if they share a common subject and are connected by reply or by date relationships. Posts will have content and may also have attached files, which can be edited or deleted by the Moderator of the Forum that contains the Post.
 
-The SIOC Types Ontology Module describes some additional, more specific
-subclasses of SIOC::Post.
+The SIOC Types Ontology Module describes some additional, more specific subclasses of SIOC::Post.
 
 =head2 Class attributes
 
@@ -175,15 +170,13 @@ subclasses of SIOC::Post.
 
 The content of the Post in plain text format.
 
-This attribute is required and must be set in the creation of a class instance
-with new().
+This attribute is required and must be set in the creation of a class instance with new().
 
 =item encoded_content
 
 Used to describe the encoded content of a Post, contained in CDATA areas.
 
-This attribute is required and must be set in the creation of a class instance
-with new().
+This attribute is required and must be set in the creation of a class instance with new().
 
 =item attachments 
 
@@ -191,25 +184,19 @@ The URIs of files attached to a Post.
 
 =item related
 
-Related Posts for this Post, perhaps determined implicitly
-from topics or references.
+Related Posts for this Post, perhaps determined implicitly from topics or references.
 
 =item siblings
 
-A Post may have a sibling or a twin that exists in a different
-Forum, but the siblings may differ in some small way (for example, language,
-category, etc.). The sibling of this Post should be self-describing (that is,
-it should contain all available information).
+A Post may have a sibling or a twin that exists in a different Forum, but the siblings may differ in some small way (for example, language, category, etc.). The sibling of this Post should be self-describing (that is, it should contain all available information).
 
 =item note 
 
-A note associated with this Post, for example, if it has been
-edited by a User.
+A note associated with this Post, for example, if it has been edited by a User.
 
 =item reply_count 
 
-The number of replies that this Post has. Useful for when
-the reply structure is absent.
+The number of replies that this Post has. Useful for when the reply structure is absent.
 
 =back
 
@@ -218,15 +205,11 @@ the reply structure is absent.
 
 =head2 content([$string])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 encoded_content([$string])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 set_attachment($name => $data)
 
@@ -246,15 +229,11 @@ Adds a new value to the corresponding array attribute.
 
 =head2 note([$string])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 reply_count([$num])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 
 =head1 DIAGNOSTICS

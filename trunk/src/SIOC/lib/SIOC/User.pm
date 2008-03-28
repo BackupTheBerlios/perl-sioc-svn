@@ -192,19 +192,11 @@ This documentation refers to SIOC::User version 1.0.0.
 
 =head1 DESCRIPTION
 
-A User is an online account of a member of an online community. It is
-connected to Items and Posts that a User creates or edits, to Containers and
-Forums that it is subscribed to or moderates and to Sites that it administers.
-Users can be grouped for purposes of allowing access to certain Forums or
-enhanced community site features (weblogs, webmail, etc.).
+A User is an online account of a member of an online community. It is connected to Items and Posts that a User creates or edits, to Containers and Forums that it is subscribed to or moderates and to Sites that it administers. Users can be grouped for purposes of allowing access to certain Forums or enhanced community site features (weblogs, webmail, etc.).
 
-A foaf:Person will normally hold a registered User account on a Site (through
-the property foaf:holdsAccount), and will use this account to create content
-and interact with the community.
+A foaf:Person will normally hold a registered User account on a Site (through the property foaf:holdsAccount), and will use this account to create content and interact with the community.
 
-sioc:User describes properties of an online account, and is used in
-combination with a foaf:Person (using the property sioc:account_of) which
-describes information about the individual itself.
+sioc:User describes properties of an online account, and is used in combination with a foaf:Person (using the property sioc:account_of) which describes information about the individual itself.
 
 
 =head1 CLASS ATTRIBUTES
@@ -215,15 +207,13 @@ describes information about the individual itself.
 
 An electronic mail address of the User.
 
-This attribute is required and must be set in the creation of a class instance
-with new().
+This attribute is required and must be set in the creation of a class instance with new().
 
 =item foaf_uri
 
 A link to a FOAF record.
 
-This attribute is required and must be set in the creation of a class instance
-with new().
+This attribute is required and must be set in the creation of a class instance with new().
 
 =item email_sha1 
 
@@ -231,8 +221,7 @@ An electronic mail address of the User, encoded using SHA1.
 
 =item account_of 
 
-Refers to the foaf:Agent or foaf:Person who owns this sioc:User
-online account.
+Refers to the foaf:Agent or foaf:Person who owns this sioc:User online account.
 
 =item avatar 
 
@@ -277,26 +266,19 @@ Containers that a User is subscribed to.
 
 =head2 new({ email => $email, foaf_uri => $foaf, ...})
 
-Create a new class instance. See the CLASS ATTRIBUTES section for required
-attribute values.
+Create a new class instance. See the CLASS ATTRIBUTES section for required attribute values.
 
 =head2 email([$string])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 foaf_uri([$string])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 email_sha1([$string])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 add_function($role)
 

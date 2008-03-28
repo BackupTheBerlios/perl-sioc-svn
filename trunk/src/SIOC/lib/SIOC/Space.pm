@@ -74,10 +74,7 @@ This documentation refers to SIOC::Space version 1.0.0.
 
 =head1 DESCRIPTION
 
-A Space is defined as being a place where data resides. It can be the location
-for a set of Containers of content Items, e.g., on a Site, personal desktop,
-shared filespace, etc. Any data object that resides on a particular Space can
-be linked to it using the sioc:has_space property.
+A Space is defined as being a place where data resides. It can be the location for a set of Containers of content Items, e.g., on a Site, personal desktop, shared filespace, etc. Any data object that resides on a particular Space can be linked to it using the sioc:has_space property.
 
 
 =head1 CLASS ATTRIBUTES
@@ -103,9 +100,7 @@ Points to Usergroups that have certain access to this Space.
 
 =head2 parent([$space])
 
-Accessor for the attribute of the same name. Call without argument to read the
-current value of the attribute; sets attribute when called with new value as
-argument.
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
 
 =head2 make_space_of($resource)
 

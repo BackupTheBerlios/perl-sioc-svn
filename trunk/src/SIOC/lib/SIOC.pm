@@ -12,6 +12,7 @@ use strict;
 use warnings;
 
 use version; our $VERSION = qv(1.0.0);
+# TODO: Set all versions to 1.0.1
 
 use Carp;
 use Readonly;
@@ -196,17 +197,11 @@ This is an abstract class that isn't meant to be instantiated.
 
 =head1 DESCRIPTION
 
-The SIOC (Semantically-Interlinked Online Communities) Core Ontology provides
-the main concepts and properties required to describe information from online
-communities (e.g., message boards, wikis, weblogs, etc.) on the Semantic Web.
+The SIOC (Semantically-Interlinked Online Communities) Core Ontology provides the main concepts and properties required to describe information from online communities (e.g., message boards, wikis, weblogs, etc.) on the Semantic Web.
 
-This distribution implements the various SIOC subclasses like SIOC::Site,
-SIOC::User, SIOC::Forum or SIOC::Post. It also contains an exporter class
-(SIOC::Exporter) that Perl-based community software can use to generate a
-semantic RDF representation of its data.
+This distribution implements the various SIOC subclasses like SIOC::Site, SIOC::User, SIOC::Forum or SIOC::Post. It also contains an exporter class (SIOC::Exporter) that Perl-based community software can use to generate a semantic RDF representation of its data.
 
-This class implements an abstract base class for the various SIOC subclasses
-like
+This class implements an abstract base class for the various SIOC subclasses like
 
 =over
 

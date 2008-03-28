@@ -1,0 +1,782 @@
+! Technische Details
+
+perl-SIOC besteht aus einer Sammlung von Inhaltsklassen, die die verschiedenen SIOC-Klassen abbilden, sowie aus einer Exporter-Klasse, die für die Erzeugung der RDF-Ausgabe zuständig ist.
+
+!! Klassenhierarchie
+
+Die Inhaltsklassen sind allesamt von der abstrakten Basisklasse [% SIOC %] abgeleitet. Sie stellt grundlegende Attribute und Methoden zur Verfügung. Von ihr abgeleitet sind die folgenden Inhaltsklassen:
+
+* SIOC::Community
+* SIOC::Container
+* SIOC::Forum
+* SIOC::Item
+* SIOC::Post
+* SIOC::Role
+* SIOC::Site
+* SIOC::Space
+* SIOC::Thread
+* SIOC::User
+* SIOC::Usergroup
+
+Diese Klassen sind im folgenden dokumentiert. Da die Software international eingesetzt wird, ist die Dokumentation in Englisch gehalten.
+
+!!! Class: SIOC
+
+SIOC implements an abstract base class for the various SIOC subclasses.
+
+This class has the following attributes:
+
+:id:An identifier of a SIOC concept instance. For example, a user ID. Must be unique for instances of each type of SIOC concept within the same site. This attribute is required and must be set in the creation of a class instance with new().
+
+:name:The name of a SIOC instance, e.g. a username for a User, group name for a Usergroup, etc. This attribute is required and must be set in the creation of a class instance with new().
+
+:url:The URL of this resource on the Web. This attribute is required and must be set in the creation of a class instance with new().
+
+:description:A textual description of the resource.
+
+:comment:A comment on the SIOC instance.
+
+:topics:Topics the resource is connected to.
+
+:feeds:Feeds (e.g., RSS, Atom, etc.) pertaining to this resource (e.g., for a Forum, Site, User, etc.).
+
+:links:URIs of documents which contain this SIOC object.
+
+This class offers the following methods:
+
+'''new(\%args)'''
+
+Creates a new class instance. Arguments are passed as a hash reference. See the ATTRIBUTES section above for required arguments.
+
+'''id([$new_id])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''name([$new_name])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''url([$newurl])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''description([$newdescription])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''comment([$comment])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''add_topic($newtopic)'''
+
+Adds a new value to the corresponding array attribute.
+
+For $newtopic, a string is expected.
+
+'''add_feed($newfeed)'''
+
+Adds a new value to the corresponding array attribute.
+
+For $newfeed, a string is expected.
+
+'''add_link($link)'''
+
+Adds a new value to the corresponding array attribute.
+
+For $link, a string is expected.
+
+'''type()'''
+
+Returns a string representation of the SIOC subclass. For an instance of SIOC::Forum, it returns 'forum', for SIOC::Post 'post' and so on.
+
+'''export_url($url)'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''fill_template'''
+
+This method is called by export_rdf() to provide template variables needed by Template Toolkit. Use the set_template_vars method for each variable.
+
+It always returns 1.
+
+'''set_template_vars(\%vars)'''
+
+Set template variables from the key/value pairs of the hash reference passed as an argument.
+
+'''export_rdf()'''
+
+Returns the object's information in RDF format.
+
+
+!!! Class: SIOC::Community
+
+Community is a high-level concept that defines an online community and what it consists of.
+
+A Community may consist of different types of objects (people, sites, etc.) joined by a common topic, interests or goals.
+
+A Community is different from a Site: a Site describes a single community site whilst a Community can consist of a number of Sites and other resources described in SIOC or other ontologies (e.g., FOAF). Community is linked to its constituent parts using the property dcterms:hasPart.
+
+So far, this class doesn't have special attributes and methods.
+
+
+!!! Class: SIOC::Container
+
+Container is a high-level concept used to group content Items together. The relationships between a Container and the Items that belong to it are described using sioc:container_of and sioc:has_container properties. A hierarchy of Containers can be defined in terms of parents and children using sioc:has_parent and sioc:parent_of.
+
+Subclasses of Container can be used to further specify typed groupings of Items in online communities. Forum, a subclass of Container and one of the core classes in SIOC, is used to describe an area on a community Site (e.g., a forum or weblog) on which Posts are made. The SIOC Types Ontology Module contains additional, more specific subclasses of SIOC::Container.
+
+This class has the following attributes:
+
+:parent:A Container or Forum that this Container or Forum is a child of.
+
+:children:Child Containers or Forums that this Container or Forum is a parent of.
+
+:items:Items/Posts that this Container contains.
+
+:owner:A User that this Container is owned by.
+
+:subscribers:Users who are subscribed to this Container.
+
+This class offers the following methods:
+
+'''parent([$container])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''add_child($container)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_item($item)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''owner([$user])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''add_subscriber($user)'''
+
+Adds a new value to the corresponding array attribute.
+
+
+!!! Class: SIOC::Forum
+
+Forums can be thought of as channels or discussion area on which Posts are made. A Forum can be linked to the Site that hosts it. Forums will usually discuss a certain topic or set of related topics, or they may contain discussions entirely devoted to a certain community group or organisation. A Forum will have a moderator who can veto or edit posts before or after they appear in the Forum.
+
+Forums may have a set of subscribed Users who are notified when new Posts are made. The hierarchy of Forums can be defined in terms of parents and children, allowing the creation of structures conforming to topic categories as defined by the Site administrator. Examples of Forums include mailing lists, message boards, Usenet newsgroups and weblogs.
+
+This class has the following attributes:
+
+:host:The Site that hosts this Forum.
+
+:moderators:Users who are moderators of this Forum.
+
+:scopes:Roles that have a scope of this Forum.
+
+This class offers the following methods:
+
+'''host([$site])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''add_moderator($user)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_scope($role)'''
+
+Adds a new value to the corresponding array attribute.
+
+This class uses the following RDF template for its output:
+
+    <sioc:Forum rdf:about="[% url %]">
+        <sioc:link rdf:resource="[% export_url %]"/>
+    [% IF title %]
+        <dc:title>[% name %]</dc:title>
+    [% END %]
+    [% IF description %]
+        <dc:description>[% description %]</dc:description>
+    [% END %]
+    [% IF comment %]
+        <rdfs:comment>[% comment %]</rdfs:comment>
+    [% END %]
+
+    [% FOREACH thread = threads %]
+        <sioc:parent_of>
+            <sioc:Thread rdf:about="[% thread.url %]">
+                <rdfs:seeAlso rdf:resource="[% thread.export_url %]"/>
+            </sioc:Thread>
+        </sioc:parent_of>
+    [% END %]
+
+    [% FOREACH post = items %]
+        <sioc:container_of>
+            <sioc:Post rdf:about="[% post.url %]">
+                <rdfs:seeAlso rdf:resource="[% post.export_url %]"/>
+            </sioc:Post>
+        </sioc:container_of>
+    [% END %]
+
+    [% IF next_page_url %]
+        <rdfs:seeAlso rdf:resource="[% next_page_url | url %]"/>
+    [% END %]
+    </sioc:Forum>
+
+
+!!! Class: SIOC::Item
+
+SIOC::Item is a high-level concept for content items. It has subclasses that further specify different types of Items. One of these subclasses (which plays an important role in SIOC) is SIOC::Post, used to describe articles or messages created within online community Sites. The SIOC Types Ontology Module describes additional, more specific subclasses of sioc:Item.
+
+Items can be contained within Containers.
+
+This class has the following attributes:
+
+:created:Details the date and time when a resource was created. This attribute is required and must be set in the creation of a class instance with new().
+
+:creator:This is the User who made this Item. This attribute is required and must be set in the creation of a class instance with new().
+
+:modified:Details the date and time when a resource was modified.
+
+:modifier:A User who modified this Item.
+
+:view_count:The number of times this Item, Thread, User profile, etc. has been viewed.
+
+:about:Specifies that this Item is about a particular resource, e.g., a Post describing a book, hotel, etc.
+
+:container::The Container to which this Item belongs.
+
+:parent_posts:Links to Items or Posts which this Item or Post is a reply to.
+
+:reply_posts:Points to Items or Posts that are a reply or response to this Item or Post.
+
+:ip_address:The IP address used when creating this Item. This can be associated with a creator. Some wiki articles list the IP addresses for the creator or modifiers when the usernames are absent.
+
+:previous_by_date:Previous Item or Post in a given Container sorted by date.
+
+:next_by_date:Next Item or Post in a given Container sorted by date.
+
+:previous_version:Links to a previous revision of this Item or Post.
+
+:next_version:Links to the next revision of this Item or Post.
+
+This class offers the following methods:
+
+'''created([$date])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''creator([$user])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''modified([$date])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''modifier([$user])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''view_count($num)'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''about([$string])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''container([$container])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''add_parent_post($post)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_reply_post($post)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''ip_address([$string])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''previous_by_date([$post])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''next_by_date([$post])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''previous_version([$post])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''next_version([$post])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+
+!!! Class:: SIOC::Post
+
+A Post is an article or message posted by a User to a Forum. A series of Posts may be threaded if they share a common subject and are connected by reply or by date relationships. Posts will have content and may also have attached files, which can be edited or deleted by the Moderator of the Forum that contains the Post.
+
+The SIOC Types Ontology Module describes some additional, more specific subclasses of SIOC::Post.
+
+This class has the following attributes:
+
+:content:The content of the Post in plain text format. This attribute is required and must be set in the creation of a class instance with new().
+
+:encoded_content:Used to describe the encoded content of a Post, contained in CDATA areas. This attribute is required and must be set in the creation of a class instance with new().
+
+:attachments:The URIs of files attached to a Post.
+
+:related:Related Posts for this Post, perhaps determined implicitly from topics or references.
+
+:siblings:A Post may have a sibling or a twin that exists in a different Forum, but the siblings may differ in some small way (for example, language, category, etc.). The sibling of this Post should be self-describing (that is, it should contain all available information).
+
+:note:A note associated with this Post, for example, if it has been edited by a User.
+
+:reply_count:The number of replies that this Post has. Useful for when the reply structure is absent.
+
+This class offers the following methods:
+
+'''content([$string])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''encoded_content([$string])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''set_attachment($name => $data)'''
+
+Sets a key/value pair in the corresponding hash attribute.
+
+'''get_attachment($name)'''
+
+Queries a key/value pair in the corresponding hash attribute.
+
+'''add_related($item)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_sibling($item)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''note([$string])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''reply_count([$num])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+This class uses the following RDF template for its output:
+
+    <sioc:Post rdf:about="[% url | url %]">
+        [% IF title %]
+        <dc:title>[% name %]</dc:title>
+        [% END %]
+        [% IF creator %]
+        <sioc:has_creator>
+            <sioc:User rdf:about="[% creator.url | url %]">
+                <rdfs:seeAlso rdf:resource="[% creator.export_url | url %]"/>
+            </sioc:User>
+        </sioc:has_creator>
+        <foaf:maker>
+            <foaf:Person rdf:about="[% creator.foaf_uri | url %]">
+                <rdfs:seeAlso rdf:resource="[% creator.export_url | url %]"/>
+            </foaf:Person>
+        </foaf:maker>
+        [% END %]
+
+        <dcterms:created>[% created %]</dcterms:created>
+        [% IF updated && created != updated %]
+        <dcterms:modified>[% modified %]</dcterms:modified>
+        [% END %]
+
+        <sioc:content>[% content %]</sioc:content>
+        <content:encoded><![CDATA[[% encoded_content %]]]></content:encoded>
+    
+        [% FOREACH topic = topics %]
+        <sioc:topic rdfs:label="[% topic.name %]" rdf:resource="[% topic.url | url %]"/>
+        [% END %]
+
+        [% FOREACH link = links %]
+        <sioc:links_to rdfs:label="[% link.name %]" rdf:resource="[% link.url | url %]"/>
+        [% END %]
+    
+        [% FOREACH parent = parents %]
+        <sioc:reply_of>
+            <sioc:Post rdf:about="[% parent.url | url %]">
+                <rdfs:seeAlso rdf:resource="[% parent.export_url | url %]"/>
+            </sioc:Post>
+        </sioc:reply_of>
+        [% END %]
+    
+        [% FOREACH reply = replies %]
+        <sioc:has_reply>
+            <sioc:Post rdf:about="[% reply.url | url %]">
+                <rdfs:seeAlso rdf:resource="[% reply.export_url | url %]"/>
+            </sioc:Post>
+        </sioc:has_reply>
+        [% END %]
+    
+    </sioc:Post>
+
+
+!!! Class: SIOC::Role
+
+Roles are used to express functions or access control privileges that Users may have.
+
+This class has the following attributes:
+
+:owner:A User who has this Role.
+
+:scope:Forums that this Role applies to.
+
+This class offers the following methods:
+
+'''owner([$user])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''scope([$forum])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+
+!!! Class: SIOC::Site
+
+A Site is the location of an online community or set of communities, with Users in Usergroups creating content therein. While an individual Forum or group of Forums are usually hosted on a centralised Site, in the future the concept of a "site" may be extended (for example, a topic Thread could be formed by Posts in a distributed Forum on a peer-to-peer environment Space).
+
+This class has the following attributes:
+
+:administrators:Users who are administrators of this Site.
+
+:forums:Forums that are hosted on this Site.
+
+:admin_usergroup:Usergroup containing the administrators of this Site.
+
+This class offers the following methods:
+
+'''add_administrator($user)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_forum($forum)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''admin_usergroup([$usergroup])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+This class uses the following RDF template for its output:
+
+    <sioc:Site rdf:about="[% url | url %]">
+        <dc:title>[% name %]</dc:title>
+        <dc:description>[% description %]</dc:description>
+        <sioc:link rdf:resource="[% url | url %]"/>
+    [% FOREACH forum = forums %]
+        <sioc:host_of rdf:resource="[% forum.export_url %]"/>
+    [% END %]
+        <sioc:has_Usergroup rdf:nodeID="[% admin_ug %]"/>
+    </sioc:Site>
+
+    [% FOREACH forum = forums %]
+    <sioc:Forum rdf:about="[% forum.url | url %]">
+        <sioc:link rdf:resource="[% forum.url | url %]"/>
+        <rdfs:seeAlso rdf:resource="[% forum.export_url %]"/>
+    </sioc:Forum>
+    [% END %]
+
+    [% IF administrators %]
+    <sioc:Usergroup rdf:nodeID="[% admin_ug %]">
+        <sioc:name>Administrators for "[% name %]"</sioc:name>
+    [% FOREACH user = administrators %]
+        <sioc:has_member>
+            <sioc:User rdf:about="[% user.url | url %]">
+                <rdfs:seeAlso rdf:resource="[% user.export_url %]"/>
+            </sioc:User>
+        </sioc:has_member>
+    [% END %]
+    </sioc:Usergroup>
+    [% END %]
+
+
+!!! Class: SIOC::Space
+
+A Space is defined as being a place where data resides. It can be the location for a set of Containers of content Items, e.g., on a Site, personal desktop, shared filespace, etc. Any data object that resides on a particular Space can be linked to it using the sioc:has_space property.
+
+This class has the following attributes:
+
+:parent:A data Space which this resource is a part of.
+
+:space_of:A resource which belongs to this data Space.
+
+:usergroups:Points to Usergroups that have certain access to this Space.
+
+This class offers the following methods:
+
+'''parent([$space])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''make_space_of($resource)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_usergroup($usergroup)'''
+
+Adds a new value to the corresponding array attribute.
+
+
+!!! Class: SIOC::Thread
+
+Mailing lists, forums and blogs on community sites usually employ some threaded discussion methods, whereby discussions are initialised by a certain user and replied to by others. The Thread container is used to group Posts from a single discussion thread together via the sioc:container_of property, especially where a sioc:has_reply / reply_of structure is absent.
+
+This class has the following attributes:
+
+:page:Number of the page this Thread is on.
+
+This class offers the following methods:
+
+'''page([$num])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+This class uses the following RDF template for its output:
+
+    <sioc:Thread rdf:about="[% url | url %]">
+        <sioc:link rdf:resource="[% url | url %]"/>
+    [% IF views %]
+        <sioc:num_views>[% views %]</sioc:num_views>
+    [% END %]
+    [% IF note %]
+        <rdfs:comment>[% note %]</rdfs:comment>
+    [% END %]
+    [% FOREACH topic = topics %]
+        <sioc:topic>[% topic %]</sioc:topic>
+    [% END %]
+    [% FOREACH post = items %]
+        <sioc:container_of>
+            <sioc:Post rdf:about="[% post.url | url %]">
+                <rdfs:seeAlso rdf:resource="[% siocURL('post', post.id) %]"/>
+    [% IF post.prev_by_date %]
+    		    <sioc:previous_by_date rdf:resource="[% post.prev_by_date | url %]"/>
+    [% END %]
+    [% IF post.next_by_date %]
+    		    <sioc:next_by_date rdf:resource="[% post.next_by_date | url %]"/>
+    [% END %]
+            </sioc:Post>
+        </sioc:container_of>
+    [% END %]
+    [% IF next %]
+        <rdfs:seeAlso rdf:resource="[% siocURL('thread', id, page+1) %]"/>
+    [% END %]
+    </sioc:Thread>
+
+
+!!! Class: SIOC::User
+
+A User is an online account of a member of an online community. It is connected to Items and Posts that a User creates or edits, to Containers and Forums that it is subscribed to or moderates and to Sites that it administers. Users can be grouped for purposes of allowing access to certain Forums or enhanced community site features (weblogs, webmail, etc.).
+
+A foaf:Person will normally hold a registered User account on a Site (through the property foaf:holdsAccount), and will use this account to create content and interact with the community.
+
+sioc:User describes properties of an online account, and is used in combination with a foaf:Person (using the property sioc:account_of) which describes information about the individual itself.
+
+This class has the following attributes:
+
+:email:An electronic mail address of the User. This attribute is required and must be set in the creation of a class instance with new().
+
+:foaf_uri:A link to a FOAF record. This attribute is required and must be set in the creation of a class instance with new().
+
+:email_sha1:An electronic mail address of the User, encoded using SHA1.
+
+:account_of:Refers to the foaf:Agent or foaf:Person who owns this sioc:User online account.
+
+:avatar:An image or depiction used to represent this User.
+
+:functions:Roles that this User has.
+
+:usergroups:A Usergroup that this User is a member of.
+
+:created_items:Items that the User is a creator of.
+
+:modified_items:Items that this User has modified.
+
+:administered_sites:Sites that the User is an administrator of.
+
+:moderated_forums:Forums that User is a moderator of.
+
+:owned_containers:Containers owned by a particular User, for example, a weblog or image gallery.
+
+:subscriptions:Containers that a User is subscribed to.
+
+This class offers the following methods:
+
+'''new({ email => $email, foaf_uri => $foaf, ...})'''
+
+Create a new class instance. See the CLASS ATTRIBUTES section for required attribute values.
+
+'''email([$string])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''foaf_uri([$string])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''email_sha1([$string])'''
+
+Accessor for the attribute of the same name. Call without argument to read the current value of the attribute; sets attribute when called with new value as argument.
+
+'''add_function($role)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_usergroup($usergroup)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_created_item($item)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_modified_item($item)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_administered_site($site)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_moderated_forum($forum)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_owned_container($container)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_subscription($container)'''
+
+Adds a new value to the corresponding array attribute.
+
+This class uses the following RDF template for its output:
+
+    <foaf:Person rdf:about="[% foaf_uri | url %]">
+    [% IF name %]
+        <foaf:name>[% name %]</foaf:name>
+    [% END %]
+    [% IF email_sha1 %]
+        <foaf:mbox_sha1sum>[% email_sha1 %]</foaf:mbox_sha1sum>
+    [% END %]
+        <foaf:holdsAccount>
+            <sioc:User rdf:about="[% url | url %]">
+    [% IF nick %]
+                <sioc:name>[% name %]</sioc:name>
+    [% END %]
+    [% IF email %]
+                <sioc:email rdf:resource="[% email %]"/>
+    [% END %]
+    [% IF email_sha1 %]
+                <sioc:email_sha1>[% email_sha1 %]</sioc:email_sha1>
+    [% END %]
+    [% IF role %]
+                <sioc:has_function>
+                    <sioc:Role>
+                        <sioc:name>[% role %]</sioc:name>
+                    </sioc:Role>
+                </sioc:has_function>
+    [% END %]
+            </sioc:User>  
+        </foaf:holdsAccount>
+    </foaf:Person>
+
+
+!!! Class: SIOC::Usergroup
+
+A Usergroup is a set of members or Users of a community who have a common Role, purpose or interest. While a group of Users may be a single community that is linked to a certain Forum, they may also be a set of Users who perform a certain Role, for example, moderators or administrators.
+
+This class has the following attributes:
+
+:members:User who are members of this Usergroup.
+
+:spaces:Spaces that the Usergroup has access to.
+
+This class offers the following methods:
+
+'''new(\%arguments)'''
+
+Create a new class instance. See the CLASS ATTRIBUTES section for required attribute values.
+
+'''add_member($user)'''
+
+Adds a new value to the corresponding array attribute.
+
+'''add_space($space)'''
+
+Adds a new value to the corresponding array attribute.
+
+
+!!! Class: SIOC::Exporter
+
+This module implements a SIOC exporter class. It will output the RDF representation of SIOC objects passed to it.
+
+It works like in this example:
+
+    use SIOC::Exporter;
+
+    # create SIOC object instance, e.g. a SIOC::User
+    use SIOC::User;
+    my $user = SIOC::User->new(...);
+
+    # create exporter instance
+    my $exporter = SIOC::Exporter->new({
+        host => 'http://www.example.com',
+    });
+
+    # pass object to exporter
+    $exporter->export_object($user);
+
+    # output the object's information as RDF data
+    print $exporter->output(), "\n";
+
+This class has the following attributes:
+
+:host:The host attribute stores the URL of the website whose information is exported. This attribute is required and must be set in the creation of a class instance with new().
+
+:encoding:The encoding attribute stores the character encoding used. This information will be used in the XML processing instruction and in the charset header generated by the output() method.
+
+:generator:The generator attribute stores the identification of the software using SIOC::Exporter to generate SIOC information.
+
+:export_email:The export_email attribute stores a boolean value that determines if email addresses will be included in the RDF output.
+
+This class offers the following methods:
+
+'''new(\%attributes)'''
+
+Creates a new class instance. Arguments are passed as a hash reference. See the ATTRIBUTES section above for required arguments.
+
+'''register_object($sioc_object)'''
+
+This method registers a SIOC object with the exporter, assigning a SIOC exporter URL to it. This URL is necessary to reference the object in RDF.
+
+'''export_object($sioc_object)'''
+
+Pass the SIOC object you want to export with output() as an argument to this method.
+
+'''object_export_url()'''
+
+This method generates the URL at which the SIOC data of the object passed as an argument will be provided. It's used by register_object(). Change this method in a derived subclass to reflect your website configuration.
+
+'''output()'''
+
+This method's result is the registered object as an RDF document.

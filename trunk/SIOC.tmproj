@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>src/SIOC/lib/SIOC/Exporter.pm</string>
+	<string>src/SIOC/lib/SIOC.pm</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -11,89 +11,95 @@
 			<array>
 				<dict>
 					<key>filename</key>
+					<string>src/SIOC/lib/dbtest.pl</string>
+					<key>lastUsed</key>
+					<date>2008-03-21T20:46:19Z</date>
+				</dict>
+				<dict>
+					<key>filename</key>
 					<string>src/SIOC/lib/test.pl</string>
 					<key>lastUsed</key>
-					<date>2008-02-17T22:51:33Z</date>
-				</dict>
-				<dict>
-					<key>filename</key>
-					<string>src/SIOC/lib/SIOC.pm</string>
-					<key>lastUsed</key>
-					<date>2008-02-24T21:43:55Z</date>
-				</dict>
-				<dict>
-					<key>filename</key>
-					<string>src/SIOC/lib/SIOC/Community.pm</string>
-					<key>lastUsed</key>
-					<date>2008-02-17T22:49:25Z</date>
-				</dict>
-				<dict>
-					<key>filename</key>
-					<string>src/SIOC/lib/SIOC/Container.pm</string>
-					<key>lastUsed</key>
-					<date>2008-02-17T22:48:17Z</date>
+					<date>2008-03-21T20:46:26Z</date>
 				</dict>
 				<dict>
 					<key>filename</key>
 					<string>src/SIOC/lib/SIOC/Exporter.pm</string>
 					<key>lastUsed</key>
-					<date>2008-02-24T21:43:55Z</date>
+					<date>2008-03-28T17:53:46Z</date>
+				</dict>
+				<dict>
+					<key>filename</key>
+					<string>src/SIOC/lib/SIOC.pm</string>
+					<key>lastUsed</key>
+					<date>2008-03-28T17:53:46Z</date>
 					<key>selected</key>
 					<true/>
 				</dict>
 				<dict>
 					<key>filename</key>
+					<string>src/SIOC/lib/SIOC/Community.pm</string>
+					<key>lastUsed</key>
+					<date>2008-03-28T16:04:41Z</date>
+				</dict>
+				<dict>
+					<key>filename</key>
+					<string>src/SIOC/lib/SIOC/Container.pm</string>
+					<key>lastUsed</key>
+					<date>2008-03-28T16:05:10Z</date>
+				</dict>
+				<dict>
+					<key>filename</key>
 					<string>src/SIOC/lib/SIOC/Forum.pm</string>
 					<key>lastUsed</key>
-					<date>2008-02-17T22:14:28Z</date>
+					<date>2008-03-28T16:05:19Z</date>
 				</dict>
 				<dict>
 					<key>filename</key>
 					<string>src/SIOC/lib/SIOC/Item.pm</string>
 					<key>lastUsed</key>
-					<date>2008-02-17T22:46:00Z</date>
+					<date>2008-03-28T16:06:31Z</date>
 				</dict>
 				<dict>
 					<key>filename</key>
 					<string>src/SIOC/lib/SIOC/Post.pm</string>
 					<key>lastUsed</key>
-					<date>2008-02-17T22:44:50Z</date>
+					<date>2008-03-28T16:06:57Z</date>
 				</dict>
 				<dict>
 					<key>filename</key>
 					<string>src/SIOC/lib/SIOC/Role.pm</string>
 					<key>lastUsed</key>
-					<date>2008-02-17T22:15:52Z</date>
+					<date>2008-03-28T16:07:08Z</date>
 				</dict>
 				<dict>
 					<key>filename</key>
 					<string>src/SIOC/lib/SIOC/Site.pm</string>
 					<key>lastUsed</key>
-					<date>2008-02-17T22:47:45Z</date>
+					<date>2008-03-28T16:07:17Z</date>
 				</dict>
 				<dict>
 					<key>filename</key>
 					<string>src/SIOC/lib/SIOC/Space.pm</string>
 					<key>lastUsed</key>
-					<date>2008-02-17T22:47:18Z</date>
+					<date>2008-03-28T16:07:27Z</date>
 				</dict>
 				<dict>
 					<key>filename</key>
 					<string>src/SIOC/lib/SIOC/Thread.pm</string>
 					<key>lastUsed</key>
-					<date>2008-02-18T20:32:30Z</date>
+					<date>2008-03-28T16:07:39Z</date>
 				</dict>
 				<dict>
 					<key>filename</key>
 					<string>src/SIOC/lib/SIOC/User.pm</string>
 					<key>lastUsed</key>
-					<date>2008-02-18T11:32:03Z</date>
+					<date>2008-03-28T16:08:03Z</date>
 				</dict>
 				<dict>
 					<key>filename</key>
 					<string>src/SIOC/lib/SIOC/Usergroup.pm</string>
 					<key>lastUsed</key>
-					<date>2008-02-17T22:13:42Z</date>
+					<date>2008-03-28T17:53:38Z</date>
 				</dict>
 				<dict>
 					<key>children</key>
@@ -107,12 +113,14 @@
 						<dict>
 							<key>filename</key>
 							<string>src/SIOC/t/00-pod-coverage.t</string>
+							<key>lastUsed</key>
+							<date>2008-03-25T15:30:45Z</date>
 						</dict>
 						<dict>
 							<key>filename</key>
 							<string>src/SIOC/t/00-pod.t</string>
 							<key>lastUsed</key>
-							<date>2008-01-22T16:25:38Z</date>
+							<date>2008-03-25T15:29:20Z</date>
 						</dict>
 						<dict>
 							<key>filename</key>
@@ -130,25 +138,73 @@
 							<key>filename</key>
 							<string>src/SIOC/t/20-sioc_base.t</string>
 							<key>lastUsed</key>
-							<date>2008-02-17T22:42:54Z</date>
+							<date>2008-03-25T15:29:15Z</date>
+						</dict>
+						<dict>
+							<key>filename</key>
+							<string>src/SIOC/t/21-sioc_post.t</string>
+							<key>lastUsed</key>
+							<date>2008-03-21T20:45:23Z</date>
+						</dict>
+						<dict>
+							<key>filename</key>
+							<string>src/SIOC/t/21-sioc_item.t</string>
+							<key>lastUsed</key>
+							<date>2008-03-21T20:45:25Z</date>
+						</dict>
+						<dict>
+							<key>filename</key>
+							<string>src/SIOC/t/21-sioc_usergroup.t</string>
+							<key>lastUsed</key>
+							<date>2008-03-21T20:45:36Z</date>
+						</dict>
+						<dict>
+							<key>filename</key>
+							<string>src/SIOC/t/21-sioc_thread.t</string>
+							<key>lastUsed</key>
+							<date>2008-03-21T20:45:32Z</date>
+						</dict>
+						<dict>
+							<key>filename</key>
+							<string>src/SIOC/t/21-sioc_space.t</string>
+							<key>lastUsed</key>
+							<date>2008-03-21T20:45:33Z</date>
+						</dict>
+						<dict>
+							<key>filename</key>
+							<string>src/SIOC/t/21-sioc_role.t</string>
+							<key>lastUsed</key>
+							<date>2008-03-21T20:45:35Z</date>
+						</dict>
+						<dict>
+							<key>filename</key>
+							<string>src/SIOC/t/21-sioc_forum.t</string>
+							<key>lastUsed</key>
+							<date>2008-03-21T20:45:26Z</date>
+						</dict>
+						<dict>
+							<key>filename</key>
+							<string>src/SIOC/t/21-sioc_container.t</string>
+							<key>lastUsed</key>
+							<date>2008-03-21T20:45:27Z</date>
 						</dict>
 						<dict>
 							<key>filename</key>
 							<string>src/SIOC/t/21-sioc_community.t</string>
 							<key>lastUsed</key>
-							<date>2008-02-17T22:42:21Z</date>
+							<date>2008-03-21T20:45:27Z</date>
 						</dict>
 						<dict>
 							<key>filename</key>
 							<string>src/SIOC/t/21-sioc_site.t</string>
 							<key>lastUsed</key>
-							<date>2008-02-17T22:42:20Z</date>
+							<date>2008-03-21T20:45:38Z</date>
 						</dict>
 						<dict>
 							<key>filename</key>
 							<string>src/SIOC/t/21-sioc_user.t</string>
 							<key>lastUsed</key>
-							<date>2008-02-17T22:41:32Z</date>
+							<date>2008-03-21T20:45:37Z</date>
 						</dict>
 					</array>
 					<key>expanded</key>
@@ -161,25 +217,33 @@
 					<array>
 						<dict>
 							<key>filename</key>
+							<string>src/SIOC/LICENSE</string>
+							<key>lastUsed</key>
+							<date>2008-03-27T11:23:58Z</date>
+						</dict>
+						<dict>
+							<key>filename</key>
 							<string>src/SIOC/Changes</string>
+							<key>lastUsed</key>
+							<date>2008-03-28T08:37:42Z</date>
 						</dict>
 						<dict>
 							<key>filename</key>
 							<string>src/SIOC/Makefile.PL</string>
 							<key>lastUsed</key>
-							<date>2008-02-17T21:21:46Z</date>
+							<date>2008-03-25T16:01:13Z</date>
 						</dict>
 						<dict>
 							<key>filename</key>
 							<string>src/SIOC/MANIFEST</string>
 							<key>lastUsed</key>
-							<date>2008-02-17T21:23:42Z</date>
+							<date>2008-03-25T16:00:59Z</date>
 						</dict>
 						<dict>
 							<key>filename</key>
 							<string>src/SIOC/README</string>
 							<key>lastUsed</key>
-							<date>2008-02-17T21:20:18Z</date>
+							<date>2008-03-21T20:46:16Z</date>
 						</dict>
 					</array>
 					<key>expanded</key>
@@ -200,7 +264,7 @@
 					<key>filename</key>
 					<string>phpapi/sioc_inc.php</string>
 					<key>lastUsed</key>
-					<date>2008-02-24T21:39:33Z</date>
+					<date>2008-03-21T20:46:20Z</date>
 				</dict>
 			</array>
 			<key>expanded</key>
@@ -213,7 +277,15 @@
 			<array>
 				<dict>
 					<key>filename</key>
+					<string>project/technische_details.txt</string>
+					<key>lastUsed</key>
+					<date>2008-03-28T16:04:06Z</date>
+				</dict>
+				<dict>
+					<key>filename</key>
 					<string>project/report.txt</string>
+					<key>lastUsed</key>
+					<date>2008-03-28T08:38:02Z</date>
 				</dict>
 			</array>
 			<key>expanded</key>
@@ -228,7 +300,7 @@
 					<key>filename</key>
 					<string>demodata/johnbreslin.xml</string>
 					<key>lastUsed</key>
-					<date>2008-02-24T21:38:36Z</date>
+					<date>2008-03-21T20:45:48Z</date>
 				</dict>
 				<dict>
 					<key>filename</key>
@@ -245,190 +317,114 @@
 	<integer>200</integer>
 	<key>metaData</key>
 	<dict>
-		<key>demodata/johnbreslin.xml</key>
+		<key>project/report.txt</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>39</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>12</integer>
+				<integer>73</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>76</integer>
+			<key>firstVisibleLine</key>
+			<integer>59</integer>
+		</dict>
+		<key>project/technische_details.txt</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>44</integer>
+				<key>line</key>
+				<integer>38</integer>
 			</dict>
 			<key>columnSelection</key>
 			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>29</integer>
 			<key>selectFrom</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>2</integer>
+				<integer>0</integer>
 			</dict>
 			<key>selectTo</key>
 			<dict>
 				<key>column</key>
-				<integer>39</integer>
-				<key>line</key>
-				<integer>12</integer>
-			</dict>
-		</dict>
-		<key>phpapi/sioc_inc.php</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>10</integer>
-				<key>line</key>
-				<integer>138</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>132</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>114</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>10</integer>
-				<key>line</key>
-				<integer>138</integer>
+				<integer>782</integer>
 			</dict>
 		</dict>
-		<key>src/SIOC/MANIFEST</key>
+		<key>src/SIOC/Changes</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>27</integer>
+				<integer>9</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-		</dict>
-		<key>src/SIOC/Makefile.PL</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>8</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>src/SIOC/README</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>40</integer>
-				<key>line</key>
-				<integer>13</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>6</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>40</integer>
-				<key>line</key>
-				<integer>13</integer>
-			</dict>
 		</dict>
 		<key>src/SIOC/lib/SIOC.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>38</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>19</integer>
+				<integer>15</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>19</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>38</integer>
-				<key>line</key>
-				<integer>19</integer>
-			</dict>
 		</dict>
 		<key>src/SIOC/lib/SIOC/Community.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>12</integer>
 				<key>line</key>
-				<integer>22</integer>
+				<integer>81</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>77</integer>
 		</dict>
 		<key>src/SIOC/lib/SIOC/Container.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>6</integer>
+				<integer>20</integer>
 				<key>line</key>
-				<integer>63</integer>
+				<integer>102</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>36</integer>
+			<integer>132</integer>
 		</dict>
 		<key>src/SIOC/lib/SIOC/Exporter.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>11</integer>
+				<integer>15</integer>
 				<key>line</key>
-				<integer>10</integer>
+				<integer>268</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -440,126 +436,140 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>32</integer>
 				<key>line</key>
-				<integer>41</integer>
+				<integer>148</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>1</integer>
+			<integer>179</integer>
 		</dict>
 		<key>src/SIOC/lib/SIOC/Item.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>32</integer>
+				<integer>84</integer>
 				<key>line</key>
-				<integer>54</integer>
+				<integer>265</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>35</integer>
+			<integer>296</integer>
 		</dict>
 		<key>src/SIOC/lib/SIOC/Post.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>16</integer>
+				<integer>91</integer>
 				<key>line</key>
-				<integer>36</integer>
+				<integer>235</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>28</integer>
+			<integer>263</integer>
 		</dict>
 		<key>src/SIOC/lib/SIOC/Role.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>98</integer>
 				<key>line</key>
-				<integer>38</integer>
+				<integer>87</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>109</integer>
 		</dict>
 		<key>src/SIOC/lib/SIOC/Site.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>6</integer>
+				<integer>20</integer>
 				<key>line</key>
-				<integer>40</integer>
+				<integer>143</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>16</integer>
+			<integer>169</integer>
 		</dict>
 		<key>src/SIOC/lib/SIOC/Space.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>6</integer>
+				<integer>28</integer>
 				<key>line</key>
-				<integer>46</integer>
+				<integer>102</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>12</integer>
+			<integer>127</integer>
 		</dict>
 		<key>src/SIOC/lib/SIOC/Thread.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>12</integer>
+				<integer>105</integer>
 				<key>line</key>
-				<integer>52</integer>
+				<integer>100</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>30</integer>
+			<integer>121</integer>
 		</dict>
 		<key>src/SIOC/lib/SIOC/User.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>8</integer>
+				<integer>96</integer>
 				<key>line</key>
-				<integer>112</integer>
+				<integer>280</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>326</integer>
 		</dict>
 		<key>src/SIOC/lib/SIOC/Usergroup.pm</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>35</integer>
 				<key>line</key>
-				<integer>45</integer>
+				<integer>13</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>10</integer>
+			<integer>0</integer>
+		</dict>
+		<key>src/SIOC/lib/dbtest.pl</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>11</integer>
+				<key>line</key>
+				<integer>38</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>18</integer>
 		</dict>
 		<key>src/SIOC/lib/test.pl</key>
 		<dict>
@@ -568,7 +578,21 @@
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>12</integer>
+				<integer>32</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>8</integer>
+		</dict>
+		<key>src/SIOC/t/00-pod-coverage.t</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>10</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -624,51 +648,9 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>12</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>22</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>src/SIOC/t/21-sioc_community.t</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>12</integer>
-				<key>line</key>
-				<integer>22</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>src/SIOC/t/21-sioc_site.t</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>12</integer>
-				<key>line</key>
-				<integer>22</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>src/SIOC/t/21-sioc_user.t</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>12</integer>
-				<key>line</key>
-				<integer>25</integer>
+				<integer>18</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -679,32 +661,30 @@
 	<key>openDocuments</key>
 	<array>
 		<string>src/SIOC/lib/SIOC.pm</string>
+		<string>src/SIOC/t/00-pod-coverage.t</string>
+		<string>src/SIOC/t/00-pod.t</string>
 		<string>src/SIOC/t/20-sioc_base.t</string>
-		<string>src/SIOC/t/21-sioc_community.t</string>
-		<string>src/SIOC/t/21-sioc_site.t</string>
-		<string>src/SIOC/t/21-sioc_user.t</string>
-		<string>src/SIOC/README</string>
+		<string>src/SIOC/lib/dbtest.pl</string>
 		<string>src/SIOC/lib/test.pl</string>
-		<string>phpapi/sioc_inc.php</string>
-		<string>src/SIOC/lib/SIOC/Community.pm</string>
-		<string>src/SIOC/lib/SIOC/Space.pm</string>
 		<string>src/SIOC/lib/SIOC/Forum.pm</string>
 		<string>src/SIOC/lib/SIOC/Post.pm</string>
 		<string>src/SIOC/lib/SIOC/Role.pm</string>
+		<string>src/SIOC/lib/SIOC/Space.pm</string>
+		<string>src/SIOC/lib/SIOC/Thread.pm</string>
 		<string>src/SIOC/lib/SIOC/Site.pm</string>
 		<string>src/SIOC/lib/SIOC/User.pm</string>
+		<string>src/SIOC/lib/SIOC/Community.pm</string>
 		<string>src/SIOC/lib/SIOC/Usergroup.pm</string>
-		<string>src/SIOC/Makefile.PL</string>
-		<string>src/SIOC/MANIFEST</string>
+		<string>src/SIOC/Changes</string>
+		<string>project/report.txt</string>
+		<string>project/technische_details.txt</string>
 		<string>src/SIOC/lib/SIOC/Item.pm</string>
 		<string>src/SIOC/lib/SIOC/Container.pm</string>
 		<string>src/SIOC/lib/SIOC/Exporter.pm</string>
-		<string>src/SIOC/lib/SIOC/Thread.pm</string>
-		<string>demodata/johnbreslin.xml</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{344, 86}, {690, 783}}</string>
+	<string>{{27, 79}, {739, 786}}</string>
 </dict>
 </plist>
